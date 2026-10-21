@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.1
+# Block Escape — Prototype 0.2
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -27,3 +27,19 @@ Tap an arrow block. It exits the 6x6 board if no other block or wall is in the p
 5. Prepare signed Android builds, Google Play closed testing, and compliant monetization.
 
 No ads, telemetry, accounts, backend, or in-app purchases are included in this prototype.
+
+## Sound (v0.2)
+
+The 44px sound button supports touch and keyboard input and exposes its state to assistive technology. Move, blocked-move and completion effects use Web Audio with a shared context, created/resumed only after user input. No audio autoplays on page load. Unsupported audio, rejected playback and unavailable storage do not prevent play.
+
+Sound preference uses `blockEscapeSound` (`on` / `off`, enabled by default). Existing progress in `blockEscapeUnlocked` is preserved. No libraries, audio downloads or build step are needed; relative asset paths work on GitHub Pages project sites.
+
+## Validation
+
+Run `node --check game.js`. With the static server running on port 8080, run `node tests/browser.cjs` in an environment providing Playwright and Chromium. On the Codex cloud image use:
+
+```sh
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/browser.cjs
+```
+
+The browser test covers all 10 levels, gameplay controls, saved progress, sound persistence, audio effects and unavailable/rejected audio or storage. Playwright is a development test tool only; it is not shipped with the game. Real Android/iOS audio output remains a manual check.
