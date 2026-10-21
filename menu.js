@@ -1,10 +1,16 @@
 'use strict';
 // Presentation/navigation only. The existing game owns levels, moves and storage.
 const menu=document.getElementById('menu'),gameScreen=document.querySelector('.app');
-let gameStarted=false,modalOpener;
+let gameStarted=false,modalOpener,screenTransition;
+function revealScreen(element){screenTransition?.cancel();if(!reducedMotion()&&element.animate)screenTransition=element.animate([{opacity:0},{opacity:1}],{duration:220,easing:'ease-out'})}
+const menuMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+const stopScreenMotion=event=>{if(event.matches)screenTransition?.cancel()};
+if(menuMotion.addEventListener)menuMotion.addEventListener('change',stopScreenMotion);else menuMotion.addListener(stopScreenMotion);
+function syncMenuSound(){const button=document.getElementById('menuSound');button.textContent=sound?'♪':'♪̸';button.setAttribute('aria-pressed',String(sound));button.setAttribute('aria-label',sound?'Sesi kapat':'Sesi aç')}
+document.getElementById('menuSound').onclick=()=>{toggleSound();syncMenuSound()};
 function refreshMenu(){document.getElementById('menuProgress').textContent=`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
 window.openGame=function(){
-  gameStarted=true;menu.hidden=true;gameScreen.hidden=false;
+  gameStarted=true;menu.hidden=true;gameScreen.hidden=false;revealScreen(gameScreen);
   document.getElementById('homeBtn').focus();
 };
 document.getElementById('playBtn').onclick=()=>{
@@ -13,7 +19,7 @@ document.getElementById('playBtn').onclick=()=>{
 };
 document.getElementById('homeBtn').onclick=()=>{
   if(busy)return;
-  gameScreen.hidden=true;menu.hidden=false;refreshMenu();
+  gameScreen.hidden=true;menu.hidden=false;refreshMenu();syncMenuSound();revealScreen(menu);
   document.getElementById('playBtn').focus();
 };
 document.getElementById('menuLevels').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);
@@ -42,3 +48,5 @@ document.getElementById('motionToggle').onclick=event=>{
   event.currentTarget.setAttribute('aria-pressed',String(paused));
   event.currentTarget.textContent=paused?'Hareketi sürdür':'Hareketi durdur';
 };
+
+syncMenuSound();

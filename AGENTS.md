@@ -39,3 +39,7 @@
 - `menu.css` / `menu.js` and local SVG assets own independent presentation layers. Do not let menu selectors alter board/cell/block sizing. Preserve gameplay state when returning to the menu.
 - Respect reduced motion and the pause control. Keep inactive screens hidden, native buttons, keyboard focus and dialog Escape/Tab behavior.
 - Run `tests/menu.cjs` with the documented NODE_PATH alongside all gameplay suites. Existing suites must enter via OYNA after navigation; explicit game fixtures may select their original level.
+
+## Approved artwork
+- Menu artwork follows the reference supplied in chat. Keep environment, Bloop, logo, islands and functional buttons separate. See `assets/LICENSES.md` before reusing/distributing assets; do not assert independent rights clearance.
+- Run `tests/reference-menu.cjs` alongside existing tests. New screen transitions must cancel when reduced motion changes at runtime. Menu sound must share the game's preference key.
