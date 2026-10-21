@@ -25,3 +25,8 @@
 - Use the shared busy guard for board mutations; keep undo/reset and level selection locked until animation completion. Always release locks on cancellation or unsupported animation APIs.
 - Honor `prefers-reduced-motion` in JavaScript and CSS. Preserve pinch zoom and safe-area padding on mobile.
 - Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/animations.cjs` alongside the existing browser suite.
+
+## Board geometry
+- Keep explicit equal grid tracks on both axes; empty cells must not collapse or depend on block content.
+- Moving blocks must stay opaque and above adjacent cells until they cross the board edge; retain the DOM node until completion.
+- Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/board-geometry.cjs` for mobile/desktop rectangle and visible motion regressions.
