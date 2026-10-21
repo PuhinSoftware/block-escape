@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.2
+# Block Escape — Prototype 0.3
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -43,3 +43,9 @@ NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modul
 ```
 
 The browser test covers all 10 levels, gameplay controls, saved progress, sound persistence, audio effects and unavailable/rejected audio or storage. Playwright is a development test tool only; it is not shipped with the game. Real Android/iOS audio output remains a manual check.
+
+## Motion and touch (v0.3)
+
+Blocks slide along their arrows and fade beyond the clipped board; blocked moves shake briefly and wins reveal an animated success card. Board input, undo/reset and level selection are locked until the move settles, preventing duplicate moves and stale completion dialogs. Sound remains available during animation. Reduced-motion preferences skip tile movement and disable success animations. Touch controls avoid selection/callout, respect safe-area insets and retain pinch zoom. No animation libraries are used.
+
+Animation tests: with the server on port 8080, run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/animations.cjs`. Tests include touch input, direction, duplicate input, cancellation, reduced motion and controls after animation. Physical iPhone/Android testing remains manual.
