@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.3
+# Block Escape — Prototype 0.3.1
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -46,6 +46,10 @@ The browser test covers all 10 levels, gameplay controls, saved progress, sound 
 
 ## Motion and touch (v0.3)
 
-Blocks slide along their arrows and fade beyond the clipped board; blocked moves shake briefly and wins reveal an animated success card. Board input, undo/reset and level selection are locked until the move settles, preventing duplicate moves and stale completion dialogs. Sound remains available during animation. Reduced-motion preferences skip tile movement and disable success animations. Touch controls avoid selection/callout, respect safe-area insets and retain pinch zoom. No animation libraries are used.
+Blocks slide along their arrows and remain visible until crossing the clipped board edge; blocked moves shake briefly and wins reveal an animated success card. Board input, undo/reset and level selection are locked until the move settles, preventing duplicate moves and stale completion dialogs. Sound remains available during animation. Reduced-motion preferences skip tile movement and disable success animations. Touch controls avoid selection/callout, respect safe-area insets and retain pinch zoom. No animation libraries are used.
 
 Animation tests: with the server on port 8080, run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/animations.cjs`. Tests include touch input, direction, duplicate input, cancellation, reduced motion and controls after animation. Physical iPhone/Android testing remains manual.
+
+## Board geometry regression (v0.3.1)
+
+Both grid axes use six equal `minmax(0, 1fr)` tracks so empty rows retain square cells. Exiting tiles stay opaque, above neighboring cells and in the DOM until reaching the clipped board edge. Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/board-geometry.cjs` with the server on port 8080. This checks all 36 cell rectangles on mobile and desktop before, during and after the first/middle/final move, plus visible travel, duplicate input and undo/reset. Set `ARTIFACT_DIR` to an external output directory to capture midpoint screenshots.

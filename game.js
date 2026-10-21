@@ -74,14 +74,15 @@ async function animateBlock(element,block,blocked){
   const distance=dx>0?bounds.right-rect.left:dx<0?rect.right-bounds.left:dy>0?bounds.bottom-rect.top:rect.bottom-bounds.top;
   const frames=blocked?
     [{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}]:
-    [{transform:'translate(0,0)',opacity:1},{transform:`translate(${dx*distance}px,${dy*distance}px)`,opacity:0}];
+    [{transform:'translate(0,0)',opacity:1},{transform:`translate(${dx*distance}px,${dy*distance}px)`,opacity:1}];
   element.classList.add(blocked?'blocked':'exiting');
+  if(!blocked)element.parentElement.classList.add('exiting-cell');
   let animation,timer;
   try{
-    animation=element.animate(frames,{duration:blocked?180:280,easing:blocked?'ease-in-out':'cubic-bezier(.4,0,.8,1)',fill:'forwards'});
+    animation=element.animate(frames,{duration:blocked?180:380,easing:blocked?'ease-in-out':'cubic-bezier(.4,0,.8,1)',fill:'forwards'});
     // Hidden tabs or cancelled animations must never leave input locked.
     await Promise.race([animation.finished,new Promise(resolve=>{timer=setTimeout(resolve,500)})]);
-  }catch{}finally{clearTimeout(timer);animation?.cancel();element.classList.remove('blocked','exiting')}
+  }catch{}finally{clearTimeout(timer);animation?.cancel();element.classList.remove('blocked','exiting');element.parentElement?.classList.remove('exiting-cell')}
 }
 async function tap(id,el){
   if(busy)return;

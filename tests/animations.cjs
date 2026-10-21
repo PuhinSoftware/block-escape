@@ -32,7 +32,7 @@ const transform=frames.at(-1).transform;
 const [x,y]=transform.match(/-?[\d.]+(?=px)/g).map(Number);
 assert.equal(Math.sign(x),dir==='L'?-1:dir==='R'?1:0);
 assert.equal(Math.sign(y),dir==='U'?-1:dir==='D'?1:0);
-assert.equal(frames.at(-1).opacity,'0');
+assert.equal(frames.at(-1).opacity,'1');
 }
 // Cancellation cannot strand the board lock.
 await page.evaluate(()=>{document.querySelector('[aria-label="Satır 4, sütun 4, R yönü"]').click();document.querySelector('.exiting').getAnimations().forEach(a=>a.cancel())});
