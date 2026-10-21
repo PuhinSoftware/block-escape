@@ -6,7 +6,7 @@ try{
 const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 const settled=()=>page.waitForFunction(()=>document.getElementById('board').getAttribute('aria-busy')!=='true');
-await page.goto('http://127.0.0.1:8080');await page.locator('#sound').tap();
+await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').click();await page.locator('#sound').tap();
 assert.ok(!(await page.locator('meta[name=viewport]').getAttribute('content')).includes('maximum-scale'));
 // Dispatch duplicates in the same task, before a single animation frame can finish.
 const state=await page.evaluate(()=>{
@@ -57,7 +57,7 @@ await page.locator('#reset').tap();assert.equal(await page.locator('.block').cou
 await page.evaluate(()=>{Element.prototype.animate=undefined});
 await page.getByRole('button',{name:'Satır 4, sütun 4, R yönü',exact:true}).tap();await settled();
 assert.equal(await page.locator('#moves').textContent(),'1');
-await page.reload();await page.evaluate(()=>{document.querySelector('[aria-label="Satır 4, sütun 4, R yönü"]').click();document.querySelector('.exiting').getAnimations().forEach(a=>a.pause())});
+await page.reload();await page.locator('#playBtn').click();await page.evaluate(()=>load(0));await page.evaluate(()=>{document.querySelector('[aria-label="Satır 4, sütun 4, R yönü"]').click();document.querySelector('.exiting').getAnimations().forEach(a=>a.pause())});
 await settled();assert.equal(await page.locator('#reset').isEnabled(),true);
 assert.deepEqual(errors,[]);
 console.log('PASS: touch, direction U/D/L/R, duplicate input lock, blocked feedback, cancellation, reduced motion, success animation, undo/reset and saved unlocking');

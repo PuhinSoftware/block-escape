@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.3.2
+# Block Escape — Prototype 0.4
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -61,3 +61,11 @@ Cells are size-contained and blocks are absolutely positioned within them, so gl
 Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/mobile-grid.cjs` with the server on port 8080. It checks 320/375/390/430px, both normal and oversized content, all 36 cell rectangles and block-to-cell containment across every move in all 10 levels, undo and reset. `ARTIFACT_DIR` captures real browser screenshots outside the checkout. Set `BROWSER=webkit` (and `PLAYWRIGHT_BROWSERS_PATH` if installed separately) to run the same suite in Playwright WebKit; engine startup failure is a failing command, never silently replaced with Chromium.
 
 Observed before the fix: an oversized arrow at 320px produced a 108×133px button inside a 39.17×39.17px cell. Previous tests checked only cell geometry, missing button overflow. This stress reproduction proves intrinsic-content coupling; it does not reproduce or identify an iPhone-specific WebKit defect. Normal Chromium layouts passed before this change. WebKit installation in the current environment was blocked by HTTP 403 from cdn.playwright.dev and playwright.download.prss.microsoft.com; WebKit and physical iPhone behavior remain unverified. MDN/WebKit documentation requests were also blocked by the network policy. Do not report Chromium mobile emulation as Safari validation.
+
+## Main menu (v0.4)
+
+`menu.css` and `menu.js` own the presentation/navigation layer; the existing game retains its levels, moves, storage and exit animations. Sky/background, logo, floating island (`assets/island.svg`), Bloop (`assets/bloop.svg`) and action buttons are independent layers. Artwork is a local vector interpretation of the colorful floating-island/Bloop brief; no approved reference image was present in this checkout.
+
+OYNA starts the highest unlocked level on the first visit, then resumes the current in-memory game when returning from the game’s Ana menü button. BÖLÜM SEÇ uses existing unlock rules. Reloading preserves the original unlocked-level and sound keys, not an unfinished board (same storage model as before). Decorations honor reduced motion and have a pause control. Native buttons, visible focus, hidden inactive screens, dialog keyboard containment/Escape and safe-area padding support accessible mobile navigation. No external fonts, libraries, network artwork or build step are required; relative assets support GitHub Pages project paths.
+
+Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/menu.cjs` with the server on port 8080. Set `ARTIFACT_DIR` to save screenshots outside the checkout. Tests cover 320/375/390/430px and desktop, play/resume, level locks, keyboard/dialog focus, reduced motion, pause and storage preservation. Existing gameplay suites enter through the menu before testing their original checks. Chromium mobile emulation is not iPhone Safari validation; WebKit remains unavailable in this environment after its download was blocked by network policy.

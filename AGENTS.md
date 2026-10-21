@@ -34,3 +34,8 @@
 ## Mobile containment
 - Cells must not derive size from glyph/button intrinsic dimensions. Keep buttons out of grid sizing flow, with explicit appearance/padding/minimum dimensions. Clip normal cell content and allow overflow only on the exiting cell.
 - Run `tests/mobile-grid.cjs` using the same NODE_PATH as other suites; use `BROWSER=webkit` for a separately installed WebKit engine. It covers 320/375/390/430px, all levels and large-content stress. Never label Chromium emulation as iPhone/Safari testing or silently skip a missing engine.
+
+## Main menu
+- `menu.css` / `menu.js` and local SVG assets own independent presentation layers. Do not let menu selectors alter board/cell/block sizing. Preserve gameplay state when returning to the menu.
+- Respect reduced motion and the pause control. Keep inactive screens hidden, native buttons, keyboard focus and dialog Escape/Tab behavior.
+- Run `tests/menu.cjs` with the documented NODE_PATH alongside all gameplay suites. Existing suites must enter via OYNA after navigation; explicit game fixtures may select their original level.

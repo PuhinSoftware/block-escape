@@ -6,7 +6,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'
 try{
 for(const [name,options] of [['mobile',{viewport:{width:390,height:844},isMobile:true,hasTouch:true}],['desktop',{viewport:{width:1280,height:900}}]]){
 const page=await browser.newPage({...options,reducedMotion:'no-preference'});
-await page.goto('http://127.0.0.1:8080');await page.locator('#sound').click();
+await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').click();await page.locator('#sound').click();
 const measure=()=>page.locator('.cell').evaluateAll(cells=>cells.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
 const baseline=await measure();
 const same=async stage=>{

@@ -64,7 +64,7 @@ function toggleSound(){
 }
 function setBusy(value){
   busy=value;board.setAttribute('aria-busy',String(value));
-  document.querySelectorAll('.block,#undo,#reset,#levelsBtn').forEach(button=>button.disabled=value);
+  document.querySelectorAll('.block,#undo,#reset,#levelsBtn,#homeBtn').forEach(button=>button.disabled=value);
 }
 function reducedMotion(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches}
 async function animateBlock(element,block,blocked){
@@ -105,7 +105,7 @@ async function tap(id,el){
 }
 function undo(){if(busy)return;if(!history.length){message('Geri alınacak hamle yok.');return}blocks=history.pop();moves=Math.max(0,moves-1);render()}
 function showWin(){showModal('Bölüm tamamlandı! 🎉',`${moves} hamlede bütün blokları temizledin.`,false);$('next').textContent=index===levels.length-1?'Başa dön ↻':'Sonraki bölüm →';$('next').onclick=()=>load(index===levels.length-1?0:index+1)}
-function showModal(title,description,picker){if(busy&&picker)return;$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>load(i);$('levelPicker').append(b)})}$('overlay').classList.remove('hidden')}
+function showModal(title,description,picker){if(busy&&picker)return;$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>{load(i);window.openGame?.()};$('levelPicker').append(b)})}$('overlay').classList.remove('hidden')}
 function hideModal(){$('overlay').classList.add('hidden')}
 $('undo').onclick=undo;$('reset').onclick=()=>load(index);$('levelsBtn').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);$('close').onclick=hideModal;$('sound').onclick=toggleSound;
 updateSoundButton();
