@@ -27,9 +27,10 @@ await same(`move ${i+1} start`);
 const snapshot=async progress=>{
 await page.evaluate(p=>{exitAnimation.currentTime=exitAnimation.effect.getTiming().duration*p},progress);
 await page.evaluate(()=>new Promise(requestAnimationFrame));
-return page.evaluate(()=>{const r=movingTile.getBoundingClientRect();const b=document.getElementById('board').getBoundingClientRect();return {connected:movingTile.isConnected,x:r.x,y:r.y,right:r.right,bottom:r.bottom,opacity:Number(getComputedStyle(movingTile).opacity),board:{x:b.x,y:b.y,right:b.right,bottom:b.bottom},busy,disabled:document.getElementById('undo').disabled}});
+return page.evaluate(()=>{const r=movingTile.getBoundingClientRect();const b=document.getElementById('board').getBoundingClientRect();return {connected:movingTile.isConnected,x:r.x,y:r.y,right:r.right,bottom:r.bottom,opacity:Number(getComputedStyle(movingTile).opacity),frontmost:document.elementFromPoint(Math.min(r.x+r.width/2,b.right-4),Math.min(r.y+r.height/2,b.bottom-4))===movingTile,board:{x:b.x,y:b.y,right:b.right,bottom:b.bottom},busy,disabled:document.getElementById('undo').disabled}});
 };
 const mid=await snapshot(.5);assert.equal(mid.connected,true);assert.equal(mid.busy,true);assert.equal(mid.disabled,true);
+assert.equal(mid.frontmost,true,'moving tile must paint above adjacent cells');
 assert.ok(mid.opacity>=.95,`${name}: moving tile faded too early`);
 if(i===1){assert.ok(mid.y>before.y+5);assert.ok(mid.y<mid.board.bottom)}else{assert.ok(mid.x>before.x+5);assert.ok(mid.x<mid.board.right)}
 await same(`move ${i+1} midpoint`);

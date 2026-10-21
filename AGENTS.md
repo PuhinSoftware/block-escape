@@ -30,3 +30,7 @@
 - Keep explicit equal grid tracks on both axes; empty cells must not collapse or depend on block content.
 - Moving blocks must stay opaque and above adjacent cells until they cross the board edge; retain the DOM node until completion.
 - Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/board-geometry.cjs` for mobile/desktop rectangle and visible motion regressions.
+
+## Mobile containment
+- Cells must not derive size from glyph/button intrinsic dimensions. Keep buttons out of grid sizing flow, with explicit appearance/padding/minimum dimensions. Clip normal cell content and allow overflow only on the exiting cell.
+- Run `tests/mobile-grid.cjs` using the same NODE_PATH as other suites; use `BROWSER=webkit` for a separately installed WebKit engine. It covers 320/375/390/430px, all levels and large-content stress. Never label Chromium emulation as iPhone/Safari testing or silently skip a missing engine.
