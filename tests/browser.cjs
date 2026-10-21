@@ -6,7 +6,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'
 try {
 const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error' && !m.location().url.endsWith('/favicon.ico'))errors.push(m.text())});
-const response=await page.goto('http://127.0.0.1:8080');assert.equal(response.status(),200);
+const response=await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').click();assert.equal(response.status(),200);
 for(const file of ['game.js','style.css'])assert.equal((await page.request.get('http://127.0.0.1:8080/'+file)).status(),200);
 await page.locator('#sound').click();await settled(page);
 assert.equal(await page.locator('.cell').count(),36);
@@ -29,13 +29,13 @@ await page.locator('#overlay').waitFor({state:'visible'});assert.equal(await pag
 await page.locator('#next').click();await settled(page);
 }
 assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeUnlocked')),'10');
-await page.reload();await page.locator('#levelsBtn').click();await settled(page);assert.equal(await page.locator('#levelPicker button:enabled').count(),10);
+await page.reload();await page.locator('#playBtn').click();await page.locator('#levelsBtn').click();await settled(page);assert.equal(await page.locator('#levelPicker button:enabled').count(),10);
 assert.deepEqual(errors,[]);
 await page.locator('#close').click();await settled(page);
 assert.equal(await page.locator('#sound').getAttribute('aria-pressed'),'false');
-await page.reload();assert.equal(await page.locator('#sound').getAttribute('aria-pressed'),'false');
+await page.reload();await page.locator('#playBtn').click();assert.equal(await page.locator('#sound').getAttribute('aria-pressed'),'false');
 assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeUnlocked')),'10');
-await page.locator('#sound').click();await settled(page);await page.reload();
+await page.locator('#sound').click();await settled(page);await page.reload();await page.locator('#playBtn').click();
 assert.equal(await page.locator('#sound').getAttribute('aria-pressed'),'true');
 assert.ok((await page.locator('#sound').boundingBox()).width>=44);
 // Instrument the Web Audio boundary to verify tones and lifecycle without speakers.
@@ -50,7 +50,7 @@ createOscillator(){return {frequency:{setValueAtTime:f=>audioCalls.tones.push(f)
 createGain(){return {gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){},disconnect(){audioCalls.disconnects++}}}
 };
 });
-await audio.goto('http://127.0.0.1:8080');assert.equal(await audio.evaluate(()=>audioCalls.contexts),0);
+await audio.goto('http://127.0.0.1:8080');await audio.locator('#playBtn').click();assert.equal(await audio.evaluate(()=>audioCalls.contexts),0);
 await audio.getByRole('button',{name:'Satır 2, sütun 2, R yönü',exact:true}).click();await settled(audio);
 await audio.getByRole('button',{name:'Satır 4, sütun 4, R yönü',exact:true}).click();await settled(audio);
 await audio.getByRole('button',{name:'Satır 2, sütun 4, D yönü',exact:true}).click();await settled(audio);
@@ -72,7 +72,7 @@ if(mode==='missing'){window.AudioContext=undefined;window.webkitAudioContext=und
 if(mode==='rejected')window.AudioContext=class{constructor(){this.state='suspended'}resume(){return Promise.reject(Error('policy'))}};
 if(mode==='storage'){Storage.prototype.getItem=()=>{throw Error('storage denied')};Storage.prototype.setItem=()=>{throw Error('storage denied')}};
 },mode);
-await fallback.goto('http://127.0.0.1:8080');
+await fallback.goto('http://127.0.0.1:8080');await fallback.locator('#playBtn').click();
 await fallback.getByRole('button',{name:'Satır 4, sütun 4, R yönü',exact:true}).click();await settled(fallback);
 assert.equal(await fallback.locator('#moves').textContent(),'1');
 await fallback.locator('#sound').click();await settled(fallback);assert.equal(await fallback.locator('#sound').getAttribute('aria-pressed'),'false');

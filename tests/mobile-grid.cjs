@@ -9,7 +9,7 @@ try{
 for(const width of [320,375,390,430])for(const enlarged of [false,true]){
 const page=await browser.newPage({viewport:{width,height:900},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.goto('http://127.0.0.1:8080');await page.locator('#sound').tap();
+await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').click();await page.locator('#sound').tap();
 // Deliberate oversized glyph: tests intrinsic-content independence, not Safari emulation.
 if(enlarged)await page.addStyleTag({content:'.block{font-size:96px}'});
 const cells=()=>page.locator('.cell').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
