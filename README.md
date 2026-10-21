@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.3.1
+# Block Escape — Prototype 0.3.2
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -53,3 +53,11 @@ Animation tests: with the server on port 8080, run `NODE_PATH=/opt/codex/runtime
 ## Board geometry regression (v0.3.1)
 
 Both grid axes use six equal `minmax(0, 1fr)` tracks so empty rows retain square cells. Exiting tiles stay opaque, above neighboring cells and in the DOM until reaching the clipped board edge. Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/board-geometry.cjs` with the server on port 8080. This checks all 36 cell rectangles on mobile and desktop before, during and after the first/middle/final move, plus visible travel, duplicate input and undo/reset. Set `ARTIFACT_DIR` to an external output directory to capture midpoint screenshots.
+
+## Mobile containment regression (v0.3.2)
+
+Cells are size-contained and blocks are absolutely positioned within them, so glyphs/native button intrinsic sizing cannot determine grid track sizes. Button appearance, padding, minimum dimensions and line height are explicit. Cells clip normal content but allow overflow only for the exiting cell, preserving directional motion.
+
+Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/mobile-grid.cjs` with the server on port 8080. It checks 320/375/390/430px, both normal and oversized content, all 36 cell rectangles and block-to-cell containment across every move in all 10 levels, undo and reset. `ARTIFACT_DIR` captures real browser screenshots outside the checkout. Set `BROWSER=webkit` (and `PLAYWRIGHT_BROWSERS_PATH` if installed separately) to run the same suite in Playwright WebKit; engine startup failure is a failing command, never silently replaced with Chromium.
+
+Observed before the fix: an oversized arrow at 320px produced a 108×133px button inside a 39.17×39.17px cell. Previous tests checked only cell geometry, missing button overflow. This stress reproduction proves intrinsic-content coupling; it does not reproduce or identify an iPhone-specific WebKit defect. Normal Chromium layouts passed before this change. WebKit installation in the current environment was blocked by HTTP 403 from cdn.playwright.dev and playwright.download.prss.microsoft.com; WebKit and physical iPhone behavior remain unverified. MDN/WebKit documentation requests were also blocked by the network policy. Do not report Chromium mobile emulation as Safari validation.
