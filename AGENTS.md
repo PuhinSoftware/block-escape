@@ -20,3 +20,8 @@
 ## GitHub Pages
 - All assets must use relative paths so owner/repository project URLs work. No backend, secrets, Node runtime, external CDN or build step is required for deployment.
 - Keep the site usable over static HTTPS hosting; browser audio policies still require a user gesture.
+
+## Animations
+- Use the shared busy guard for board mutations; keep undo/reset and level selection locked until animation completion. Always release locks on cancellation or unsupported animation APIs.
+- Honor `prefers-reduced-motion` in JavaScript and CSS. Preserve pinch zoom and safe-area padding on mobile.
+- Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/animations.cjs` alongside the existing browser suite.

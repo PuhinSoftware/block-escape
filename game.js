@@ -16,13 +16,13 @@ const raw=[
 ['1,1,R','2,1,R','2,3,R','1,3,R','4,1,R','4,4,R','3,4,R','3,2,R']
 ];
 const levels=raw.map((a,i)=>({walls: i>=5?[[0,0],[5,5]]:[],blocks:a.map((s,j)=>{let [x,y,dir]=s.split(',');return{id:j,x:+x,y:+y,dir}})}));
-const $=id=>document.getElementById(id),board=$('board');let index=0,blocks=[],history=[],moves=0,sound=true,toastTimer,audioContext;
+const $=id=>document.getElementById(id),board=$('board');let index=0,blocks=[],history=[],moves=0,sound=true,toastTimer,audioContext,busy=false;
 let unlocked=1;try{unlocked=Math.max(1,Math.min(levels.length,Number(localStorage.getItem('blockEscapeUnlocked'))||1))}catch{}
 try{sound=localStorage.getItem('blockEscapeSound')!=='off'}catch{}
 function key(x,y){return `${x},${y}`}
 function clearPath(block,items){let [dx,dy]=vectors[block.dir],x=block.x+dx,y=block.y+dy;const walls=new Set(levels[index].walls.map(p=>key(...p)));while(x>=0&&y>=0&&x<S&&y<S){if(walls.has(key(x,y))||items.some(b=>b.x===x&&b.y===y))return false;x+=dx;y+=dy}return true}
 function solvable(items){if(!items.length)return true;return items.some(b=>clearPath(b,items)&&solvable(items.filter(t=>t.id!==b.id)))}
-function load(i){index=i;blocks=levels[i].blocks.map(b=>({...b}));history=[];moves=0;hideModal();render();message('');}
+function load(i){if(busy)return;index=i;blocks=levels[i].blocks.map(b=>({...b}));history=[];moves=0;hideModal();render();message('');}
 function render(){board.style.setProperty('--size',S);const wallSet=new Set(levels[index].walls.map(p=>key(...p)));const map=new Map(blocks.map(b=>[key(b.x,b.y),b]));const frag=document.createDocumentFragment();for(let y=0;y<S;y++)for(let x=0;x<S;x++){const cell=document.createElement('div');cell.className='cell'+(wallSet.has(key(x,y))?' wall':'');const b=map.get(key(x,y));if(b){const btn=document.createElement('button');btn.className='block';btn.dataset.dir=b.dir;btn.textContent=arrows[b.dir];btn.setAttribute('aria-label',`Satır ${y+1}, sütun ${x+1}, ${b.dir} yönü`);btn.addEventListener('click',()=>tap(b.id,btn));cell.append(btn)}frag.append(cell)}board.replaceChildren(frag);$('levelLabel').textContent=`${String(index+1).padStart(2,'0')} / ${levels.length}`;$('remaining').textContent=blocks.length;$('moves').textContent=moves}
 function message(t){$('toast').textContent=t;clearTimeout(toastTimer);if(t)toastTimer=setTimeout(()=>$('toast').textContent='',1800)}
 // Create/resume only inside a user gesture. One context serves every effect.
@@ -62,10 +62,49 @@ function toggleSound(){
   if(sound)playSound('move');
   else if(audioContext){try{audioContext.suspend().catch(()=>{})}catch{}}
 }
-function tap(id,el){const b=blocks.find(x=>x.id===id);if(!b)return;if(!clearPath(b,blocks)){el.classList.add('blocked');setTimeout(()=>el.classList.remove('blocked'),250);message('Yol kapalı! Önce diğer bloğu çıkar.');playSound('blocked');return}history.push(blocks.map(b=>({...b})));blocks=blocks.filter(x=>x.id!==id);moves++;playSound(blocks.length?'move':'win');render();if(!blocks.length){if(index+1>=unlocked){unlocked=Math.min(levels.length,index+2);try{localStorage.setItem('blockEscapeUnlocked',unlocked)}catch{}}setTimeout(()=>showWin(),260)}}
-function undo(){if(!history.length){message('Geri alınacak hamle yok.');return}blocks=history.pop();moves=Math.max(0,moves-1);render()}
+function setBusy(value){
+  busy=value;board.setAttribute('aria-busy',String(value));
+  document.querySelectorAll('.block,#undo,#reset,#levelsBtn').forEach(button=>button.disabled=value);
+}
+function reducedMotion(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches}
+async function animateBlock(element,block,blocked){
+  if(reducedMotion()||!element.animate)return;
+  const rect=element.getBoundingClientRect(),bounds=board.getBoundingClientRect();
+  const [dx,dy]=vectors[block.dir];
+  const distance=dx>0?bounds.right-rect.left:dx<0?rect.right-bounds.left:dy>0?bounds.bottom-rect.top:rect.bottom-bounds.top;
+  const frames=blocked?
+    [{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}]:
+    [{transform:'translate(0,0)',opacity:1},{transform:`translate(${dx*distance}px,${dy*distance}px)`,opacity:0}];
+  element.classList.add(blocked?'blocked':'exiting');
+  let animation,timer;
+  try{
+    animation=element.animate(frames,{duration:blocked?180:280,easing:blocked?'ease-in-out':'cubic-bezier(.4,0,.8,1)',fill:'forwards'});
+    // Hidden tabs or cancelled animations must never leave input locked.
+    await Promise.race([animation.finished,new Promise(resolve=>{timer=setTimeout(resolve,500)})]);
+  }catch{}finally{clearTimeout(timer);animation?.cancel();element.classList.remove('blocked','exiting')}
+}
+async function tap(id,el){
+  if(busy)return;
+  const b=blocks.find(x=>x.id===id);if(!b)return;
+  setBusy(true);
+  try{
+    if(!clearPath(b,blocks)){
+      message('Yol kapalı! Önce diğer bloğu çıkar.');playSound('blocked');
+      await animateBlock(el,b,true);return;
+    }
+    history.push(blocks.map(b=>({...b})));blocks=blocks.filter(x=>x.id!==id);moves++;
+    playSound(blocks.length?'move':'win');
+    await animateBlock(el,b,false);
+    render();
+    if(!blocks.length){
+      if(index+1>=unlocked){unlocked=Math.min(levels.length,index+2);try{localStorage.setItem('blockEscapeUnlocked',unlocked)}catch{}}
+      showWin();
+    }
+  }finally{setBusy(false)}
+}
+function undo(){if(busy)return;if(!history.length){message('Geri alınacak hamle yok.');return}blocks=history.pop();moves=Math.max(0,moves-1);render()}
 function showWin(){showModal('Bölüm tamamlandı! 🎉',`${moves} hamlede bütün blokları temizledin.`,false);$('next').textContent=index===levels.length-1?'Başa dön ↻':'Sonraki bölüm →';$('next').onclick=()=>load(index===levels.length-1?0:index+1)}
-function showModal(title,description,picker){$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>load(i);$('levelPicker').append(b)})}$('overlay').classList.remove('hidden')}
+function showModal(title,description,picker){if(busy&&picker)return;$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>load(i);$('levelPicker').append(b)})}$('overlay').classList.remove('hidden')}
 function hideModal(){$('overlay').classList.add('hidden')}
 $('undo').onclick=undo;$('reset').onclick=()=>load(index);$('levelsBtn').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);$('close').onclick=hideModal;$('sound').onclick=toggleSound;
 updateSoundButton();
