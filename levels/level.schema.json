@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://block-escape.local/schemas/level-v1",
+  "title": "Block Escape level v1",
+  "type": "object",
+  "required": ["schemaVersion", "id", "worldId", "difficulty", "gridSize", "blocks"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "id": {"type": "integer", "minimum": 1, "maximum": 300},
+    "worldId": {"enum": ["crystal-mines", "coral-kingdom", "sky-islands", "star-galaxy"]},
+    "difficulty": {"enum": ["tutorial", "easy", "medium", "hard"]},
+    "gridSize": {"const": 6},
+    "blocks": {"type": "array", "minItems": 1, "maxItems": 36, "items": {"type": "object", "required": ["id", "x", "y", "dir"], "properties": {"id": {"type": "integer", "minimum": 0}, "x": {"type": "integer", "minimum": 0, "maximum": 5}, "y": {"type": "integer", "minimum": 0, "maximum": 5}, "dir": {"enum": ["U", "D", "L", "R"]}}}},
+    "walls": {"type": "array", "maxItems": 35, "items": {"type": "array", "prefixItems": [{"type": "integer", "minimum": 0, "maximum": 5}, {"type": "integer", "minimum": 0, "maximum": 5}], "minItems": 2, "maxItems": 2}},
+    "generation": {"type": "object"}
+  },
+  "description": "Runtime semantic validation also rejects repeated ids, overlapping cells and world/range mismatches. Optional walls preserve the existing engine rule."
+}

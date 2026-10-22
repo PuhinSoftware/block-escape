@@ -33,3 +33,5 @@
 .settings-panel button{appearance:none;-webkit-appearance:none;min-width:44px;min-height:44px;border:1px solid #79a4d9;border-radius:13px;background:#12345c;color:#eef7ff;padding:10px 12px;font-weight:700;touch-action:manipulation}
 .settings-panel button:focus-visible{outline:3px solid #fff39c;outline-offset:3px}.settings-panel button:active{background:#275785}
 #settingsClose{font-size:25px;padding:0;flex-shrink:0}.setting-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,40%);align-items:center;gap:12px;border-top:1px solid #7da6db44;padding:18px 0}.setting-row p{margin:0;font-size:11px;color:#bfd4ef}.setting-row button{font-size:12px;overflow-wrap:anywhere}.setting-row button[aria-pressed="true"]{border-color:#8beaf5;background:#164d6a}.settings-note{font-size:11px;color:#c2d7ee;margin:4px 0 18px}#settingsDone{width:100%;background:linear-gradient(#149ce5,#1366be);border-color:#75d6ff}
+
+.menu-button:disabled{opacity:.6;cursor:wait;animation:none}#levelStatus:empty{display:none}#levelStatus{max-width:300px;line-height:1.5}#retryLevels{min-height:44px;font-size:12px}

@@ -7,9 +7,9 @@ const browser=await (engine==='webkit'?webkit:chromium).launch(engine==='chromiu
 try{
 for(const [width,height] of [[320,568],[375,667],[390,844],[430,932]]){
 const page=await browser.newPage({viewport:{width,height},isMobile:true,hasTouch:true});
-await page.goto('http://127.0.0.1:8080');
-assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-assert.equal(await page.locator('#menu button').count(),3,'only play, levels and settings controls');
+await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>levelsReady);
+assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth));
+assert.equal(await page.locator('#menu button:visible').count(),3,'only play, levels and settings controls');
 const audioBefore=await page.evaluate(()=>audioContext===undefined);assert.equal(audioBefore,true);
 await page.locator('#settingsBtn').tap();await page.locator('#settingsSound').tap();assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeSound')),'off');
 assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');await page.locator('#settingsDone').tap();

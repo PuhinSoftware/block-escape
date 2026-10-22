@@ -1,0 +1,2655 @@
+{
+  "schemaVersion": 1,
+  "levels": [
+    {
+      "schemaVersion": 1,
+      "id": 1,
+      "worldId": "crystal-mines",
+      "difficulty": "tutorial",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 5,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 2,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 2,
+          "x": 0,
+          "y": 0,
+          "dir": "L"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:1",
+        "attempt": 1,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 2,
+      "worldId": "crystal-mines",
+      "difficulty": "tutorial",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 5,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 5,
+          "dir": "R"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:2",
+        "attempt": 3,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 3,
+      "worldId": "crystal-mines",
+      "difficulty": "tutorial",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 4,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 1,
+          "x": 0,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 3,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 3,
+          "y": 2,
+          "dir": "L"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:3",
+        "attempt": 1,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 4,
+      "worldId": "crystal-mines",
+      "difficulty": "tutorial",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 2,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 2,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 2,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 3,
+          "x": 5,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 4,
+          "x": 5,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 5,
+          "x": 4,
+          "y": 2,
+          "dir": "U"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:4",
+        "attempt": 1,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 5,
+      "worldId": "crystal-mines",
+      "difficulty": "tutorial",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 1,
+          "x": 1,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 5,
+          "x": 4,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 6,
+          "x": 3,
+          "y": 1,
+          "dir": "L"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:5",
+        "attempt": 3,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 6,
+      "worldId": "crystal-mines",
+      "difficulty": "easy",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 4,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 3,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 2,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 3,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 6,
+          "x": 4,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 7,
+          "x": 1,
+          "y": 1,
+          "dir": "D"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:6",
+        "attempt": 1,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 7,
+      "worldId": "crystal-mines",
+      "difficulty": "easy",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 5,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 5,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 2,
+          "x": 1,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 3,
+          "x": 2,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 4,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 5,
+          "x": 2,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 6,
+          "x": 3,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 7,
+          "x": 0,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 8,
+          "x": 3,
+          "y": 3,
+          "dir": "R"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:7",
+        "attempt": 1,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 8,
+      "worldId": "crystal-mines",
+      "difficulty": "easy",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 4,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 1,
+          "x": 1,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 2,
+          "x": 5,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 3,
+          "x": 0,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 0,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 5,
+          "x": 2,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 6,
+          "x": 3,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 7,
+          "x": 5,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 8,
+          "x": 3,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 9,
+          "x": 3,
+          "y": 5,
+          "dir": "D"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:8",
+        "attempt": 1,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 9,
+      "worldId": "crystal-mines",
+      "difficulty": "easy",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 5,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 5,
+          "x": 2,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 6,
+          "x": 1,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 7,
+          "x": 1,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 8,
+          "x": 2,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 3,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 10,
+          "x": 0,
+          "y": 4,
+          "dir": "L"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:9",
+        "attempt": 3,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 10,
+      "worldId": "crystal-mines",
+      "difficulty": "easy",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 1,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 1,
+          "x": 0,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 2,
+          "x": 0,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 3,
+          "x": 2,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 4,
+          "x": 3,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 5,
+          "x": 4,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 6,
+          "x": 4,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 7,
+          "x": 3,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 8,
+          "x": 0,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 10,
+          "x": 5,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 11,
+          "x": 5,
+          "y": 5,
+          "dir": "D"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:10",
+        "attempt": 2,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 11,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 5,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 1,
+          "x": 5,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 0,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 5,
+          "x": 5,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 6,
+          "x": 0,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 7,
+          "x": 3,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 8,
+          "x": 2,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 9,
+          "x": 2,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 10,
+          "x": 2,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 11,
+          "x": 2,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 12,
+          "x": 2,
+          "y": 1,
+          "dir": "U"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:11",
+        "attempt": 4,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 12,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 2,
+          "x": 5,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 4,
+          "x": 5,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 5,
+          "x": 1,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 6,
+          "x": 3,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 7,
+          "x": 2,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 8,
+          "x": 0,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 9,
+          "x": 1,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 10,
+          "x": 1,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 11,
+          "x": 3,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 12,
+          "x": 3,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 0,
+          "y": 1,
+          "dir": "L"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:12",
+        "attempt": 4,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 13,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 3,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 4,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 3,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 5,
+          "x": 2,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 6,
+          "x": 2,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 7,
+          "x": 2,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 8,
+          "x": 1,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 9,
+          "x": 1,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 10,
+          "x": 1,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 11,
+          "x": 5,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 12,
+          "x": 5,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 13,
+          "x": 0,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 14,
+          "x": 0,
+          "y": 1,
+          "dir": "U"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:13",
+        "attempt": 4,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 14,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 2,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 1,
+          "x": 2,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 2,
+          "x": 3,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 3,
+          "x": 3,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 4,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 6,
+          "x": 0,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 7,
+          "x": 2,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 8,
+          "x": 5,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 9,
+          "x": 3,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 10,
+          "x": 1,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 11,
+          "x": 0,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 12,
+          "x": 0,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 5,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 14,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 15,
+          "x": 1,
+          "y": 4,
+          "dir": "D"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:14",
+        "attempt": 5,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 15,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 4,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 2,
+          "x": 3,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 5,
+          "x": 4,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 6,
+          "x": 3,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 7,
+          "x": 5,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 8,
+          "x": 0,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 10,
+          "x": 5,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 11,
+          "x": 2,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 12,
+          "x": 3,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 5,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 14,
+          "x": 0,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 15,
+          "x": 1,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 16,
+          "x": 0,
+          "y": 0,
+          "dir": "U"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:15",
+        "attempt": 4,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 16,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 2,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 1,
+          "x": 2,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 2,
+          "x": 0,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 3,
+          "x": 0,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 5,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 5,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 6,
+          "x": 1,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 7,
+          "x": 5,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 8,
+          "x": 3,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 1,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 10,
+          "x": 0,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 11,
+          "x": 4,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 12,
+          "x": 5,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 13,
+          "x": 0,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 14,
+          "x": 4,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 15,
+          "x": 1,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 16,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 17,
+          "x": 3,
+          "y": 1,
+          "dir": "U"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:16",
+        "attempt": 2,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 17,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 2,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 3,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 2,
+          "x": 1,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 3,
+          "x": 3,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 4,
+          "x": 0,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 0,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 6,
+          "x": 0,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 7,
+          "x": 5,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 8,
+          "x": 0,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 9,
+          "x": 4,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 10,
+          "x": 3,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 11,
+          "x": 3,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 12,
+          "x": 4,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 13,
+          "x": 5,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 14,
+          "x": 2,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 15,
+          "x": 5,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 16,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 17,
+          "x": 5,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 18,
+          "x": 1,
+          "y": 5,
+          "dir": "D"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:17",
+        "attempt": 12,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 18,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 3,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 1,
+          "x": 3,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 2,
+          "x": 1,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 0,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 5,
+          "x": 0,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 6,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 7,
+          "x": 0,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 8,
+          "x": 4,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 10,
+          "x": 5,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 11,
+          "x": 5,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 12,
+          "x": 2,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 0,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 14,
+          "x": 4,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 15,
+          "x": 2,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 16,
+          "x": 1,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 17,
+          "x": 4,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 18,
+          "x": 0,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 19,
+          "x": 5,
+          "y": 1,
+          "dir": "R"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:18",
+        "attempt": 8,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 19,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 1,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 0,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 2,
+          "x": 0,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 2,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 2,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 6,
+          "x": 4,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 7,
+          "x": 4,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 8,
+          "x": 5,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 10,
+          "x": 4,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 11,
+          "x": 2,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 12,
+          "x": 1,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 13,
+          "x": 0,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 14,
+          "x": 3,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 15,
+          "x": 0,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 16,
+          "x": 0,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 17,
+          "x": 3,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 18,
+          "x": 1,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 19,
+          "x": 5,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 20,
+          "x": 5,
+          "y": 0,
+          "dir": "U"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:19",
+        "attempt": 17,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 20,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 5,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 3,
+          "x": 0,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 4,
+          "x": 4,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 5,
+          "x": 2,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 6,
+          "x": 3,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 7,
+          "x": 0,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 8,
+          "x": 2,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 9,
+          "x": 1,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 10,
+          "x": 1,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 11,
+          "x": 2,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 12,
+          "x": 3,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 3,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 14,
+          "x": 0,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 15,
+          "x": 5,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 16,
+          "x": 3,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 17,
+          "x": 5,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 18,
+          "x": 5,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 19,
+          "x": 5,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 20,
+          "x": 4,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 21,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:20",
+        "attempt": 89,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 21,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 2,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 2,
+          "x": 5,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 3,
+          "x": 5,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 0,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 5,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 6,
+          "x": 1,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 7,
+          "x": 1,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 8,
+          "x": 0,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 10,
+          "x": 0,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 11,
+          "x": 3,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 12,
+          "x": 4,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 2,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 14,
+          "x": 0,
+          "y": 2,
+          "dir": "L"
+        },
+        {
+          "id": 15,
+          "x": 3,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 16,
+          "x": 2,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 17,
+          "x": 2,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 18,
+          "x": 2,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 19,
+          "x": 1,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 20,
+          "x": 0,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 21,
+          "x": 3,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 22,
+          "x": 5,
+          "y": 3,
+          "dir": "R"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:21",
+        "attempt": 34,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 22,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 2,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 3,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 2,
+          "x": 3,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 1,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 6,
+          "x": 0,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 7,
+          "x": 0,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 8,
+          "x": 4,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 10,
+          "x": 2,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 11,
+          "x": 5,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 12,
+          "x": 0,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 4,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 14,
+          "x": 4,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 15,
+          "x": 1,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 16,
+          "x": 5,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 17,
+          "x": 5,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 18,
+          "x": 5,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 19,
+          "x": 4,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 20,
+          "x": 2,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 21,
+          "x": 0,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 22,
+          "x": 0,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 23,
+          "x": 5,
+          "y": 4,
+          "dir": "R"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:22",
+        "attempt": 5,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 23,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 3,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 2,
+          "x": 3,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 3,
+          "x": 5,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 4,
+          "x": 5,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 5,
+          "x": 1,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 6,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 7,
+          "x": 4,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 8,
+          "x": 4,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 10,
+          "x": 2,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 11,
+          "x": 3,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 12,
+          "x": 2,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 13,
+          "x": 0,
+          "y": 5,
+          "dir": "L"
+        },
+        {
+          "id": 14,
+          "x": 0,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 15,
+          "x": 1,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 16,
+          "x": 3,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 17,
+          "x": 0,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 18,
+          "x": 2,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 19,
+          "x": 5,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 20,
+          "x": 2,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 21,
+          "x": 3,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 22,
+          "x": 5,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 23,
+          "x": 0,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 24,
+          "x": 4,
+          "y": 1,
+          "dir": "R"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:23",
+        "attempt": 12,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 24,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 3,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 1,
+          "x": 3,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 2,
+          "y": 4,
+          "dir": "R"
+        },
+        {
+          "id": 3,
+          "x": 0,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 4,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 5,
+          "x": 4,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 6,
+          "x": 1,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 7,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 8,
+          "x": 3,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 9,
+          "x": 3,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 10,
+          "x": 2,
+          "y": 1,
+          "dir": "L"
+        },
+        {
+          "id": 11,
+          "x": 0,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 12,
+          "x": 5,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 4,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 14,
+          "x": 5,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 15,
+          "x": 1,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 16,
+          "x": 4,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 17,
+          "x": 1,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 18,
+          "x": 5,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 19,
+          "x": 5,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 20,
+          "x": 2,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 21,
+          "x": 3,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 22,
+          "x": 5,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 23,
+          "x": 5,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 24,
+          "x": 2,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 25,
+          "x": 4,
+          "y": 5,
+          "dir": "D"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:24",
+        "attempt": 4,
+        "qualityVersion": 1
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": 25,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 2,
+          "y": 0,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 5,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 5,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 4,
+          "x": 3,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 5,
+          "x": 3,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 6,
+          "x": 0,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 7,
+          "x": 0,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 8,
+          "x": 2,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 3,
+          "y": 1,
+          "dir": "U"
+        },
+        {
+          "id": 10,
+          "x": 0,
+          "y": 3,
+          "dir": "L"
+        },
+        {
+          "id": 11,
+          "x": 0,
+          "y": 5,
+          "dir": "R"
+        },
+        {
+          "id": 12,
+          "x": 4,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 13,
+          "x": 3,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 14,
+          "x": 5,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 15,
+          "x": 4,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 16,
+          "x": 4,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 17,
+          "x": 1,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 18,
+          "x": 2,
+          "y": 2,
+          "dir": "D"
+        },
+        {
+          "id": 19,
+          "x": 0,
+          "y": 0,
+          "dir": "U"
+        },
+        {
+          "id": 20,
+          "x": 5,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 21,
+          "x": 1,
+          "y": 3,
+          "dir": "U"
+        },
+        {
+          "id": 22,
+          "x": 3,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 23,
+          "x": 2,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 24,
+          "x": 4,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 25,
+          "x": 2,
+          "y": 5,
+          "dir": "D"
+        },
+        {
+          "id": 26,
+          "x": 1,
+          "y": 0,
+          "dir": "U"
+        }
+      ],
+      "generation": {
+        "seed": "crystal-v06-2026",
+        "levelSeed": "crystal-v06-2026:level:25",
+        "attempt": 65,
+        "qualityVersion": 1
+      }
+    }
+  ]
+}

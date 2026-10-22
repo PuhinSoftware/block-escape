@@ -1,9 +1,9 @@
 # Block Escape development
 
 ## Architecture
-- Static, dependency-free browser game. `index.html` defines the Turkish UI, `style.css` the responsive layout and `game.js` authored levels, movement, rendering, storage and synthesized audio.
-- Preserve the 6×6 rules, all 10 authored levels, blocked taps without move cost, reset and level unlocking.
-- `blockEscapeUnlocked` stores existing progress. Never clear storage or rename this key. `blockEscapeSound` independently stores `on` / `off`.
+- Static, dependency-free browser game. `index.html` defines the Turkish UI, `style.css` the responsive layout and `game.js` catalog loading, rendering, storage and synthesized audio. `engine/rules.js` is the shared Node/browser movement API; `engine/catalog.js` validates the versioned JSON catalog.
+- Preserve the 6×6 rules, the 25 published v0.6 levels, blocked taps without move cost, reset and level unlocking.
+- `blockEscapeUnlockedV06` stores new-catalog progress. Never read/migrate/delete/overwrite the legacy `blockEscapeUnlocked` key. Never clear storage. `blockEscapeSound` independently stores `on` / `off`.
 
 ## Coding rules
 - Use vanilla JavaScript, CSS and HTML; no framework, build pipeline or runtime dependencies without a concrete need.
@@ -15,7 +15,7 @@
 - From the repository root: `python3 -m http.server 8080 --bind 127.0.0.1`.
 - Syntax: `node --check game.js`.
 - Browser: `node tests/browser.cjs` with Playwright available and the server on port 8080. In the cloud image: `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/browser.cjs`. Chromium defaults to `/usr/bin/chromium`; override with `CHROMIUM_PATH` if needed.
-- Check all 10 levels, blocked/valid moves, reset, saved unlocking, mute persistence and audio/storage failure fallbacks. Test actual audible output on mobile devices manually.
+- Check all 25 levels, blocked/valid moves, reset, saved unlocking, mute persistence and audio/storage failure fallbacks. Test actual audible output on mobile devices manually.
 
 ## GitHub Pages
 - All assets must use relative paths so owner/repository project URLs work. No backend, secrets, Node runtime, external CDN or build step is required for deployment.
@@ -55,7 +55,7 @@
 - Run `tests/gameplay-ui.cjs` with the documented NODE_PATH plus all existing suites. It supports `BROWSER=webkit` and `ARTIFACT_DIR`. Stress styles in grid tests must match theme specificity to avoid silently weakening overflow coverage.
 
 ## Crystal Mines and removed action
-- Gameplay's first world is Crystal Mines. Keep the menu unchanged; mine environment, miner Bloop, frame, real board and controls are separate layers. Do not add star scoring or alter the original 10 levels during this task.
+- Gameplay's first world is Crystal Mines. Keep the menu unchanged; mine environment, miner Bloop, frame, real board and controls are separate layers. Do not add star scoring. v0.6 intentionally replaces the original ten arrangements with 25 newly generated puzzles; exclude retired signatures.
 - The reversal action and its in-memory snapshots have been intentionally removed. Do not restore its button, handler, state or shortcuts. Bottom gameplay controls are reset and level select only.
 - Run `tests/crystal-mines.cjs` plus the eight existing suites using the documented NODE_PATH. It supports `BROWSER=webkit` and `ARTIFACT_DIR`; do not claim Safari coverage when WebKit is missing.
 
@@ -63,3 +63,11 @@
 - Keep `art-upgrade.css` scoped to gameplay. Actual grid sizing/containment, menu and game logic remain in the existing files; graphics must never determine cell dimensions or intercept taps.
 - Artwork/provenance/encoding are documented in `assets/gameplay/README.md` and `assets/LICENSES.md`. Reuse cached small textures and offline color variants; avoid runtime tint filters and new endless gameplay animations.
 - Run `tests/art-upgrade.cjs` with the documented NODE_PATH plus all nine prior suites. It validates art/network budgets, texture caching, real hit targets and mobile layout; it supports `ARTIFACT_DIR` and `BROWSER=webkit`.
+
+## v0.6 data pipeline
+- `levels/catalog.json` distinguishes planned 300 from available 25. Only referenced packs are playable. Keep schema version 1, unique contiguous IDs, correct 75-level world ranges and 6×6 dimensions.
+- Movement is monotonic removal; every completed solution has one move per block. Do not claim strategic order or BFS-derived difficulty. Generator/solver must call the shared rules; quality gates and retired/symmetry/near-duplicate filtering are in `tools/level-quality.cjs`.
+- Preserve the accepted seed `crystal-v06-2026`, bounded attempts/time, generation provenance and deterministic reports. Never accept a solver limit as solvable.
+- Run `node --test tests/level-system.test.cjs`, `node tools/generate-levels.cjs --check`, `node tools/validate-levels.cjs` and `tests/run-browser.cjs` with the above NODE_PATH/server. The runner fails if any suite fails. Use `ARTIFACT_DIR` outside the checkout.
+- Keep JSON fetch failure/retry accessible, prevent play before complete validation, and use relative URLs for static hosting. `file://` is not supported.
+- Changing existing puzzle semantics requires an explicit data/progress version decision. Adding future levels must preserve the reviewed prefix, regenerate reports, extend acceptance tests and review difficulty on real boards. Future world art is not delivered by catalog metadata.

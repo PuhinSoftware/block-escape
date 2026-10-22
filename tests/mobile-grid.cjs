@@ -1,3 +1,4 @@
+const {firstLabels}=require('./helpers.cjs');
 const {chromium,webkit}=require('playwright');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
@@ -9,7 +10,7 @@ try{
 for(const width of [320,375,390,430])for(const enlarged of [false,true]){
 const page=await browser.newPage({viewport:{width,height:900},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').click();await page.locator('#sound').tap();
+await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>levelsReady);await page.locator('#playBtn').click();await page.locator('#sound').tap();
 // Deliberate oversized glyph: tests intrinsic-content independence, not Safari emulation.
 if(enlarged)await page.addStyleTag({content:'.app .block{font-size:96px}'});
 const cells=()=>page.locator('.cell').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
@@ -25,16 +26,16 @@ for(const {block:b,cell:c} of sizes){
 assert.ok(b.x>=c.x-.1&&b.y>=c.y-.1&&b.right<=c.right+.1&&b.bottom<=c.bottom+.1,`${engine}/${width}/${enlarged}/${stage}: button escapes cell ${JSON.stringify({b,c})}`);
 assert.ok(Math.abs(b.width-c.width)<.1&&Math.abs(b.height-c.height)<.1,'button must fill cell');
 }
-assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'page overflow');
+assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth),'page overflow');
 };
 await check('initial');
 if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:true});await page.screenshot({path:`${process.env.ARTIFACT_DIR}/${engine}-${width}-${enlarged?'enlarged':'normal'}.png`,fullPage:true});}
-for(const [i,label] of ['Satır 4, sütun 4, R yönü','Satır 2, sütun 4, D yönü','Satır 2, sütun 2, R yönü'].entries()){
+for(const [i,label] of [firstLabels[0],firstLabels[1],firstLabels[2]].entries()){
 await page.getByRole('button',{name:label,exact:true}).tap();await page.waitForFunction(()=>!busy);await check(['first','middle','last'][i]);
 }
 await page.locator('#close').tap();await page.locator('#reset').tap();await check('reset');
-// Sample every move in all authored levels, including wall cells and empty boards.
-for(let level=0;level<10;level++){
+// Sample every move in all published levels, including empty boards.
+for(let level=0;level<25;level++){
 await page.evaluate(i=>load(i),level);await check(`level ${level+1} initial`);
 while(await page.locator('.block').count()){
 await page.evaluate(async()=>{const b=blocks.find(b=>clearPath(b,blocks));if(!b)throw Error('Unsolvable level');const el=[...document.querySelectorAll('.block')].find(el=>el.getAttribute('aria-label')===`Satır ${b.y+1}, sütun ${b.x+1}, ${b.dir} yönü`);await tap(b.id,el)});
