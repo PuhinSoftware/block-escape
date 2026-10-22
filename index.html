@@ -33,25 +33,27 @@
 </div>
 <main class="app" hidden>
   <div class="game-backdrop" aria-hidden="true"></div>
-  <header class="game-header">
-    <button id="homeBtn" class="game-icon" type="button" aria-label="Ana menüye dön"><span aria-hidden="true">⌂</span></button>
-    <h1 class="game-brand"><span class="visually-hidden">Block Escape</span><img src="assets/logo.svg" width="640" height="320" alt=""></h1>
-    <button id="sound" class="game-icon" type="button" aria-label="Sesi kapat" aria-pressed="true" title="Ses açık">♪</button>
+  <header class="game-header mine-hud" aria-label="Oyun bilgileri">
+    <button id="homeBtn" class="game-icon" type="button" aria-label="Ana menüye dön"><svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor" aria-hidden="true"><path d="m2 11 10-9 10 9-2 2-2-2v11h-5v-7h-2v7H6V11l-2 2Z"/></svg></button>
+    <section class="hud" aria-label="Bölüm bilgileri">
+      <div class="hud-level"><small>BÖLÜM</small><strong id="levelLabel">01 / 10</strong></div>
+      <div class="hud-moves"><small>HAMLE</small><strong id="moves">0</strong></div>
+      <div class="hud-remaining"><small>KALAN BLOK</small><strong id="remaining">0</strong></div>
+    </section>
   </header>
-  <section class="hud" aria-label="Bölüm bilgileri">
-    <div class="hud-level"><small>BÖLÜM</small><strong id="levelLabel">01 / 10</strong></div>
-    <div class="hud-remaining"><small>KALAN BLOK</small><strong id="remaining">0</strong></div>
-    <div class="hud-moves"><small>HAMLE</small><strong id="moves">0</strong></div>
-  </section>
-  <div class="bloop-helper"><img src="assets/bloop.png" width="1413" height="1113" alt="" aria-hidden="true"><p id="hint" class="hint">Yolu aç, blokları özgür bırak!</p></div>
+  <div class="mine-caption"><h1>KRİSTAL MADENLERİ</h1><button id="sound" class="game-icon" type="button" aria-label="Sesi kapat" aria-pressed="true" title="Ses açık">♪</button></div>
+  <div class="bloop-helper"><img src="assets/miner-bloop.png" width="1413" height="1113" alt="" aria-hidden="true"><p id="hint" class="hint">Yolu aç, kristal macerasına katıl!</p><span class="mine-lantern" aria-hidden="true"></span></div>
   <div class="board-platform">
     <span class="platform-gem gem-left" aria-hidden="true"></span><span class="platform-gem gem-right" aria-hidden="true"></span>
     <div id="board" class="board" role="group" aria-label="Oyun tahtası"></div>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <section class="controls" aria-label="Oyun kontrolleri"><button id="undo" type="button"><span aria-hidden="true">↶</span> Geri al</button><button id="reset" type="button"><span aria-hidden="true">⟳</span> Yeniden başlat</button></section>
-  <footer class="game-footer"><button id="levelsBtn" type="button"><span aria-hidden="true">▦</span> Bölümler</button><p>İlerlemen bu tarayıcıda güvende.</p></footer>
+  <section class="controls" aria-label="Oyun kontrolleri">
+    <button id="reset" type="button"><span aria-hidden="true">⟳</span><span>YENİDEN BAŞLAT</span></button>
+    <button id="levelsBtn" type="button"><span aria-hidden="true">☷</span><span>BÖLÜM SEÇ</span></button>
+  </section>
+  <footer class="game-footer"><p>İlerlemen bu tarayıcıda güvende.</p></footer>
 </main>
 <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal">
-<div class="victory-art" aria-hidden="true"><i class="confetti confetti-one"></i><i class="confetti confetti-two"></i><i class="confetti confetti-three"></i><i class="confetti confetti-four"></i><span class="victory-medal">★</span><img src="assets/bloop.png" width="1413" height="1113" alt=""></div>
+<div class="victory-art" aria-hidden="true"><i class="confetti confetti-one"></i><i class="confetti confetti-two"></i><i class="confetti confetti-three"></i><i class="confetti confetti-four"></i><span class="victory-medal">◆</span><img src="assets/miner-bloop.png" width="1413" height="1113" alt=""></div>
 <h2 id="modalTitle">Tebrikler!</h2><p id="modalText"></p><div id="levelPicker" class="level-picker hidden"></div><button id="next" class="primary">Sonraki bölüm →</button><button id="close" class="secondary">Kapat</button></div></div><script src="game.js"></script><script src="menu.js"></script></body></html>

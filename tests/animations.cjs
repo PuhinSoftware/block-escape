@@ -16,7 +16,7 @@ return {moves,remaining:blocks.length,busy,disabled:document.getElementById('res
 });
 assert.deepEqual(state,{moves:1,remaining:2,busy:true,disabled:true,exiting:true});
 await settled();assert.equal(await page.locator('.block').count(),2);
-await page.locator('#undo').tap();assert.equal(await page.locator('.block').count(),3);
+await page.locator('#reset').tap();assert.equal(await page.locator('.block').count(),3);
 await page.getByRole('button',{name:'Satır 2, sütun 2, R yönü',exact:true}).tap();
 assert.equal(await page.locator('#moves').textContent(),'0');
 await settled();assert.equal(await page.locator('.block.blocked').count(),0);
@@ -51,7 +51,7 @@ await page.emulateMedia({reducedMotion:'no-preference'});
 await page.evaluate(()=>load(0));
 for(const label of ['Satır 4, sütun 4, R yönü','Satır 2, sütun 4, D yönü','Satır 2, sütun 2, R yönü']){await page.getByRole('button',{name:label,exact:true}).tap();await settled()}
 assert.equal(await page.locator('.modal').evaluate(el=>getComputedStyle(el).animationName),'celebrate');
-await page.locator('#close').tap();await page.locator('#undo').tap();assert.equal(await page.locator('.block').count(),1);
+await page.locator('#close').tap();
 await page.locator('#reset').tap();assert.equal(await page.locator('.block').count(),3);
 // Missing animation APIs and paused timelines must also release the lock.
 await page.evaluate(()=>{Element.prototype.animate=undefined});
@@ -60,6 +60,6 @@ assert.equal(await page.locator('#moves').textContent(),'1');
 await page.reload();await page.locator('#playBtn').click();await page.evaluate(()=>load(0));await page.evaluate(()=>{document.querySelector('[aria-label="Satır 4, sütun 4, R yönü"]').click();document.querySelector('.exiting').getAnimations().forEach(a=>a.pause())});
 await settled();assert.equal(await page.locator('#reset').isEnabled(),true);
 assert.deepEqual(errors,[]);
-console.log('PASS: touch, direction U/D/L/R, duplicate input lock, blocked feedback, cancellation, reduced motion, success animation, undo/reset and saved unlocking');
+console.log('PASS: touch, direction U/D/L/R, duplicate input lock, blocked feedback, cancellation, reduced motion, success animation, reset and saved unlocking');
 }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

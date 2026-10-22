@@ -21,21 +21,21 @@ await check('initial');
 assert.equal(await page.locator('.bloop-helper').evaluate(el=>getComputedStyle(el).pointerEvents),'none');
 await page.locator('#board').scrollIntoViewIfNeeded();
 assert.ok(await page.locator('.block').evaluateAll(els=>els.every(el=>{const r=el.getBoundingClientRect();return document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===el})),'tiles unobstructed');
-for(const id of ['homeBtn','sound','undo','reset','levelsBtn']){const r=await page.locator('#'+id).boundingBox();assert.ok(r.width>=44&&r.height>=44)}
+for(const id of ['homeBtn','sound','reset','levelsBtn']){const r=await page.locator('#'+id).boundingBox();assert.ok(r.width>=44&&r.height>=44)}
 if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:true});await page.screenshot({path:`${process.env.ARTIFACT_DIR}/gameplay-${width}.png`,fullPage:true})}
 for(const [i,label] of ['Satır 4, sütun 4, R yönü','Satır 2, sütun 4, D yönü','Satır 2, sütun 2, R yönü'].entries()){
 await page.getByRole('button',{name:label,exact:true}).tap();await settled();await check(['first','middle','last'][i]);
 }
 assert.equal(await page.locator('.victory-art').isVisible(),true);assert.equal(await page.locator('.modal').evaluate(el=>getComputedStyle(el).animationName),'celebrate');
 if(process.env.ARTIFACT_DIR)await page.screenshot({path:`${process.env.ARTIFACT_DIR}/victory-${width}.png`,fullPage:true});
-await page.locator('#close').tap();await page.locator('#undo').tap();await check('undo');assert.equal(await page.locator('.block').count(),1);
+await page.locator('#close').tap();
 await page.locator('#reset').tap();await check('reset');assert.equal(await page.locator('.block').count(),3);
 await page.locator('#homeBtn').tap();assert.equal(await page.locator('#menu').isVisible(),true);await page.locator('#settingsBtn').tap();assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');await page.locator('#settingsDone').tap();
 await page.locator('#playBtn').tap();assert.equal(await page.locator('#levelLabel').textContent(),'01 / 10');assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeUnlocked')),'2');
 await page.emulateMedia({reducedMotion:'reduce'});
 for(const label of ['Satır 4, sütun 4, R yönü','Satır 2, sütun 4, D yönü','Satır 2, sütun 2, R yönü']){await page.getByRole('button',{name:label,exact:true}).tap();await settled()}
 assert.equal(await page.locator('.modal').evaluate(el=>getComputedStyle(el).animationName),'none');assert.equal(await page.locator('.confetti-one').isVisible(),false);
-assert.deepEqual(errors,[]);console.log(`PASS ${engine} gameplay ${width}x${height}: frame/cards, 36 square cells, no tile overflow, helper nonblocking, victory/reduced motion, undo/reset/menu/storage`);await page.close();
+assert.deepEqual(errors,[]);console.log(`PASS ${engine} gameplay ${width}x${height}: frame/cards, 36 square cells, no tile overflow, helper nonblocking, victory/reduced motion, reset/menu/storage`);await page.close();
 }
 }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

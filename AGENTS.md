@@ -2,7 +2,7 @@
 
 ## Architecture
 - Static, dependency-free browser game. `index.html` defines the Turkish UI, `style.css` the responsive layout and `game.js` authored levels, movement, rendering, storage and synthesized audio.
-- Preserve the 6×6 rules, all 10 authored levels, blocked taps without move cost, undo/reset and level unlocking.
+- Preserve the 6×6 rules, all 10 authored levels, blocked taps without move cost, reset and level unlocking.
 - `blockEscapeUnlocked` stores existing progress. Never clear storage or rename this key. `blockEscapeSound` independently stores `on` / `off`.
 
 ## Coding rules
@@ -15,14 +15,14 @@
 - From the repository root: `python3 -m http.server 8080 --bind 127.0.0.1`.
 - Syntax: `node --check game.js`.
 - Browser: `node tests/browser.cjs` with Playwright available and the server on port 8080. In the cloud image: `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/browser.cjs`. Chromium defaults to `/usr/bin/chromium`; override with `CHROMIUM_PATH` if needed.
-- Check all 10 levels, blocked/valid moves, undo/reset, saved unlocking, mute persistence and audio/storage failure fallbacks. Test actual audible output on mobile devices manually.
+- Check all 10 levels, blocked/valid moves, reset, saved unlocking, mute persistence and audio/storage failure fallbacks. Test actual audible output on mobile devices manually.
 
 ## GitHub Pages
 - All assets must use relative paths so owner/repository project URLs work. No backend, secrets, Node runtime, external CDN or build step is required for deployment.
 - Keep the site usable over static HTTPS hosting; browser audio policies still require a user gesture.
 
 ## Animations
-- Use the shared busy guard for board mutations; keep undo/reset and level selection locked until animation completion. Always release locks on cancellation or unsupported animation APIs.
+- Use the shared busy guard for board mutations; keep reset and level selection locked until animation completion. Always release locks on cancellation or unsupported animation APIs.
 - Honor `prefers-reduced-motion` in JavaScript and CSS. Preserve pinch zoom and safe-area padding on mobile.
 - Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/animations.cjs` alongside the existing browser suite.
 
@@ -53,3 +53,8 @@
 - `gameplay.css` is presentation only. Keep stone framing outside the grid, all 36 equal cells independent of contents, and Bloop/decorations pointer-transparent and outside playable tiles. Do not alter game rules or storage for visual changes.
 - Reuse existing licensed/provenance-documented artwork. Keep victory decorations hidden in the level picker; reduced motion must disable celebration effects.
 - Run `tests/gameplay-ui.cjs` with the documented NODE_PATH plus all existing suites. It supports `BROWSER=webkit` and `ARTIFACT_DIR`. Stress styles in grid tests must match theme specificity to avoid silently weakening overflow coverage.
+
+## Crystal Mines and removed action
+- Gameplay's first world is Crystal Mines. Keep the menu unchanged; mine environment, miner Bloop, frame, real board and controls are separate layers. Do not add star scoring or alter the original 10 levels during this task.
+- The reversal action and its in-memory snapshots have been intentionally removed. Do not restore its button, handler, state or shortcuts. Bottom gameplay controls are reset and level select only.
+- Run `tests/crystal-mines.cjs` plus the eight existing suites using the documented NODE_PATH. It supports `BROWSER=webkit` and `ARTIFACT_DIR`; do not claim Safari coverage when WebKit is missing.

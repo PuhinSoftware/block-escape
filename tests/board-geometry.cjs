@@ -27,7 +27,7 @@ await same(`move ${i+1} start`);
 const snapshot=async progress=>{
 await page.evaluate(p=>{exitAnimation.currentTime=exitAnimation.effect.getTiming().duration*p},progress);
 await page.evaluate(()=>new Promise(requestAnimationFrame));
-return page.evaluate(()=>{const r=movingTile.getBoundingClientRect();const b=document.getElementById('board').getBoundingClientRect();return {connected:movingTile.isConnected,x:r.x,y:r.y,right:r.right,bottom:r.bottom,opacity:Number(getComputedStyle(movingTile).opacity),frontmost:document.elementFromPoint(Math.min(r.x+r.width/2,b.right-4),Math.min(r.y+r.height/2,b.bottom-4))===movingTile,board:{x:b.x,y:b.y,right:b.right,bottom:b.bottom},busy,disabled:document.getElementById('undo').disabled}});
+return page.evaluate(()=>{const r=movingTile.getBoundingClientRect();const b=document.getElementById('board').getBoundingClientRect();return {connected:movingTile.isConnected,x:r.x,y:r.y,right:r.right,bottom:r.bottom,opacity:Number(getComputedStyle(movingTile).opacity),frontmost:document.elementFromPoint(Math.min(r.x+r.width/2,b.right-4),Math.min(r.y+r.height/2,b.bottom-4))===movingTile,board:{x:b.x,y:b.y,right:b.right,bottom:b.bottom},busy,disabled:document.getElementById('reset').disabled}});
 };
 const mid=await snapshot(.5);assert.equal(mid.connected,true);assert.equal(mid.busy,true);assert.equal(mid.disabled,true);
 assert.equal(mid.frontmost,true,'moving tile must paint above adjacent cells');
@@ -43,9 +43,9 @@ await page.waitForFunction(()=>!busy);assert.equal(await page.evaluate(()=>moves
 assert.equal(await page.evaluate(()=>movingTile.isConnected),false);
 await same(`move ${i+1} completed`);
 }
-await page.locator('#close').click();await page.locator('#undo').click();await same('undo');
+await page.locator('#close').click();
 await page.locator('#reset').click();await same('reset');
-console.log(`PASS ${name}: 36 square equal cells; unchanged first/middle/final move geometry; visible midpoint/edge travel; DOM retained; duplicate guard; undo/reset`);
+console.log(`PASS ${name}: 36 square equal cells; unchanged first/middle/final move geometry; visible midpoint/edge travel; DOM retained; duplicate guard; reset`);
 await page.close();
 }
 }finally{await browser.close()}
