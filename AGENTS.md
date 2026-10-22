@@ -48,3 +48,8 @@
 - Keep settings in the independent menu presentation layer. Shared sound controls must use the existing game sound key; preserve artwork and gameplay state.
 - Settings must trap/restore focus, support Escape and touch closing, prevent background interaction and honor reduced motion. Keep menu controls at least 44px and the play target at least 72px.
 - Run `tests/settings.cjs` with the documented NODE_PATH alongside other suites. Capture mobile layouts via `ARTIFACT_DIR` outside the checkout.
+
+## Gameplay presentation
+- `gameplay.css` is presentation only. Keep stone framing outside the grid, all 36 equal cells independent of contents, and Bloop/decorations pointer-transparent and outside playable tiles. Do not alter game rules or storage for visual changes.
+- Reuse existing licensed/provenance-documented artwork. Keep victory decorations hidden in the level picker; reduced motion must disable celebration effects.
+- Run `tests/gameplay-ui.cjs` with the documented NODE_PATH plus all existing suites. It supports `BROWSER=webkit` and `ARTIFACT_DIR`. Stress styles in grid tests must match theme specificity to avoid silently weakening overflow coverage.

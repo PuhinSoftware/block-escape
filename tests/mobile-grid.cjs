@@ -11,7 +11,7 @@ const page=await browser.newPage({viewport:{width,height:900},isMobile:true,hasT
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').click();await page.locator('#sound').tap();
 // Deliberate oversized glyph: tests intrinsic-content independence, not Safari emulation.
-if(enlarged)await page.addStyleTag({content:'.block{font-size:96px}'});
+if(enlarged)await page.addStyleTag({content:'.app .block{font-size:96px}'});
 const cells=()=>page.locator('.cell').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
 const initial=await cells();
 const check=async stage=>{

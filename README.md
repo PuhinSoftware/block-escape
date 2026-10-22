@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.4
+# Block Escape — Prototype 0.5
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -83,3 +83,13 @@ With the static server running, run `NODE_PATH=/opt/codex/runtimes/codex-primary
 The existing Bloop/logo/island artwork is unchanged. The responsive scene fills available screen space with a contained character, larger 72px play target, subtle light pulse and press feedback. Matching top-corner settings/sound controls open an independent settings dialog with sound and menu motion controls. The panel traps keyboard focus, supports Escape/backdrop/close/done, restores focus, locks background scrolling and keeps background content inert. The original game sound preference is shared across all controls; progress and board state are unchanged. Reduced motion disables the pulse and decorative animations.
 
 Run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/settings.cjs` with the server on port 8080, plus existing suites. This checks 320×568, 375×667, 390×844 and 430×932, fitting controls, keyboard/touch interaction, sound persistence and motion controls. `ARTIFACT_DIR` saves menu/settings screenshots outside the checkout. The initial test attempt encountered a stale HTTP server returning empty responses; restarting the prior onboarding server restored the test prerequisite. Chromium results do not establish physical Safari/Android compatibility.
+
+## Fantasy gameplay presentation (v0.5)
+
+`gameplay.css` adds the menu's existing floating-island environment to gameplay, a stone platform frame outside the board, glossy direction-colored tiles, HUD cards, themed undo/reset/home controls, a noninteractive Bloop helper outside the grid and a Bloop/medal/confetti win dialog. Existing menu artwork is reused; no new image downloads, libraries or licence assumptions are added. The home button now lives in the game header. The existing level picker shares the dialog and hides victory-only decorations.
+
+The six equal grid tracks, size-contained cells, absolute zero-padding buttons and exit-animation overflow rules stay in `style.css`; the platform is a pointer-transparent outer pseudo-element and does not change grid dimensions. Game rules, authored levels, storage keys, undo/reset and audio logic in `game.js` remain unchanged. Native touch targets, safe-area spacing, pinch zoom, keyboard focus and reduced-motion fallback are retained. Short phones can scroll vertically to reach controls; horizontal overflow is disallowed.
+
+With the static server on port 8080 run `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/gameplay-ui.cjs` alongside the seven existing suites. Set `ARTIFACT_DIR` to capture gameplay/victory screenshots outside the checkout; use `BROWSER=webkit` to require WebKit without fallback. Tests cover 320×568, 375×667, 390×844 and 430×932, all 36 cell rectangles, first/middle/final removal, block containment/hit testing, nonblocking helper, controls, win/reduced-motion, undo/reset, settings sound sync, menu return and saved unlocking. The existing oversized-content regression now uses `.app .block` specificity to ensure the new theme cannot mask the 96px glyph stress test.
+
+WebKit is not installed in the current environment and its previous download attempts were denied by network policy. A failing WebKit launch does not validate Safari; Chromium mobile emulation does not replace physical iPhone Safari or Android Chrome tests. An initial stale HTTP server returned empty responses; it was restarted with logs redirected outside the checkout before repeating tests.
