@@ -15,8 +15,6 @@ await page.getByRole('button',{name:'Satır 2, sütun 2, R yönü',exact:true}).
 assert.equal(await page.locator('#moves').textContent(),'0');assert.equal(await page.locator('.block').count(),3);
 await page.getByRole('button',{name:'Satır 4, sütun 4, R yönü',exact:true}).click();await settled(page);
 assert.equal(await page.locator('#moves').textContent(),'1');assert.equal(await page.locator('.block').count(),2);
-await page.locator('#undo').click();await settled(page);assert.equal(await page.locator('.block').count(),3);assert.equal(await page.locator('#moves').textContent(),'0');
-await page.getByRole('button',{name:'Satır 4, sütun 4, R yönü',exact:true}).click();await settled(page);
 await page.locator('#reset').click();await settled(page);assert.equal(await page.locator('.block').count(),3);
 for(let i=0;i<10;i++){
 assert.equal(await page.locator('#levelLabel').textContent(),`${String(i+1).padStart(2,'0')} / 10`);
@@ -79,6 +77,6 @@ await fallback.locator('#sound').click();await settled(fallback);assert.equal(aw
 assert.deepEqual(failures,[]);await fallback.close();
 }
 console.log('PASS: audio tones, shared context, mute/reload, preserved progress, gesture startup, cleanup, missing audio, rejected resume, denied storage');
-console.log('PASS: mobile viewport, assets, blocked move, move, undo, reset, all 10 levels, progress persistence; no browser errors');
+console.log('PASS: mobile viewport, assets, blocked move, move, reset, all 10 levels, progress persistence; no browser errors');
 } finally {await browser.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

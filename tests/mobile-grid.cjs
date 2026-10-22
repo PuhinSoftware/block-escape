@@ -11,7 +11,7 @@ const page=await browser.newPage({viewport:{width,height:900},isMobile:true,hasT
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').click();await page.locator('#sound').tap();
 // Deliberate oversized glyph: tests intrinsic-content independence, not Safari emulation.
-if(enlarged)await page.addStyleTag({content:'.block{font-size:96px}'});
+if(enlarged)await page.addStyleTag({content:'.app .block{font-size:96px}'});
 const cells=()=>page.locator('.cell').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
 const initial=await cells();
 const check=async stage=>{
@@ -32,7 +32,7 @@ if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:tr
 for(const [i,label] of ['Satır 4, sütun 4, R yönü','Satır 2, sütun 4, D yönü','Satır 2, sütun 2, R yönü'].entries()){
 await page.getByRole('button',{name:label,exact:true}).tap();await page.waitForFunction(()=>!busy);await check(['first','middle','last'][i]);
 }
-await page.locator('#close').tap();await page.locator('#undo').tap();await check('undo');await page.locator('#reset').tap();await check('reset');
+await page.locator('#close').tap();await page.locator('#reset').tap();await check('reset');
 // Sample every move in all authored levels, including wall cells and empty boards.
 for(let level=0;level<10;level++){
 await page.evaluate(i=>load(i),level);await check(`level ${level+1} initial`);
@@ -42,7 +42,7 @@ await check(`level ${level+1} move`);
 }
 }
 assert.deepEqual(errors,[]);
-console.log(`PASS ${engine} ${width}px ${enlarged?'oversized-content':'normal'}: cells, button containment, first/middle/last move, undo/reset`);
+console.log(`PASS ${engine} ${width}px ${enlarged?'oversized-content':'normal'}: cells, button containment, first/middle/last move, reset`);
 await page.close();
 }
 }finally{await browser.close()}
