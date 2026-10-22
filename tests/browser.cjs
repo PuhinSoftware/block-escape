@@ -52,8 +52,8 @@ createGain(){return {gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}},
 await audio.goto('http://127.0.0.1:8080');await audio.locator('#playBtn').click();assert.equal(await audio.evaluate(()=>audioCalls.contexts),0);
 await audio.evaluate(()=>load(1));await audio.getByRole('button',{name:await moveLabel(audio,false),exact:true}).click();await settled(audio);
 await audio.evaluate(()=>load(0));await finish(audio);
-await audio.waitForFunction(()=>audioCalls.disconnects===12);
-assert.deepEqual(await audio.evaluate(()=>audioCalls.tones),[180,640,640,640,800,960]);
+await audio.waitForFunction(()=>audioCalls.disconnects===16);
+assert.deepEqual(await audio.evaluate(()=>audioCalls.tones),[180,640,640,784,988,1175,1480,1760]);
 assert.equal(await audio.evaluate(()=>audioCalls.contexts),1);
 await audio.locator('#close').click();
 await audio.locator('#sound').click();await settled(audio);

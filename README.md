@@ -287,3 +287,38 @@ Use `ARTIFACT_DIR=/tmp/block-escape-v062` for screenshots and `BROWSER=webkit`
 for a separately installed WebKit engine. Chromium touch emulation is not an
 actual iPhone Safari or Android hardware test. Rebuild the timer solution report
 with `node tools/validate-timer.cjs --write` after intentional lab changes.
+
+
+## v0.6.2.1 — Compact Crystal HUD
+
+The previous v0.6.2 progress milestones are replaced by a **star-free crystal
+bar**. Its panel is 28px high (previously 48px, 42% smaller), displays removed /
+initial blocks, and retains the 550ms continuous fill. A separate **POTANSİYEL
+ÖDÜL** indicator shows an upper bound under current conditions, not earned stars.
+`BlockEscapePerformance.potential()` delegates to the same `score()` function
+used by the results screen. It considers current lives and active elapsed time;
+no future move/time prediction is made. Failure/timeout shows zero potential;
+a still-winnable attempt retains at least one. No scoring thresholds changed.
+
+Only successful results reveal earned stars, 260ms apart. Empty slots never
+celebrate. `star-audio.js` provides original temporary crystal cues (784Hz,
+988Hz, then a 1175/1480/1760Hz chord) on the game's existing AudioContext.
+The context is prepared on the last input gesture. Delayed cues never create or
+resume a context; unavailable/denied audio is skipped. Each 190ms cue ends
+before the next, and muting/closing/next level cancels audio or queued reveals.
+Reduced motion removes scaling/glints and potential-star fading. These cues
+replace the old completion melody, so two reward sequences do not overlap.
+
+Additional verification:
+
+```sh
+node tests/hud-polish.test.cjs
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules ARTIFACT_DIR=/tmp/block-escape-v0621 node tests/hud-polish-browser.cjs
+```
+
+`tests/run-browser.cjs` now runs 14 packages. Audio assertions inspect Web Audio
+scheduling and cleanup; they do not replace listening on real iPhone/Android
+hardware. Existing 25 levels, both labs, storage keys and artwork remain intact.
+See [v0.6.2.1 technical report](reports/v0621-technical-report.md) for results and
+mobile dimensions. Short screens retain vertical scrolling so tiles and touch
+targets need not shrink.

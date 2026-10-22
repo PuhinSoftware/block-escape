@@ -67,6 +67,7 @@ function playSound(effect){
 }
 function toggleSound(){
   sound=!sound;
+  if(!sound)stopStarSounds();
   try{localStorage.setItem('blockEscapeSound',sound?'on':'off')}catch{}
   updateSoundButton();
   if(sound)playSound('move');
@@ -106,7 +107,7 @@ async function tap(id,el){
     if(outcome.type==='collision'){
       prepareCollisionAudio();
       await animateCollision(el,b,outcome.contact,()=>{
-        adoptState(outcome.state);updateLives(lives);playSound('blocked');
+        adoptState(outcome.state);updateLives(lives);updatePotential();playSound('blocked');
         message(lives?`Çarpışma! ${lives} canın kaldı.`:'Canların bitti. Yeniden deneyebilirsin.');
       });
       if(playStatus==='failed')showFailed();
@@ -114,7 +115,7 @@ async function tap(id,el){
     }
     if(outcome.type!=='exit')return;
     adoptState(outcome.state);
-    playSound(blocks.length?'move':'win');
+    if(blocks.length)playSound('move');else prepareCollisionAudio(); // Unlock the shared context on the final input gesture.
     await animateBlock(el,b,false);
     render();updateProgress();
     if(Rules.isWon(blocks)){
@@ -125,7 +126,7 @@ async function tap(id,el){
 }
 function showWin(){showModal('Bölüm tamamlandı! 🎉',`${moves} hamlede bütün blokları temizledin.`,false);showPerformance();$('next').textContent=index===levels.length-1?'Başa dön ↻':'Sonraki bölüm →';$('next').onclick=()=>load(index===levels.length-1?0:index+1)}
 function showFailed(timeout=false){showModal(timeout?"TIME'S UP!":'LEVEL FAILED',timeout?'Süre doldu. Yeni bir denemeye hazır mısın?':'Üç canın bitti. Yolları inceleyip yeniden dene.',false);$('overlay').classList.remove('celebrating');$('overlay').classList.add('failed');$('next').textContent='Tekrar Dene';$('next').onclick=()=>load(index);$('close').textContent='Ana Menü';$('close').onclick=()=>{hideModal(true);window.returnToMenu?.()}}
-function showModal(title,description,picker){if(busy&&picker)return;$('resultStars').hidden=true;$('overlay').classList.remove('failed');$('close').textContent='Kapat';$('close').onclick=()=>hideModal();$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>{load(i);window.openGame?.()};$('levelPicker').append(b)})}$('overlay').classList.remove('hidden');syncClock()}
-function hideModal(force=false){if(playStatus==='failed'&&$('overlay').classList.contains('failed')&&!force)return;$('overlay').classList.add('hidden');syncClock()}
+function showModal(title,description,picker){if(busy&&picker)return;cancelRewardPresentation();$('resultStars').hidden=true;$('overlay').classList.remove('failed');$('close').textContent='Kapat';$('close').onclick=()=>hideModal();$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>{load(i);window.openGame?.()};$('levelPicker').append(b)})}$('overlay').classList.remove('hidden');syncClock()}
+function hideModal(force=false){if(playStatus==='failed'&&$('overlay').classList.contains('failed')&&!force)return;cancelRewardPresentation();$('overlay').classList.add('hidden');syncClock()}
 $('reset').onclick=()=>load(index);$('levelsBtn').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);$('close').onclick=hideModal;$('sound').onclick=toggleSound;
 updateSoundButton();
