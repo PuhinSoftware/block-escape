@@ -1,4 +1,4 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101827"><title>Block Escape — Prototype 0.6</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="menu.css"><link rel="stylesheet" href="gameplay.css"><link rel="stylesheet" href="art-upgrade.css"></head><body>
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101827"><title>Block Escape — Prototype 0.6.1</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="menu.css"><link rel="stylesheet" href="gameplay.css"><link rel="stylesheet" href="art-upgrade.css"><link rel="stylesheet" href="collision.css"></head><body>
 <section id="menu" class="menu" aria-labelledby="menuTitle">
   <div class="menu-background" aria-hidden="true">
     <div class="sky-art"></div><i class="cloud cloud-one"></i><i class="cloud cloud-two"></i>
@@ -41,6 +41,8 @@
       <div class="hud-remaining"><small>KALAN BLOK</small><strong id="remaining">0</strong></div>
     </section>
   </header>
+  <div class="life-hud"><small aria-hidden="true">CAN</small><div id="lives" class="hearts" role="status" aria-live="polite" aria-label="Kalan can: 3 / 3"><span class="heart" aria-hidden="true">♥</span><span class="heart" aria-hidden="true">♥</span><span class="heart" aria-hidden="true">♥</span></div></div>
+  <p id="labBanner" class="lab-banner" hidden></p>
   <div class="mine-caption"><h1>KRİSTAL MADENLERİ</h1><button id="sound" class="game-icon" type="button" aria-label="Sesi kapat" aria-pressed="true" title="Ses açık">♪</button></div>
   <div class="bloop-helper"><img src="assets/gameplay/miner-bloop.webp" width="560" height="441" alt="" aria-hidden="true"><p id="hint" class="hint">Yolu aç, kristal macerasına katıl!</p><span class="mine-lantern" aria-hidden="true"></span></div>
   <div class="board-platform">
@@ -58,4 +60,4 @@
 </main>
 <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal">
 <div class="victory-art" aria-hidden="true"><i class="confetti confetti-one"></i><i class="confetti confetti-two"></i><i class="confetti confetti-three"></i><i class="confetti confetti-four"></i><span class="victory-medal">◆</span><img src="assets/gameplay/miner-bloop.webp" width="560" height="441" alt=""></div>
-<h2 id="modalTitle">Tebrikler!</h2><p id="modalText"></p><div id="levelPicker" class="level-picker hidden"></div><button id="next" class="primary">Sonraki bölüm →</button><button id="close" class="secondary">Kapat</button></div></div><script src="engine/rules.js"></script><script src="engine/catalog.js"></script><script src="game.js"></script><script src="menu.js"></script></body></html>
+<h2 id="modalTitle">Tebrikler!</h2><p id="modalText"></p><div id="levelPicker" class="level-picker hidden"></div><button id="next" class="primary">Sonraki bölüm →</button><button id="close" class="secondary">Kapat</button></div></div><script src="engine/rules.js"></script><script src="engine/catalog.js"></script><script src="game.js"></script><script src="collision.js"></script><script src="menu.js"></script></body></html>

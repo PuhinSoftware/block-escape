@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "mode": "collision-lab",
+  "levels": [
+    {
+      "schemaVersion": 1,
+      "id": 1,
+      "worldId": "crystal-mines",
+      "difficulty": "tutorial",
+      "gridSize": 6,
+      "title": "Çarpışmayı Öğren",
+      "hint": "Önce yolu açık bloğu çıkar. Çarpışmalar bir can götürür.",
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 2,
+          "x": 2,
+          "y": 4,
+          "dir": "D"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": 2,
+      "worldId": "crystal-mines",
+      "difficulty": "easy",
+      "gridSize": 6,
+      "title": "Doğru Sıra",
+      "hint": "Yolu kapatan bloğun kendi okunu takip et.",
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 3,
+          "dir": "R"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": 3,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "title": "Zincirleme Açılma",
+      "hint": "Bir çıkış, sıradaki bloğun yolunu açar.",
+      "walls": [],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 5,
+          "x": 3,
+          "y": 2,
+          "dir": "U"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": 4,
+      "worldId": "crystal-mines",
+      "difficulty": "medium",
+      "gridSize": 6,
+      "title": "Dikkatli Seçim",
+      "hint": "Uzak blokları da kontrol et; en yakın boşluk yeterli değil.",
+      "walls": [
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 4,
+          "dir": "D"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 0,
+          "dir": "D"
+        },
+        {
+          "id": 5,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": 5,
+      "worldId": "crystal-mines",
+      "difficulty": "hard",
+      "gridSize": 6,
+      "title": "Kristal Ustalığı",
+      "hint": "Yollar kesişiyor. Her dokunuştan önce ilk engeli bul.",
+      "walls": [
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          5
+        ]
+      ],
+      "blocks": [
+        {
+          "id": 0,
+          "x": 0,
+          "y": 1,
+          "dir": "R"
+        },
+        {
+          "id": 1,
+          "x": 4,
+          "y": 1,
+          "dir": "D"
+        },
+        {
+          "id": 2,
+          "x": 4,
+          "y": 4,
+          "dir": "L"
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 4,
+          "dir": "U"
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 2,
+          "dir": "R"
+        },
+        {
+          "id": 5,
+          "x": 3,
+          "y": 2,
+          "dir": "U"
+        },
+        {
+          "id": 6,
+          "x": 3,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 7,
+          "x": 0,
+          "y": 0,
+          "dir": "L"
+        },
+        {
+          "id": 8,
+          "x": 0,
+          "y": 3,
+          "dir": "R"
+        },
+        {
+          "id": 9,
+          "x": 5,
+          "y": 3,
+          "dir": "D"
+        },
+        {
+          "id": 10,
+          "x": 2,
+          "y": 5,
+          "dir": "U"
+        },
+        {
+          "id": 11,
+          "x": 2,
+          "y": 2,
+          "dir": "R"
+        }
+      ]
+    }
+  ]
+}

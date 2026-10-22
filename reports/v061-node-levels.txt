@@ -1,0 +1,18 @@
+✔ strict schema/semantic validation rejects malformed, overlapping, out-of-range data (1.724181ms)
+✔ all four rays, walls, immutable moves, blocked moves and win condition (0.501196ms)
+✔ greedy solver matches independent exhaustive shortest-path search on 240 small boards (18.834957ms)
+✔ cycles, wall deadlocks, invalid inputs and bounded solver failures are explicit (0.235005ms)
+✔ catalog validates world boundaries, pack safety and only 25 published levels (1.044265ms)
+✔ published solutions replay to empty board, exact optimum and graded quality (49.115677ms)
+✔ quality filter rejects sparse, trivial, retired, rotated and near-duplicate layouts (1.974698ms)
+✔ same seed regenerates every JSON/report byte; other seeds differ; prefix remains stable (1661.279195ms)
+✔ generator has finite attempt/time limits and invalid-option checks (6.195965ms)
+✔ catalog can represent all four 75-level ranges without publishing them (4.934802ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1758.430069
