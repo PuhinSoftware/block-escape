@@ -58,3 +58,8 @@
 - Gameplay's first world is Crystal Mines. Keep the menu unchanged; mine environment, miner Bloop, frame, real board and controls are separate layers. Do not add star scoring or alter the original 10 levels during this task.
 - The reversal action and its in-memory snapshots have been intentionally removed. Do not restore its button, handler, state or shortcuts. Bottom gameplay controls are reset and level select only.
 - Run `tests/crystal-mines.cjs` plus the eight existing suites using the documented NODE_PATH. It supports `BROWSER=webkit` and `ARTIFACT_DIR`; do not claim Safari coverage when WebKit is missing.
+
+## v0.5.1 asset skins
+- Keep `art-upgrade.css` scoped to gameplay. Actual grid sizing/containment, menu and game logic remain in the existing files; graphics must never determine cell dimensions or intercept taps.
+- Artwork/provenance/encoding are documented in `assets/gameplay/README.md` and `assets/LICENSES.md`. Reuse cached small textures and offline color variants; avoid runtime tint filters and new endless gameplay animations.
+- Run `tests/art-upgrade.cjs` with the documented NODE_PATH plus all nine prior suites. It validates art/network budgets, texture caching, real hit targets and mobile layout; it supports `ARTIFACT_DIR` and `BROWSER=webkit`.

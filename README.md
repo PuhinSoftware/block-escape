@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.5
+# Block Escape — Prototype 0.5.1
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -103,3 +103,13 @@ The former reversal feature is fully removed: button, handler, function, in-memo
 Run all nine browser suites with the static server on port 8080 and the documented NODE_PATH. New command: `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/crystal-mines.cjs`. `ARTIFACT_DIR` saves 320/375/390/430px gameplay and win screenshots outside the checkout. The new checks cover absent reversal state/UI/shortcuts, control/HUD order, square-cell stability after each move/reset, tile containment, unlocking, sound/menu return and reduced motion. Existing tests were updated only where the deliberately removed feature was referenced.
 
 Validation: baseline 10-level/audio and mobile containment suites passed before edits; all nine Chromium suites and syntax checks passed after edits. Authored level/vector definitions remain byte-identical (SHA256 `02443742c8071e4eee47eba4ed088767b3b605d1d93e0ee3ceab0c596f1de0c4`). WebKit launch was blocked by its missing executable; previous downloads were denied by network policy. No physical iPhone/Android validation is claimed.
+
+## v0.5.1 art upgrade
+
+Started from main commit `dc5776a9b15254077d8ad1efd0d011135621c62f` on the separate `feature/block-escape-v0.5.1-art-upgrade` branch. `art-upgrade.css` skins the existing DOM with generated, optimized stone cells/enamel block faces and independent embossed arrow/frame/panel/icon SVGs. Bloop is larger, with separate crystal/lantern decorations that cannot intercept taps. No reference screenshot is used as the game UI. The actual first ten levels determine block placement, including the sparse first board.
+
+`game.js`, grid sizing/containment in `style.css`, menu/settings code and original menu assets are unchanged. No reversal or scoring/star system is introduced. The game-specific WebP/SVG package totals 203549 bytes (198.8 KiB), replacing large gameplay PNG requests with a 155082-byte environment/miner pair plus reusable small skins. This is the new gameplay art size, not the size of the unchanged main menu or entire repository. Source/optimization/provenance details are in `assets/gameplay/README.md` and `assets/LICENSES.md`.
+
+With the static server on port 8080, run the nine existing browser suites and `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/art-upgrade.cjs`. Set `ARTIFACT_DIR` for 320/375/390/430px first/second-level screenshots; `BROWSER=webkit` requires WebKit without fallback. The new test checks independent art layers, transparency/opaque faces, the <240KiB art budget, a single shared cell-texture request, no old gameplay PNG requests, four arrow/color skins, unobstructed hit targets and menu return.
+
+Validation: baseline gameplay/10-level/audio and mobile containment checks passed; all ten Chromium suites and JS syntax checks passed. Initial visual review caught panel letterboxing, fixed with SVG scaling. The new alpha check caught slightly translucent generated block faces; normalization restored opaque centers while keeping transparent corners. WebKit launch failed because its executable is absent (earlier installation attempts were blocked by network policy). Chromium mobile emulation is not physical Safari/Android validation.
