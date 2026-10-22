@@ -1,0 +1,7 @@
+PASS chromium collision 320px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS chromium collision 375px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS chromium collision 390px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS chromium collision 430px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS collision vibration/animation absence, exceptions, cancellation and paused timeline cleanup
+PASS distant fixed-wall collision and return in U/D/L/R
+PASS normal catalog failure preserves progress; retry/win unlocks next level with fresh lives
