@@ -6,8 +6,7 @@ function revealScreen(element){screenTransition?.cancel();if(!reducedMotion()&&e
 const menuMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 const stopScreenMotion=event=>{if(event.matches)screenTransition?.cancel()};
 if(menuMotion.addEventListener)menuMotion.addEventListener('change',stopScreenMotion);else menuMotion.addListener(stopScreenMotion);
-function syncMenuSound(){const button=document.getElementById('menuSound');button.textContent=sound?'♪':'♪̸';button.setAttribute('aria-pressed',String(sound));button.setAttribute('aria-label',sound?'Sesi kapat':'Sesi aç');const panelButton=document.getElementById('settingsSound');panelButton.setAttribute('aria-pressed',String(sound));panelButton.textContent=sound?'Ses açık':'Ses kapalı'}
-document.getElementById('menuSound').onclick=()=>{toggleSound();syncMenuSound()};
+function syncMenuSound(){const panelButton=document.getElementById('settingsSound');panelButton.setAttribute('aria-pressed',String(sound));panelButton.textContent=sound?'Ses açık':'Ses kapalı'}
 function refreshMenu(){document.getElementById('menuProgress').textContent=`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
 window.openGame=function(){
   gameStarted=true;menu.hidden=true;gameScreen.hidden=false;revealScreen(gameScreen);
