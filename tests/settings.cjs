@@ -9,20 +9,20 @@ const page=await browser.newPage({viewport:{width,height},isMobile:true,hasTouch
 await page.goto('http://127.0.0.1:8080');
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 const play=await page.locator('#playBtn').boundingBox(),progress=await page.locator('#menuProgress').boundingBox();assert.ok(play.height>=72);assert.ok(progress.y+progress.height<=height,'controls fit short screens');assert.ok(height-progress.y-progress.height<65,'bottom whitespace reduced');
-const sound=await page.locator('#menuSound').boundingBox(),settings=await page.locator('#settingsBtn').boundingBox();assert.ok(Math.abs(sound.y-settings.y)<1);assert.ok(settings.x<sound.x);assert.equal(sound.height,settings.height);
+const settings=await page.locator('#settingsBtn').boundingBox();assert.ok(settings.width>=44&&settings.height>=44);assert.equal(await page.locator('#menuSound').count(),0);
 if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:true});await page.screenshot({path:`${process.env.ARTIFACT_DIR}/menu-${width}.png`,fullPage:true})}
 await page.locator('#settingsBtn').tap();assert.equal(await page.locator('#settingsPanel').isVisible(),true);const panel=await page.locator('#settingsPanel').boundingBox();assert.ok(panel.x>=0&&panel.y>=0&&panel.x+panel.width<=width&&panel.y+panel.height<=height,'panel fits viewport');assert.equal(await page.locator('#settingsClose').evaluate(el=>el===document.activeElement),true);
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 await page.keyboard.press('Shift+Tab');assert.equal(await page.locator('#settingsDone').evaluate(el=>el===document.activeElement),true);
 await page.keyboard.press('Tab');assert.equal(await page.locator('#settingsClose').evaluate(el=>el===document.activeElement),true);
-await page.locator('#settingsSound').tap();assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeSound')),'off');assert.equal(await page.locator('#menuSound').getAttribute('aria-pressed'),'false');
+await page.locator('#settingsSound').tap();assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeSound')),'off');assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');
 await page.locator('#motionToggle').tap();assert.equal(await page.locator('#playBtn').evaluate(el=>getComputedStyle(el).animationPlayState),'paused');assert.equal(await page.locator('.bloop-layer').evaluate(el=>getComputedStyle(el).animationPlayState),'paused');
 if(process.env.ARTIFACT_DIR)await page.screenshot({path:`${process.env.ARTIFACT_DIR}/settings-${width}.png`,fullPage:true});
 await page.keyboard.press('Escape');assert.equal(await page.locator('#settingsBackdrop').isVisible(),false);assert.equal(await page.locator('#settingsBtn').evaluate(el=>el===document.activeElement),true);assert.equal(await page.locator('#menu').evaluate(el=>el.inert),false);
 await page.locator('#settingsBtn').tap();assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');await page.locator('#motionToggle').tap();await page.locator('#settingsSound').tap();await page.locator('#settingsDone').tap();
 await page.locator('#playBtn').tap();assert.equal(await page.locator('#sound').getAttribute('aria-pressed'),'true');await page.locator('#sound').tap();await page.locator('#homeBtn').tap();await page.locator('#settingsBtn').tap();assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');await page.locator('#settingsClose').tap();
 await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('#playBtn').evaluate(el=>getComputedStyle(el).animationName),'none');
-await page.reload();assert.equal(await page.locator('#menuSound').getAttribute('aria-pressed'),'false');assert.deepEqual(errors,[]);
+await page.reload();await page.locator('#settingsBtn').tap();assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');assert.deepEqual(errors,[]);
 console.log(`PASS settings ${width}x${height}: balanced layout, no overflow, focus trap/return, touch, sound sync/persistence, motion/pulse, reduced motion`);await page.close();
 }
 }finally{await browser.close()}
