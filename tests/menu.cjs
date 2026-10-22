@@ -15,7 +15,7 @@ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWid
 for(const id of ['playBtn','menuLevels']){const r=await page.locator('#'+id).boundingBox();assert.ok(r.height>=44&&r.width>=44)}
 for(const asset of ['.island-layer','.bloop-layer'])assert.equal(await page.locator(asset).evaluate(img=>img.complete&&img.naturalWidth>0),true);
 if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:true});await page.screenshot({path:`${process.env.ARTIFACT_DIR}/menu-${width}.png`,fullPage:true})}
-await page.locator('#motionToggle').click();assert.equal(await page.locator('.island-layer').evaluate(el=>getComputedStyle(el).animationPlayState),'paused');await page.locator('#motionToggle').click();
+await page.locator('#settingsBtn').click();await page.locator('#motionToggle').click();assert.equal(await page.locator('.island-layer').evaluate(el=>getComputedStyle(el).animationPlayState),'paused');await page.locator('#motionToggle').click();await page.locator('#settingsDone').click();
 await page.locator('#menuLevels').click();
 assert.equal(await page.locator('#levelPicker button:enabled').count(),3);
 assert.equal(await page.locator('#close').evaluate(el=>el===document.activeElement),true);

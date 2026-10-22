@@ -6,7 +6,7 @@ function revealScreen(element){screenTransition?.cancel();if(!reducedMotion()&&e
 const menuMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 const stopScreenMotion=event=>{if(event.matches)screenTransition?.cancel()};
 if(menuMotion.addEventListener)menuMotion.addEventListener('change',stopScreenMotion);else menuMotion.addListener(stopScreenMotion);
-function syncMenuSound(){const button=document.getElementById('menuSound');button.textContent=sound?'♪':'♪̸';button.setAttribute('aria-pressed',String(sound));button.setAttribute('aria-label',sound?'Sesi kapat':'Sesi aç')}
+function syncMenuSound(){const button=document.getElementById('menuSound');button.textContent=sound?'♪':'♪̸';button.setAttribute('aria-pressed',String(sound));button.setAttribute('aria-label',sound?'Sesi kapat':'Sesi aç');const panelButton=document.getElementById('settingsSound');panelButton.setAttribute('aria-pressed',String(sound));panelButton.textContent=sound?'Ses açık':'Ses kapalı'}
 document.getElementById('menuSound').onclick=()=>{toggleSound();syncMenuSound()};
 function refreshMenu(){document.getElementById('menuProgress').textContent=`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
 window.openGame=function(){
@@ -50,3 +50,33 @@ document.getElementById('motionToggle').onclick=event=>{
 };
 
 syncMenuSound();
+
+// Settings are independent of the game dialog and do not change board state.
+const settingsBackdrop=document.getElementById('settingsBackdrop');
+const settingsPanel=document.getElementById('settingsPanel');
+let previousOverflow='';
+function closeSettings(){
+  if(settingsBackdrop.hidden)return;
+  settingsBackdrop.hidden=true;menu.inert=false;menu.removeAttribute('aria-hidden');
+  document.documentElement.style.overflow=previousOverflow;
+  document.getElementById('settingsBtn').focus();
+}
+document.getElementById('settingsBtn').onclick=()=>{
+  syncMenuSound();previousOverflow=document.documentElement.style.overflow;
+  settingsBackdrop.hidden=false;document.getElementById('settingsClose').focus();menu.inert=true;menu.setAttribute('aria-hidden','true');
+  document.documentElement.style.overflow='hidden';
+};
+document.getElementById('settingsClose').onclick=closeSettings;
+document.getElementById('settingsDone').onclick=closeSettings;
+document.getElementById('settingsSound').onclick=()=>{toggleSound();syncMenuSound()};
+settingsBackdrop.onclick=event=>{if(event.target===settingsBackdrop)closeSettings()};
+settingsBackdrop.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){event.preventDefault();closeSettings()}
+  if(event.key==='Tab'){
+    const buttons=[...settingsPanel.querySelectorAll('button')];const first=buttons[0],last=buttons.at(-1);
+    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}
+    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}
+  }
+});
+// Focus containment also supports browsers without native inert.
+document.addEventListener('focusin',event=>{if(!settingsBackdrop.hidden&&!settingsPanel.contains(event.target))document.getElementById('settingsClose').focus()});

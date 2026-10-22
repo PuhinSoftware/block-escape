@@ -9,7 +9,7 @@ for(const [width,height] of [[320,568],[375,667],[390,844],[430,932]]){
 const page=await browser.newPage({viewport:{width,height},isMobile:true,hasTouch:true});
 await page.goto('http://127.0.0.1:8080');
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-assert.equal(await page.locator('#menu button').count(),4,'only play, levels, sound and pause controls');
+assert.equal(await page.locator('#menu button').count(),4,'only play, levels, sound and settings controls');
 const audioBefore=await page.evaluate(()=>audioContext===undefined);assert.equal(audioBefore,true);
 await page.locator('#menuSound').tap();assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeSound')),'off');
 assert.equal(await page.locator('#menuSound').getAttribute('aria-pressed'),'false');
