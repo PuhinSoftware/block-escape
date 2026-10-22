@@ -1,0 +1,14 @@
+✔ ray finds nearest block, not just adjacent cell, in all four directions (2.020185ms)
+✔ nearest wall wins over farther block; adjacent obstacle and edge exits (1.351157ms)
+✔ three hits fail exactly once; retry creates independent state; successful exits preserve lives (0.303127ms)
+✔ all five designed labs solve with 3 lives and also after two errors; wrong paths fail after third (4.07972ms)
+✔ legal removals cannot introduce a permanent lock; invalid and terminal taps have no cost (1.01505ms)
+✔ published catalog, all 25 level bytes, reports and legacy exclusions are unchanged from v0.6 (3.464171ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20.414726
