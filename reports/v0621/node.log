@@ -1,0 +1,60 @@
+✔ strict schema/semantic validation rejects malformed, overlapping, out-of-range data (1.522475ms)
+✔ all four rays, walls, immutable moves, blocked moves and win condition (0.402567ms)
+✔ greedy solver matches independent exhaustive shortest-path search on 240 small boards (20.187567ms)
+✔ cycles, wall deadlocks, invalid inputs and bounded solver failures are explicit (0.237448ms)
+✔ catalog validates world boundaries, pack safety and only 25 published levels (1.18041ms)
+✔ published solutions replay to empty board, exact optimum and graded quality (43.89591ms)
+✔ quality filter rejects sparse, trivial, retired, rotated and near-duplicate layouts (2.088099ms)
+✔ same seed regenerates every JSON/report byte; other seeds differ; prefix remains stable (1767.407949ms)
+✔ generator has finite attempt/time limits and invalid-option checks (6.150633ms)
+✔ catalog can represent all four 75-level ranges without publishing them (6.399078ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1857.515383
+✔ ray finds nearest block, not just adjacent cell, in all four directions (2.006415ms)
+✔ nearest wall wins over farther block; adjacent obstacle and edge exits (1.183545ms)
+✔ three hits fail exactly once; retry creates independent state; successful exits preserve lives (0.266081ms)
+✔ all five designed labs solve with 3 lives and also after two errors; wrong paths fail after third (3.465915ms)
+✔ legal removals cannot introduce a permanent lock; invalid and terminal taps have no cost (1.252238ms)
+✔ published catalog, all 25 level bytes, reports and legacy exclusions are unchanged from v0.6 (1.179969ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15.432767
+✔ continuous percentage, including non-divisible totals and bounds (1.19382ms)
+✔ deterministic active clock: pause/resume, animation, hidden time, reset, zero clamp (0.342547ms)
+✔ performance stars: completion, lives, exact timed thresholds and untimed fallback (0.273052ms)
+✔ best ratings never downgrade and namespaces stay isolated (0.374004ms)
+✔ optional metadata validated; original 25 stay untimed; five timer labs solved (6.223153ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16.821862
+✔ potential uses current lives and exact score thresholds without prediction (1.416325ms)
+✔ untimed lives, minimum successful rating and zero-reward failure are distinct (0.236987ms)
+✔ potential never increases while active time or damage increases (1.158907ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.613019
+Verified reproducibility 25 levels; seed crystal-v06-2026
+PASS 25 valid, distinct, quality-filtered and optimally solved levels; reports current
+PASS 5 collision labs: optimal zero-damage solutions, two-error recovery, third-error failure and terminal input guard
+PASS five timer labs: valid, solved, exact minimum moves; report reproducible

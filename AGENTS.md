@@ -83,3 +83,8 @@
 ## v0.6.2 timer laboratory
 - Keep the normal 25 levels untimed and collision lab unchanged. Timer lab uses a separate pack. `engine/performance.js` owns active time and scoring; `timer-stars.js` owns presentation and lifecycle. Pause before every animation, dialog, screen transition and hidden page.
 - Preserve all older storage keys; best ratings use `blockEscapeBestStarsV062` with separate normal/collision/timer namespaces. Run timer Node and browser suites alongside all existing regressions.
+
+## v0.6.2.1 HUD and reward cues
+- Keep completion progress free of stars. Potential rewards delegate to the shared performance scorer; failure is zero, a possible successful completion is at least one. Do not copy threshold rules into UI files.
+- Only result stars celebrate. `star-audio.js` reuses the gesture-unlocked shared context, with no delayed context creation/resume. Cancel queued reveals and active voices on dialog dismissal/next; respect mute and reduced motion.
+- Run `tests/hud-polish.test.cjs` plus all previous Node tests and the 14-package browser runner. Keep the 28px panel readable and geometry checked at 320/375/390/430px.

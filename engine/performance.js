@@ -8,6 +8,11 @@
     const three=limits.threeSeconds??level.timeLimitSeconds*.6,two=limits.twoSeconds??level.timeLimitSeconds*.9;
     return lives===3&&elapsedMs<=three*1000?3:lives>=2&&elapsedMs<=two*1000?2:1;
   }
+  // Upper bound if completed under CURRENT conditions; never predicts future moves.
+  function potential(level,{lives,elapsedMs,status='playing'}){
+    if(status==='failed'||lives<=0||(status!=='won'&&level.timeLimitSeconds&&elapsedMs>=level.timeLimitSeconds*1000))return 0;
+    return score(level,{completed:true,lives,elapsedMs});
+  }
   // One monotonic accumulator. Synchronize BEFORE changing the running flag.
   class ActiveClock{
     constructor(now=()=>performance.now()){this.now=now;this.reset()}
@@ -21,5 +26,5 @@
     const old=record.ratings[key];record.ratings[key]=Math.max(Number.isInteger(old)&&old>=1&&old<=3?old:0,stars);
     return record;
   }
-  return Object.freeze({progress,score,ActiveClock,bestRecord});
+  return Object.freeze({progress,score,potential,ActiveClock,bestRecord});
 });
