@@ -43,3 +43,8 @@
 ## Approved artwork
 - Menu artwork follows the reference supplied in chat. Keep environment, Bloop, logo, islands and functional buttons separate. See `assets/LICENSES.md` before reusing/distributing assets; do not assert independent rights clearance.
 - Run `tests/reference-menu.cjs` alongside existing tests. New screen transitions must cancel when reduced motion changes at runtime. Menu sound must share the game's preference key.
+
+## Settings panel
+- Keep settings in the independent menu presentation layer. Shared sound controls must use the existing game sound key; preserve artwork and gameplay state.
+- Settings must trap/restore focus, support Escape and touch closing, prevent background interaction and honor reduced motion. Keep menu controls at least 44px and the play target at least 72px.
+- Run `tests/settings.cjs` with the documented NODE_PATH alongside other suites. Capture mobile layouts via `ARTIFACT_DIR` outside the checkout.
