@@ -16,6 +16,11 @@
     if(!WORLD_IDS.includes(level.worldId))errors.push('unknown worldId');
     if(!['tutorial','easy','medium','hard'].includes(level.difficulty))errors.push('unknown difficulty');
     if(level.gridSize!==GRID_SIZE)errors.push('gridSize must be 6');
+    if(level.timeLimitSeconds!==undefined&&(!Number.isFinite(level.timeLimitSeconds)||level.timeLimitSeconds<=0))errors.push('timeLimitSeconds must be positive');
+    if(level.starThresholds!==undefined){
+      const t=level.starThresholds;
+      if(!t||!Number.isFinite(t.threeSeconds)||!Number.isFinite(t.twoSeconds)||t.threeSeconds<=0||t.twoSeconds<t.threeSeconds||!level.timeLimitSeconds||t.twoSeconds>level.timeLimitSeconds)errors.push('invalid starThresholds');
+    }
     const occupied=new Set(),ids=new Set();
     const inside=(x,y)=>Number.isInteger(x)&&Number.isInteger(y)&&x>=0&&y>=0&&x<GRID_SIZE&&y<GRID_SIZE;
     if(!Array.isArray(level.blocks)||!level.blocks.length||level.blocks.length>36)errors.push('blocks must contain 1..36 items');

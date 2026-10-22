@@ -55,7 +55,7 @@
 - Run `tests/gameplay-ui.cjs` with the documented NODE_PATH plus all existing suites. It supports `BROWSER=webkit` and `ARTIFACT_DIR`. Stress styles in grid tests must match theme specificity to avoid silently weakening overflow coverage.
 
 ## Crystal Mines and removed action
-- Gameplay's first world is Crystal Mines. Keep the menu unchanged; mine environment, miner Bloop, frame, real board and controls are separate layers. Do not add star scoring. v0.6 intentionally replaces the original ten arrangements with 25 newly generated puzzles; exclude retired signatures.
+- Gameplay's first world is Crystal Mines. Keep the menu unchanged; mine environment, miner Bloop, frame, real board and controls are separate layers. v0.6.2 explicitly adds separate progress and performance stars. v0.6 intentionally replaces the original ten arrangements with 25 newly generated puzzles; exclude retired signatures.
 - The reversal action and its in-memory snapshots have been intentionally removed. Do not restore its button, handler, state or shortcuts. Bottom gameplay controls are reset and level select only.
 - Run `tests/crystal-mines.cjs` plus the eight existing suites using the documented NODE_PATH. It supports `BROWSER=webkit` and `ARTIFACT_DIR`; do not claim Safari coverage when WebKit is missing.
 
@@ -79,3 +79,7 @@
 - Failed dialogs offer retry and menu only; Escape must not resume a zero-life game. Ordinary level-picker dialogs must remain dismissible even after failure/menu return. Preserve focus trapping and touch-sized controls.
 - Do not claim permanent traps from legal removals. Collision edges only lose lives; current solver prunes them. Future lock/key mechanics require validating a new schema/state/solver assumption, not merely adding decorative fields.
 - Run both Node suites, `tools/validate-collision.cjs`, unchanged v0.6 generation/verification and all 12 browser suites. Use document coordinates for stable geometry across legitimate vertical scrolling; compare horizontal bounds with the actual viewport, not expanded innerWidth.
+
+## v0.6.2 timer laboratory
+- Keep the normal 25 levels untimed and collision lab unchanged. Timer lab uses a separate pack. `engine/performance.js` owns active time and scoring; `timer-stars.js` owns presentation and lifecycle. Pause before every animation, dialog, screen transition and hidden page.
+- Preserve all older storage keys; best ratings use `blockEscapeBestStarsV062` with separate normal/collision/timer namespaces. Run timer Node and browser suites alongside all existing regressions.

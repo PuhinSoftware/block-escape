@@ -1,0 +1,49 @@
+✔ continuous percentage, including non-divisible totals and bounds (0.892602ms)
+✔ deterministic active clock: pause/resume, animation, hidden time, reset, zero clamp (0.221793ms)
+✔ performance stars: completion, lives, exact timed thresholds and untimed fallback (0.191186ms)
+✔ best ratings never downgrade and namespaces stay isolated (0.220952ms)
+✔ optional metadata validated; original 25 stay untimed; five timer labs solved (7.209102ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.61567
+✔ strict schema/semantic validation rejects malformed, overlapping, out-of-range data (1.978143ms)
+✔ all four rays, walls, immutable moves, blocked moves and win condition (0.59396ms)
+✔ greedy solver matches independent exhaustive shortest-path search on 240 small boards (16.113409ms)
+✔ cycles, wall deadlocks, invalid inputs and bounded solver failures are explicit (0.357554ms)
+✔ catalog validates world boundaries, pack safety and only 25 published levels (1.807449ms)
+✔ published solutions replay to empty board, exact optimum and graded quality (45.63566ms)
+✔ quality filter rejects sparse, trivial, retired, rotated and near-duplicate layouts (1.604565ms)
+✔ same seed regenerates every JSON/report byte; other seeds differ; prefix remains stable (1726.242481ms)
+✔ generator has finite attempt/time limits and invalid-option checks (5.390353ms)
+✔ catalog can represent all four 75-level ranges without publishing them (3.643811ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1811.612582
+✔ ray finds nearest block, not just adjacent cell, in all four directions (2.07801ms)
+✔ nearest wall wins over farther block; adjacent obstacle and edge exits (1.055004ms)
+✔ three hits fail exactly once; retry creates independent state; successful exits preserve lives (0.189424ms)
+✔ all five designed labs solve with 3 lives and also after two errors; wrong paths fail after third (2.68415ms)
+✔ legal removals cannot introduce a permanent lock; invalid and terminal taps have no cost (2.664511ms)
+✔ published catalog, all 25 level bytes, reports and legacy exclusions are unchanged from v0.6 (0.996206ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.076741
+Verified reproducibility 25 levels; seed crystal-v06-2026
+PASS 25 valid, distinct, quality-filtered and optimally solved levels; reports current
+PASS 5 collision labs: optimal zero-damage solutions, two-error recovery, third-error failure and terminal input guard
+PASS five timer labs: valid, solved, exact minimum moves; report reproducible

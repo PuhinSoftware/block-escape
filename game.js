@@ -3,7 +3,8 @@ const Rules=BlockEscapeRules;
 const S=Rules.GRID_SIZE,arrows={U:'↑',D:'↓',L:'←',R:'→'},vectors=Rules.VECTORS;
 const levels=[];
 const PROGRESS_KEY='blockEscapeUnlockedV06';
-const LAB_MODE=new URLSearchParams(location.search).get('lab')==='collision';
+const requestedLab=new URLSearchParams(location.search).get('lab');
+const LAB_KIND=['collision','timer'].includes(requestedLab)?requestedLab:null,LAB_MODE=!!LAB_KIND;
 const $=id=>document.getElementById(id),board=$('board');let index=0,blocks=[],moves=0,sound=true,toastTimer,audioContext,busy=false;
 let unlocked=1,catalog=null,levelsReady=false,lives=3,playStatus='playing';
 try{sound=localStorage.getItem('blockEscapeSound')!=='off'}catch{}
@@ -12,8 +13,8 @@ function clearPath(block,items){return Rules.canExit(levels[index],items,block.i
 async function initializeLevels(){
   const json=async path=>{const response=await fetch(path);if(!response.ok)throw Error(`HTTP ${response.status}: ${path}`);return response.json()};
   if(LAB_MODE){
-    const data=await json('levels/lab/collision-v1.json');
-    if(data.schemaVersion!==1||data.mode!=='collision-lab'||!Array.isArray(data.levels)||data.levels.length!==5||data.levels.some((level,i)=>!Rules.validateLevel(level).valid||level.id!==i+1||typeof level.title!=='string'||typeof level.hint!=='string'))throw Error('Invalid collision lab');
+    const data=await json(`levels/lab/${LAB_KIND}-v1.json`);
+    if(data.schemaVersion!==1||data.mode!==`${LAB_KIND}-lab`||!Array.isArray(data.levels)||data.levels.length!==5||data.levels.some((level,i)=>!Rules.validateLevel(level).valid||level.id!==i+1||typeof level.title!=='string'||typeof level.hint!=='string'))throw Error('Invalid collision lab');
     levels.splice(0,levels.length,...data.levels);unlocked=5;levelsReady=true;load(0);return;
   }
   const nextCatalog=await json('levels/catalog.json');
@@ -29,7 +30,7 @@ async function initializeLevels(){
   unlocked=1;try{const stored=Number(localStorage.getItem(PROGRESS_KEY));if(Number.isInteger(stored)&&stored>=1)unlocked=Math.min(levels.length,stored)}catch{}
   levelsReady=true;load(0);
 }
-function load(i){if(busy||!levelsReady||!Number.isInteger(i)||!levels[i])return;index=i;adoptState(Rules.createState(levels[i]));hideModal();render();message('');}
+function load(i){if(busy||!levelsReady||!Number.isInteger(i)||!levels[i])return;index=i;adoptState(Rules.createState(levels[i]));activeClock.reset(levels[i].timeLimitSeconds);hideModal();render();message('');resetPerformance();}
 function currentState(){return {blocks,moves,lives,status:playStatus}}
 function adoptState(state){blocks=state.blocks;moves=state.moves;lives=state.lives;playStatus=state.status}
 function render(){board.style.setProperty('--size',S);const wallSet=new Set((levels[index].walls||[]).map(p=>key(...p)));const map=new Map(blocks.map(b=>[key(b.x,b.y),b]));const frag=document.createDocumentFragment();for(let y=0;y<S;y++)for(let x=0;x<S;x++){const cell=document.createElement('div');cell.className='cell'+(wallSet.has(key(x,y))?' wall':'');const b=map.get(key(x,y));if(b){const btn=document.createElement('button');btn.className='block';btn.dataset.dir=b.dir;btn.textContent=arrows[b.dir];btn.setAttribute('aria-label',`Satır ${y+1}, sütun ${x+1}, ${b.dir} yönü`);btn.addEventListener('click',()=>tap(b.id,btn));cell.append(btn)}frag.append(cell)}board.replaceChildren(frag);$('levelLabel').textContent=`${String(index+1).padStart(2,'0')} / ${levels.length}`;$('remaining').textContent=blocks.length;$('moves').textContent=moves;updateLives();$('labBanner').hidden=!LAB_MODE;document.querySelector('.game-footer p').textContent=LAB_MODE?'Test modu · İlerleme kaydedilmez.':'İlerlemen bu tarayıcıda güvende.';if(LAB_MODE){$('labBanner').textContent=`TEST ${index+1} · ${levels[index].title}`;$('hint').textContent=levels[index].hint}}
@@ -72,7 +73,9 @@ function toggleSound(){
   else if(audioContext){try{audioContext.suspend().catch(()=>{})}catch{}}
 }
 function setBusy(value){
-  busy=value;board.setAttribute('aria-busy',String(value));
+  syncClock();
+  busy=value;
+  syncClock();board.setAttribute('aria-busy',String(value));
   document.querySelectorAll('.block,#reset,#levelsBtn,#homeBtn').forEach(button=>button.disabled=value||(playStatus!=='playing'&&button.classList.contains('block')));
 }
 function reducedMotion(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches}
@@ -94,6 +97,7 @@ async function animateBlock(element,block,blocked){
   }catch{}finally{clearTimeout(timer);animation?.cancel();element.classList.remove('blocked','exiting');element.parentElement?.classList.remove('exiting-cell')}
 }
 async function tap(id,el){
+  syncClock();
   if(busy||playStatus!=='playing')return;
   const b=blocks.find(x=>x.id===id);if(!b)return;
   setBusy(true);
@@ -112,16 +116,16 @@ async function tap(id,el){
     adoptState(outcome.state);
     playSound(blocks.length?'move':'win');
     await animateBlock(el,b,false);
-    render();
+    render();updateProgress();
     if(Rules.isWon(blocks)){
       if(!LAB_MODE&&index+1>=unlocked){unlocked=Math.min(levels.length,index+2);try{localStorage.setItem(PROGRESS_KEY,unlocked)}catch{}}
       showWin();
     }
   }finally{setBusy(false)}
 }
-function showWin(){showModal('Bölüm tamamlandı! 🎉',`${moves} hamlede bütün blokları temizledin.`,false);$('next').textContent=index===levels.length-1?'Başa dön ↻':'Sonraki bölüm →';$('next').onclick=()=>load(index===levels.length-1?0:index+1)}
-function showFailed(){showModal('LEVEL FAILED','Üç canın bitti. Yolları inceleyip yeniden dene.',false);$('overlay').classList.remove('celebrating');$('overlay').classList.add('failed');$('next').textContent='Tekrar Dene';$('next').onclick=()=>load(index);$('close').textContent='Ana Menü';$('close').onclick=()=>{hideModal(true);window.returnToMenu?.()}}
-function showModal(title,description,picker){if(busy&&picker)return;$('overlay').classList.remove('failed');$('close').textContent='Kapat';$('close').onclick=()=>hideModal();$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>{load(i);window.openGame?.()};$('levelPicker').append(b)})}$('overlay').classList.remove('hidden')}
-function hideModal(force=false){if(playStatus==='failed'&&$('overlay').classList.contains('failed')&&!force)return;$('overlay').classList.add('hidden')}
+function showWin(){showModal('Bölüm tamamlandı! 🎉',`${moves} hamlede bütün blokları temizledin.`,false);showPerformance();$('next').textContent=index===levels.length-1?'Başa dön ↻':'Sonraki bölüm →';$('next').onclick=()=>load(index===levels.length-1?0:index+1)}
+function showFailed(timeout=false){showModal(timeout?"TIME'S UP!":'LEVEL FAILED',timeout?'Süre doldu. Yeni bir denemeye hazır mısın?':'Üç canın bitti. Yolları inceleyip yeniden dene.',false);$('overlay').classList.remove('celebrating');$('overlay').classList.add('failed');$('next').textContent='Tekrar Dene';$('next').onclick=()=>load(index);$('close').textContent='Ana Menü';$('close').onclick=()=>{hideModal(true);window.returnToMenu?.()}}
+function showModal(title,description,picker){if(busy&&picker)return;$('resultStars').hidden=true;$('overlay').classList.remove('failed');$('close').textContent='Kapat';$('close').onclick=()=>hideModal();$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>{load(i);window.openGame?.()};$('levelPicker').append(b)})}$('overlay').classList.remove('hidden');syncClock()}
+function hideModal(force=false){if(playStatus==='failed'&&$('overlay').classList.contains('failed')&&!force)return;$('overlay').classList.add('hidden');syncClock()}
 $('reset').onclick=()=>load(index);$('levelsBtn').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);$('close').onclick=hideModal;$('sound').onclick=toggleSound;
 updateSoundButton();
