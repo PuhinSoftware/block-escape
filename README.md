@@ -1,10 +1,10 @@
-# Block Escape — Prototype 0.5.1
+# Block Escape — Prototype 0.6
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
 ## Run
 
-Open `index.html` in a modern browser. For Android testing, host the folder using any static HTTPS hosting service (e.g. GitHub Pages) and open its URL in Chrome. Some Android file managers can also open `index.html` locally, but browser restrictions vary.
+Serve the repository over HTTP/HTTPS: the versioned JSON catalog is fetched asynchronously, so opening `index.html` with `file://` is not supported. For device testing use static HTTPS hosting or a reachable development server. GitHub Pages project paths are supported with relative URLs; publishing is a separate action.
 
 For local desktop testing: `python -m http.server 8080` in this directory, then visit `http://localhost:8080`.
 
@@ -16,17 +16,88 @@ Tap an arrow block. It exits the 6x6 board if no other block or wall is in the p
 
 - `index.html`: screen structure
 - `style.css`: responsive portrait styling
-- `game.js`: levels, collision/path checks, progress, interaction
+- `game.js`: JSON loading, progress, interaction, rendering and audio
+- `engine/rules.js`: shared movement/validation API (browser + Node)
+- `engine/catalog.js`: catalog/version/world validation
+- `levels/`: schema, catalog and published JSON packs
+- `tools/`: seeded generation, quality gates, solver and verification
+- `reports/`: reproducible solution reports and test evidence
 
-## Next milestones
+## v0.6 level system (current)
 
-1. Test on a real Android device and collect usability feedback.
-2. Add levels with a verified puzzle generator and more varied obstacles.
-3. Add lightweight analytics with consent/privacy design.
-4. Decide whether to package as PWA or migrate gameplay to Flutter + Flame for native release.
-5. Prepare signed Android builds, Google Play closed testing, and compliant monetization.
+Only **25 new levels** are playable. The previous ten layouts have been replaced, not extended or reused. `levels/retired-signatures.json` excludes their arrangements, including rotations/reflections/translations, without loading old levels into the game. The mine artwork, menu/Bloop, directional exit/blocked/win animations, sound, reset and level picker are retained. Undo and star scoring remain absent.
 
-No ads, telemetry, accounts, backend, or in-app purchases are included in this prototype.
+| World | Planned IDs | Currently playable |
+| --- | --- | --- |
+| Kristal Madenleri (`crystal-mines`) | 1–75 | 1–25 |
+| Mercan Krallığı (`coral-kingdom`) | 76–150 | None |
+| Gökyüzü Adaları (`sky-islands`) | 151–225 | None |
+| Yıldız Galaksisi (`star-galaxy`) | 226–300 | None |
+
+The catalog separates `plannedCount: 300` from `availableCount: 25`. Only referenced packs appear in the picker. Packs contain at most 25 levels and never cross world boundaries. Future worlds are metadata, not released gameplay/artwork. Do not advertise 300 finished puzzles.
+
+### Actual rules and shortest solutions
+
+`engine/rules.js` is the single rule source for the browser, generator and solver. Coordinates are zero-based (`x` column, `y` row); `U/D/L/R` scan from the adjacent square to the 6×6 boundary. Any block or fixed wall anywhere along that ray prevents removal. A successful move removes exactly one block; a blocked tap costs zero moves. Empty block state wins. `applyMove` does not mutate its inputs.
+
+Deleting a block can only remove obstructions, never create them. Consequently any legal move preserves solvability, and every completed ordering takes exactly the original block count in successful moves. The solver repeatedly removes a legal block; if none exists with blocks remaining, the level is unsolvable. This is a complete optimal solver for these rules, without exponential search. It returns `solved`, `unsolvable`, `invalid` or `limit`; a partial/limited search is never reported as a solution. Independent exhaustive search on 240 small boards cross-checks the implementation.
+
+Difficulty is **visual/path dependency**, not optimal-order strategy. Reported minimum moves therefore equal block counts (3–27). Dependency depth is the number of waves when all currently free blocks are removed together; it rises from 1 to 9. The first five introduce a free exit, blocked paths and multiple directions with 3–7 blocks; 6–10 are easy; 11–25 increase density and dependency depth. These are authored quality targets, not human playtest difficulty ratings.
+
+### Generate and reproduce
+
+Requires Node 18+ for development tools; no packages are required for generator/solver tests.
+
+```sh
+# Reproduce the committed 25-level dataset and both solution reports.
+node tools/generate-levels.cjs --seed crystal-v06-2026 --count 25
+# Read-only deterministic byte comparison (does not overwrite anything).
+node tools/generate-levels.cjs --seed crystal-v06-2026 --count 25 --check
+# Validate catalog, every level, quality, shortest solutions and saved report.
+node tools/validate-levels.cjs
+node --test tests/level-system.test.cjs
+# Inspect the solution of one standalone level JSON file.
+node tools/solver.cjs /path/to/level.json
+```
+
+The default seed is `crystal-v06-2026`. Each level uses `${seed}:level:${id}`, so generating a longer catalog preserves its existing prefix for the same generator/quality version. Construction adds blocks in reverse-removal order using the shared rules. Candidates are checked for exact solvability, required density, dependency depth, initially free block limits, direction variety, row/column coverage, retired layouts and pairwise similarity. Canonical signatures ignore block IDs and normalize translation, rotation and reflection with their arrows. Maximum Jaccard overlap above 0.65 rejects near-duplicates. Intentional early sparse tutorials are exempt from later density targets; no one-block puzzle is accepted.
+
+Defaults: 300 candidate attempts **per level**, 60,000 ms total generation time; solver 5,000 inspections and 1,000 ms per solve. Override generation bounds with `--max-attempts` / `--timeout-ms`. Exhausting either bound exits nonzero before writing generated files. Identical seed/options/code produce identical accepted data and reports when allowed to finish; elapsed wall time is not included in outputs. A slow machine may hit its time limit instead of producing output. Generating does replace its output files, so run it on a clean development branch and review the diff; use `--check` for read-only verification.
+
+### Add levels safely
+
+1. Keep published IDs contiguous from 1. For the next generated batch, run `node tools/generate-levels.cjs --seed crystal-v06-2026 --count 50`. This is an example for future development, **not** a claim that levels 26–50 are released or reviewed. The tool accepts up to 300; quality/resource limits can reject a requested batch.
+2. Review the new JSON, solutions and actual gameplay. `levels/level.schema.json` documents `schemaVersion`, `id`, `worldId`, `difficulty`, `gridSize`, `blocks`, optional `walls` and generation provenance. Runtime semantic validation additionally checks overlap, duplicate IDs and world ranges. Rules must stay shared; adjust `tools/level-quality.cjs` intentionally when designing future difficulty targets.
+3. Generation writes the required version-1 packs, catalog counts/references and `reports/levels-v06.{json,md}` together. JSON report entries contain exact solution block IDs, minimum moves and quality metrics. Review old-level diffs; increasing count alone must preserve the prefix. Never silently replace already published puzzles under the same progress namespace. Version schema/catalog, generator quality and progress namespace explicitly when their meaning changes.
+4. Run reproducibility, verification, Node tests and **all browser suites**. Current acceptance tests deliberately require exactly 25 published levels; expand those expectations and coverage in the future level-release task. Do not loosen quality gates just to silence a failed candidate or test.
+5. Visually review mobile screenshots and human-playtest difficulty before publishing a new batch. The present 25 have automated solvability/quality evidence; future 275 still require design and validation. No deployment is part of generation.
+
+### Progress and loading
+
+New progress uses **`blockEscapeUnlockedV06`**, independently from legacy `blockEscapeUnlocked`. The legacy key is never read for unlocking, migrated, overwritten or deleted. Existing sound uses the unchanged `blockEscapeSound` key. Missing/invalid new progress starts at 1; values beyond the published catalog clamp to 25. Finishing the last available level cannot unlock a nonexistent level. Reload restores the highest unlocked level, not an unfinished board; menu return preserves the in-memory board.
+
+Play and level selection stay disabled until the catalog and all referenced packs are fetched and validated. Network/schema errors show a retry action; no partly loaded catalog is exposed. Fetches use repository-relative URLs and work on GitHub Pages subdirectories. Storage/audio failures remain nonfatal.
+
+### Current validation commands
+
+Start `python3 -m http.server 8080 --bind 127.0.0.1` in another terminal, then:
+
+```sh
+node --check game.js
+node --check menu.js
+node --test tests/level-system.test.cjs
+node tools/generate-levels.cjs --check
+node tools/validate-levels.cjs
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules ARTIFACT_DIR=/tmp/block-escape-v06 node tests/run-browser.cjs
+```
+
+`tests/run-browser.cjs` runs all eleven suites, reports failures separately and exits nonzero on any failure/timeout. Playwright is a development tool only. Set `CHROMIUM_PATH` if needed. `tests/level-system-browser.cjs` completes all 25 levels using real touch hit targets at 320×568, 375×667, 390×844 and 430×932 (1,500 successful solution taps total, plus reset checks). It compares all 36 cells at first/middle/final moves, checks block containment, legacy/new progress isolation, reload, picker limits, catalog failure/retry and a project subdirectory. Earlier suites retain audio, animations, desktop/mobile geometry, oversized glyphs, menu, settings, art and removed-action coverage. `ARTIFACT_DIR` writes screenshots outside the checkout.
+
+To explicitly require WebKit: `BROWSER=webkit NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/level-system-browser.cjs`. An unavailable engine is a failed prerequisite, never replaced with Chromium. Chromium touch emulation is not physical iPhone Safari or Android device testing. See [solution report](reports/levels-v06.md) and [test report](reports/v06-tests.md) for this revision's actual results.
+
+## Historical implementation notes (v0.2–v0.5.1)
+
+The following sections record earlier releases. Their references to ten levels and the old progress key describe those releases; the v0.6 rules/data/progress/test commands above are current.
 
 ## Sound (v0.2)
 

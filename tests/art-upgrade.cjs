@@ -1,3 +1,4 @@
+const {firstLabels}=require('./helpers.cjs');
 const {chromium,webkit}=require('playwright');
 const fs=require('node:fs');
 const path=require('node:path');
@@ -14,13 +15,13 @@ try{
 for(const [width,height] of [[320,568],[375,667],[390,844],[430,932]]){
 const page=await browser.newPage({viewport:{width,height},isMobile:true,hasTouch:true});const requests=[];const failures=[];
 page.on('request',req=>requests.push(new URL(req.url()).pathname));page.on('pageerror',e=>failures.push(e.message));
-await page.goto('http://127.0.0.1:8080');await page.locator('#playBtn').tap();await page.waitForFunction(()=>document.querySelector('.app').getAnimations().length===0);
+await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>levelsReady);await page.locator('#playBtn').tap();await page.waitForFunction(()=>document.querySelector('.app').getAnimations().length===0);
 await page.locator('.bloop-helper img').evaluate(img=>img.decode());
-assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth));
 assert.equal(await page.locator('.cell').count(),36);assert.equal(await page.locator('#undo').count(),0);
 assert.ok((await page.locator('.bloop-helper img').boundingBox()).width>=140,'miner should be more prominent');
 assert.ok((await page.locator('.cell').first().evaluate(el=>getComputedStyle(el,'::before').backgroundImage)).includes('stone-cell.webp'));
-assert.ok((await page.locator('.block').first().evaluate(el=>getComputedStyle(el,'::before').backgroundImage)).includes('block-red.webp'));
+assert.ok((await page.locator('.block').first().evaluate(el=>getComputedStyle(el,'::before').backgroundImage)).includes('block-'));
 assert.ok((await page.locator('.block').first().evaluate(el=>getComputedStyle(el,'::after').backgroundImage)).includes('arrow-raised.svg'));
 assert.ok((await page.locator('.hud-level').evaluate(el=>getComputedStyle(el).backgroundImage)).includes('panel-blue.svg'));
 assert.ok((await page.locator('#reset').evaluate(el=>getComputedStyle(el).backgroundImage)).includes('panel-gold.svg'));
@@ -34,11 +35,12 @@ const alpha=await page.evaluate(async()=>{const image=new Image();image.src='ass
 assert.equal(alpha.corner,0);assert.equal(alpha.center,255);
 if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:true});await page.screenshot({path:`${process.env.ARTIFACT_DIR}/art-${width}.png`,fullPage:true})}
 await page.emulateMedia({reducedMotion:'reduce'});
-for(const label of ['Satır 4, sütun 4, R yönü','Satır 2, sütun 4, D yönü','Satır 2, sütun 2, R yönü']){await page.getByRole('button',{name:label,exact:true}).tap();await page.waitForFunction(()=>!busy)}
-await page.locator('#next').tap();assert.equal(await page.locator('#levelLabel').textContent(),'02 / 10');
+for(const label of [firstLabels[0],firstLabels[1],firstLabels[2]]){await page.getByRole('button',{name:label,exact:true}).tap();await page.waitForFunction(()=>!busy)}
+await page.locator('#next').tap();assert.equal(await page.locator('#levelLabel').textContent(),'02 / 25');
+await page.evaluate(()=>load(5));
 const skins=await page.locator('.block').evaluateAll(els=>els.map(el=>getComputedStyle(el,'::before').backgroundImage));
 for(const color of ['red','blue','green','purple'])assert.ok(skins.some(skin=>skin.includes('block-'+color+'.webp')));
-if(process.env.ARTIFACT_DIR)await page.screenshot({path:`${process.env.ARTIFACT_DIR}/art-level2-${width}.png`,fullPage:true});
+if(process.env.ARTIFACT_DIR)await page.screenshot({path:`${process.env.ARTIFACT_DIR}/art-level6-${width}.png`,fullPage:true});
 await page.locator('#homeBtn').tap();assert.equal(await page.locator('#menu').isVisible(),true);assert.deepEqual(failures,[]);
 console.log(`PASS ${engine} art ${width}x${height}: independent textures/skins/frames, alpha, one cached cell request, no source PNG requests, hit targets, four directions, menu; art ${bytes} bytes`);await page.close();
 }

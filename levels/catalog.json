@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "v0.6",
+  "plannedCount": 300,
+  "availableCount": 25,
+  "worlds": [
+    {
+      "id": "crystal-mines",
+      "name": "Kristal Madenleri",
+      "start": 1,
+      "end": 75
+    },
+    {
+      "id": "coral-kingdom",
+      "name": "Mercan Krallığı",
+      "start": 76,
+      "end": 150
+    },
+    {
+      "id": "sky-islands",
+      "name": "Gökyüzü Adaları",
+      "start": 151,
+      "end": 225
+    },
+    {
+      "id": "star-galaxy",
+      "name": "Yıldız Galaksisi",
+      "start": 226,
+      "end": 300
+    }
+  ],
+  "packs": [
+    {
+      "worldId": "crystal-mines",
+      "path": "v1/crystal-mines-001-025.json",
+      "count": 25
+    }
+  ]
+}

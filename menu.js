@@ -9,10 +9,12 @@ if(menuMotion.addEventListener)menuMotion.addEventListener('change',stopScreenMo
 function syncMenuSound(){const panelButton=document.getElementById('settingsSound');panelButton.setAttribute('aria-pressed',String(sound));panelButton.textContent=sound?'Ses açık':'Ses kapalı'}
 function refreshMenu(){document.getElementById('menuProgress').textContent=`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
 window.openGame=function(){
+  if(!levelsReady)return;
   gameStarted=true;menu.hidden=true;gameScreen.hidden=false;revealScreen(gameScreen);
   document.getElementById('homeBtn').focus();
 };
 document.getElementById('playBtn').onclick=()=>{
+  if(!levelsReady)return;
   if(!gameStarted)load(unlocked-1);
   window.openGame();
 };
@@ -41,7 +43,6 @@ document.addEventListener('keydown',event=>{
   if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}
   else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}
 });
-refreshMenu();
 document.getElementById('motionToggle').onclick=event=>{
   const paused=menu.dataset.paused!=='true';menu.dataset.paused=String(paused);
   event.currentTarget.setAttribute('aria-pressed',String(paused));
@@ -79,3 +80,13 @@ settingsBackdrop.addEventListener('keydown',event=>{
 });
 // Focus containment also supports browsers without native inert.
 document.addEventListener('focusin',event=>{if(!settingsBackdrop.hidden&&!settingsPanel.contains(event.target))document.getElementById('settingsClose').focus()});
+
+async function loadPublishedLevels(){
+  const play=document.getElementById('playBtn'),picker=document.getElementById('menuLevels'),retry=document.getElementById('retryLevels'),status=document.getElementById('levelStatus');
+  play.disabled=true;picker.disabled=true;retry.hidden=true;status.textContent='';
+  document.getElementById('menuProgress').textContent='Bölümler yükleniyor…';
+  try{await initializeLevels();refreshMenu();play.disabled=false;picker.disabled=false}
+  catch(error){document.getElementById('menuProgress').textContent='Bölümler yüklenemedi.';status.textContent='Bağlantıyı kontrol edip yeniden deneyebilirsin.';retry.hidden=false;console.warn('Level catalog unavailable:',error.message)}
+}
+document.getElementById('retryLevels').onclick=loadPublishedLevels;
+loadPublishedLevels();
