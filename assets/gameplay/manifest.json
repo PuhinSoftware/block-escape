@@ -1,0 +1,91 @@
+{
+  "base_commit": "dc5776a9b15254077d8ad1efd0d011135621c62f",
+  "total_art_bytes": 203549,
+  "files": [
+    {
+      "file": "arrow-raised.svg",
+      "bytes": 527,
+      "sha256": "85508d2401eb76769cc69f7b4a6cd47d7877e6f88982f5fbcf64921ab0c6c106"
+    },
+    {
+      "file": "block-blue.webp",
+      "bytes": 5600,
+      "sha256": "1233f4f7968cac47d115246b43e21dda8add922200aa6b0b2545c8d2cc9f519c"
+    },
+    {
+      "file": "block-green.webp",
+      "bytes": 5708,
+      "sha256": "7f09c5cf130ef60d0b6a8e9365958055a3e0eed3755accff3d550487efd1e0ea"
+    },
+    {
+      "file": "block-purple.webp",
+      "bytes": 5564,
+      "sha256": "cada4351bd213912a73ea51fb1973c9342f48b545ce475492bf25e8996039371"
+    },
+    {
+      "file": "block-red.webp",
+      "bytes": 5490,
+      "sha256": "9290bb1e8f2b6648e9ba0de348e6352ad2dabdf3da3c2cf9edc445b1bdbec745"
+    },
+    {
+      "file": "board-frame.svg",
+      "bytes": 6777,
+      "sha256": "a21f185ef0df41bd1923d143a3682f1f6e4da40991d7d6723c52ae40d5d8b694"
+    },
+    {
+      "file": "crystal-cluster.svg",
+      "bytes": 981,
+      "sha256": "24878501f46c307dec249f0074af7eed322592fb815d28010d9576e493397c06"
+    },
+    {
+      "file": "crystal-mine.webp",
+      "bytes": 119826,
+      "sha256": "bd4b7ed7820de68190e5db87118a9955d6a94d8fed1d57f40ab8903294bc906b"
+    },
+    {
+      "file": "frame-stone.webp",
+      "bytes": 1112,
+      "sha256": "a33ab95c0e17fef70ba1ef5218d6ad36fdad5718e0b1eb34e427187929ee9f99"
+    },
+    {
+      "file": "lantern-art.svg",
+      "bytes": 1266,
+      "sha256": "94549d31213eb5c7652ccef299307cc601174145830a44e486d8a756f9d4ef20"
+    },
+    {
+      "file": "list-raised.svg",
+      "bytes": 588,
+      "sha256": "1211a0d435c4fdca757e41b2d0aee5b7d31276a801f06392584986175c7c510b"
+    },
+    {
+      "file": "miner-bloop.webp",
+      "bytes": 35256,
+      "sha256": "9bf94231801fb792fb04c2e1b86c8c159cfe3a702ff33a94dc3e9bd27e4a6cf0"
+    },
+    {
+      "file": "panel-blue.svg",
+      "bytes": 1440,
+      "sha256": "4c9605ca9e8ccc596123e84c07a81014849ea12e4c23f96cacc19559c48f323f"
+    },
+    {
+      "file": "panel-gold.svg",
+      "bytes": 1440,
+      "sha256": "6155350be440697762c6ac24afe1dc825ae6e30899dd830431af13bf6bd22d5b"
+    },
+    {
+      "file": "reset-raised.svg",
+      "bytes": 371,
+      "sha256": "feb5f8c2fd5d1a320d74f75e16b6f078534cf395eb8bde2ec65b9da64061d44b"
+    },
+    {
+      "file": "stone-cell.webp",
+      "bytes": 10744,
+      "sha256": "364602d3f6632da7c0d4757afef4dd4100c4b97841f35bdb4a81c4420f78ca95"
+    },
+    {
+      "file": "wood-plaque.svg",
+      "bytes": 859,
+      "sha256": "0e5047f57d2a989f02fdb836ebb92135c37e32a93b8bc69306eb9ca8025f8364"
+    }
+  ]
+}
