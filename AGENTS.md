@@ -2,7 +2,7 @@
 
 ## Architecture
 - Static, dependency-free browser game. `index.html` defines the Turkish UI, `style.css` the responsive layout and `game.js` catalog loading, rendering, storage and synthesized audio. `engine/rules.js` is the shared Node/browser movement API; `engine/catalog.js` validates the versioned JSON catalog.
-- Preserve the 6×6 rules, the 25 published v0.6 levels, blocked taps without move cost, reset and level unlocking.
+- Preserve the 6×6 rules, the 25 published v0.6 levels, collision taps without successful-move cost but with one-life damage, reset and level unlocking.
 - `blockEscapeUnlockedV06` stores new-catalog progress. Never read/migrate/delete/overwrite the legacy `blockEscapeUnlocked` key. Never clear storage. `blockEscapeSound` independently stores `on` / `off`.
 
 ## Coding rules
@@ -71,3 +71,11 @@
 - Run `node --test tests/level-system.test.cjs`, `node tools/generate-levels.cjs --check`, `node tools/validate-levels.cjs` and `tests/run-browser.cjs` with the above NODE_PATH/server. The runner fails if any suite fails. Use `ARTIFACT_DIR` outside the checkout.
 - Keep JSON fetch failure/retry accessible, prevent play before complete validation, and use relative URLs for static hosting. `file://` is not supported.
 - Changing existing puzzle semantics requires an explicit data/progress version decision. Adding future levels must preserve the reviewed prefix, regenerate reports, extend acceptance tests and review difficulty on real boards. Future world art is not delivered by catalog metadata.
+
+## v0.6.1 collision laboratory
+- The 25 published v0.6 JSON levels and progress key remain unchanged. `?lab=collision` loads only the five separate `levels/lab/collision-v1.json` levels; never read/write normal progress for lab unlocking. Sound remains shared.
+- Route gameplay through shared `traceMove` / `createState` / `transition`. Scan the whole ray and stop at the first typed block/wall contact. Collisions retain every coordinate, cost exactly one life and no successful move. States are playing/won/failed; terminal states reject input. Every restart/next level starts with 3 lives.
+- `collision.js` and `collision.css` own effects only. Keep a single busy lock through outward contact, shake and return. Prepare audio on the input gesture; honor mute at impact. Vibration is optional, and reduced motion skips motion/particles/haptics. Release locks on unsupported/cancelled/paused animations.
+- Failed dialogs offer retry and menu only; Escape must not resume a zero-life game. Ordinary level-picker dialogs must remain dismissible even after failure/menu return. Preserve focus trapping and touch-sized controls.
+- Do not claim permanent traps from legal removals. Collision edges only lose lives; current solver prunes them. Future lock/key mechanics require validating a new schema/state/solver assumption, not merely adding decorative fields.
+- Run both Node suites, `tools/validate-collision.cjs`, unchanged v0.6 generation/verification and all 12 browser suites. Use document coordinates for stable geometry across legitimate vertical scrolling; compare horizontal bounds with the actual viewport, not expanded innerWidth.

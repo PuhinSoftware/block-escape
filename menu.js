@@ -7,7 +7,7 @@ const menuMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 const stopScreenMotion=event=>{if(event.matches)screenTransition?.cancel()};
 if(menuMotion.addEventListener)menuMotion.addEventListener('change',stopScreenMotion);else menuMotion.addListener(stopScreenMotion);
 function syncMenuSound(){const panelButton=document.getElementById('settingsSound');panelButton.setAttribute('aria-pressed',String(sound));panelButton.textContent=sound?'Ses açık':'Ses kapalı'}
-function refreshMenu(){document.getElementById('menuProgress').textContent=`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
+function refreshMenu(){document.getElementById('menuProgress').textContent=LAB_MODE?'Çarpışma testi · 5 bölüm · Kayıt tutulmaz':`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
 window.openGame=function(){
   if(!levelsReady)return;
   gameStarted=true;menu.hidden=true;gameScreen.hidden=false;revealScreen(gameScreen);
@@ -15,14 +15,15 @@ window.openGame=function(){
 };
 document.getElementById('playBtn').onclick=()=>{
   if(!levelsReady)return;
-  if(!gameStarted)load(unlocked-1);
+  if(playStatus==='failed')load(index);else if(!gameStarted)load(LAB_MODE?0:unlocked-1);
   window.openGame();
 };
-document.getElementById('homeBtn').onclick=()=>{
+window.returnToMenu=()=>{
   if(busy)return;
   gameScreen.hidden=true;menu.hidden=false;refreshMenu();syncMenuSound();revealScreen(menu);
   document.getElementById('playBtn').focus();
 };
+document.getElementById('homeBtn').onclick=window.returnToMenu;
 document.getElementById('menuLevels').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);
 // Track dialog visibility to focus/trap keyboard navigation without changing rules.
 const overlay=document.getElementById('overlay');

@@ -6,16 +6,16 @@ function solve(level,{maxExpansions=5000,timeoutMs=1000}={}){
   const validation=Rules.validateLevel(level);
   if(!validation.valid)return {status:'invalid',errors:validation.errors,solution:[],minimumMoves:null,expansions:0};
   if(!Number.isInteger(maxExpansions)||maxExpansions<0||!Number.isFinite(timeoutMs)||timeoutMs<0)throw Error('Invalid solver limits');
-  const deadline=performance.now()+timeoutMs;let items=level.blocks.slice(),expansions=0;const solution=[];
-  while(!Rules.isWon(items)){
+  const deadline=performance.now()+timeoutMs;let state=Rules.createState(level),expansions=0;const solution=[];
+  while(state.status!=='won'){
     let selected;
-    for(const block of items){
+    for(const block of state.blocks){
       if(expansions>=maxExpansions||performance.now()>=deadline)return {status:'limit',solution,minimumMoves:null,expansions};
       expansions++;
-      if(Rules.canExit(level,items,block.id)){selected=block.id;break}
+      if(Rules.traceMove(level,state.blocks,block.id).type==='exit'){selected=block.id;break}
     }
     if(selected===undefined)return {status:'unsolvable',solution,minimumMoves:null,expansions};
-    items=Rules.applyMove(level,items,selected).blocks;solution.push(selected);
+    state=Rules.transition(level,state,selected).state;solution.push(selected);
   }
   return {status:'solved',solution,minimumMoves:solution.length,expansions};
 }

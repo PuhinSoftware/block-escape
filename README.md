@@ -1,4 +1,4 @@
-# Block Escape — Prototype 0.6
+# Block Escape — Prototype 0.6.1
 
 Android-first mobile browser puzzle prototype, no framework or build required.
 
@@ -23,7 +23,47 @@ Tap an arrow block. It exits the 6x6 board if no other block or wall is in the p
 - `tools/`: seeded generation, quality gates, solver and verification
 - `reports/`: reproducible solution reports and test evidence
 
-## v0.6 level system (current)
+## v0.6.1 collision / lives (current gameplay)
+
+Normal play still uses the exact 25 published v0.6 layouts and `blockEscapeUnlockedV06` progress. All levels now start with **3 lives**. A block travels along its arrow to the first occupied square anywhere on its ray, makes contact, shakes and returns to its original square; every other block stays put. Contact costs one life, no successful-move count, and does not remove the block. A clear ray exits without damage. Input/reset/navigation are locked during travel and return. At zero lives, **LEVEL FAILED** offers **Tekrar Dene** (original board + 3 lives) and **Ana Menü**. Returning to the menu mid-level preserves lives; playing after failure restarts the failed level. The next level always gets 3 fresh lives. Lives are session state, not saved progress.
+
+`engine/rules.js` now exposes `traceMove` (ordered ray/first typed block-or-wall contact), `createState` and immutable `transition` (`exit`, `collision`, `ignored`; state includes blocks/moves/lives/status). Both the UI and solver use `transition`. The previous geometry helpers remain compatible with the v0.6 generator and its reports. `collision.js` / `collision.css` implement bounded contact/shake/return effects, a transient spark, optional 15ms vibration, heart loss and the compact blue/gold life rail. Audio is prepared on the original user gesture and played at contact only if still enabled. Missing/throwing vibration or animation APIs are nonfatal; reduced motion skips movement, particles, heart motion and vibration. No new library, undo, score or game artwork is introduced.
+
+### Separate five-level laboratory
+
+Run the local server and open **`http://127.0.0.1:8080/?lab=collision`** (on a project site append `?lab=collision` to its normal page URL). This loads only `levels/lab/collision-v1.json`, visibly labels TEST mode and unlocks the five laboratory levels without reading or writing normal progress. There is no lab level in the normal 25-item picker. Remove the query parameter to return to the normal catalog. This developer URL is not an authentication boundary and does not publish/deploy anything.
+
+| Test | Name | Blocks | Minimum successful moves | Dependency waves | Initially free |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1 | Çarpışmayı Öğren | 3 | 3 | 2 | 2 |
+| 2 | Doğru Sıra | 5 | 5 | 5 | 1 |
+| 3 | Zincirleme Açılma | 6 | 6 | 6 | 1 |
+| 4 | Dikkatli Seçim | 6 | 6 | 4 | 2 |
+| 5 | Kristal Ustalığı | 12 | 12 | 9 | 2 |
+
+These are hand-designed tests, not 300 generated levels. Levels 3 and 4 deliberately have the same count but different dependency/choice structures. All five solve with all 3 lives, can recover after two deliberate collisions, and fail on a third. See [solution/contact traces](reports/collision-solutions.json) and [technical/test report](reports/v061-tests.md).
+
+**Design limit:** successful removal only opens paths. A legal successful move cannot permanently trap another block; we do not simulate or advertise such a trap. Strategy here is inspecting near/distant blockers and avoiding damage, not choosing between mutually destructive successful actions. The solver skips collision edges because they preserve the board and only reduce lives; complete legal orderings remain optimal with one successful move per original block. A fixed wall directly on a block's ray would make that block permanently unremovable under these rules, so playable laboratory walls are outside solution rays. Separate negative fixtures test wall collision/failure.
+
+For future keys/locks/special obstacles, extend schema validation and `traceMove`'s typed contact resolution, then `transition`/state serialization. Keep visual effects consumers of contact coordinates, never owners of movement rules. If future actions can change directions/locks/inventory, revisit the monotonic proof and solver (e.g. bounded state search); the present greedy optimality claim must not be reused automatically.
+
+### Collision verification
+
+```sh
+node tests/collision.test.cjs
+node tests/level-system.test.cjs
+node tools/validate-collision.cjs
+# Only after intentionally editing the laboratory data:
+node tools/validate-collision.cjs --write
+# With the HTTP server running:
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules ARTIFACT_DIR=/tmp/block-escape-v061 node tests/run-browser.cjs
+```
+
+The runner now includes 12 browser suites, adding `tests/collision-browser.cjs`. The new suite covers 320/375/390/430px contact/return frames, actual touch targets, one-life duplicate guard, terminal failure, retry/menu, all five lab solutions, normal save isolation, fixed-wall contact in all directions, mute/reduced motion and unsupported/cancelled/paused APIs. `tests/fixtures/v06-hashes.json` pins the published catalog/25 layouts/old reports to v0.6 commit `d4da51f`. Existing generator reproduction and 25-level verification commands below still apply unchanged. WebKit requires a separately available test engine; use `BROWSER=webkit` with `tests/collision-browser.cjs` to require it without a Chromium fallback.
+
+## v0.6 level data system (retained)
+
+
 
 Only **25 new levels** are playable. The previous ten layouts have been replaced, not extended or reused. `levels/retired-signatures.json` excludes their arrangements, including rotations/reflections/translations, without loading old levels into the game. The mine artwork, menu/Bloop, directional exit/blocked/win animations, sound, reset and level picker are retained. Undo and star scoring remain absent.
 
@@ -91,7 +131,7 @@ node tools/validate-levels.cjs
 NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules ARTIFACT_DIR=/tmp/block-escape-v06 node tests/run-browser.cjs
 ```
 
-`tests/run-browser.cjs` runs all eleven suites, reports failures separately and exits nonzero on any failure/timeout. Playwright is a development tool only. Set `CHROMIUM_PATH` if needed. `tests/level-system-browser.cjs` completes all 25 levels using real touch hit targets at 320×568, 375×667, 390×844 and 430×932 (1,500 successful solution taps total, plus reset checks). It compares all 36 cells at first/middle/final moves, checks block containment, legacy/new progress isolation, reload, picker limits, catalog failure/retry and a project subdirectory. Earlier suites retain audio, animations, desktop/mobile geometry, oversized glyphs, menu, settings, art and removed-action coverage. `ARTIFACT_DIR` writes screenshots outside the checkout.
+`tests/run-browser.cjs` runs all twelve suites, reports failures separately and exits nonzero on any failure/timeout. Playwright is a development tool only. Set `CHROMIUM_PATH` if needed. `tests/level-system-browser.cjs` completes all 25 levels using real touch hit targets at 320×568, 375×667, 390×844 and 430×932 (1,500 successful solution taps total, plus reset checks). It compares all 36 cells at first/middle/final moves, checks block containment, legacy/new progress isolation, reload, picker limits, catalog failure/retry and a project subdirectory. Earlier suites retain audio, animations, desktop/mobile geometry, oversized glyphs, menu, settings, art and removed-action coverage. `ARTIFACT_DIR` writes screenshots outside the checkout.
 
 To explicitly require WebKit: `BROWSER=webkit NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/level-system-browser.cjs`. An unavailable engine is a failed prerequisite, never replaced with Chromium. Chromium touch emulation is not physical iPhone Safari or Android device testing. See [solution report](reports/levels-v06.md) and [test report](reports/v06-tests.md) for this revision's actual results.
 

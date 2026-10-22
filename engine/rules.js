@@ -40,9 +40,36 @@
     while(x>=0&&y>=0&&x<level.gridSize&&y<level.gridSize){cells.push([x,y]);x+=vector[0];y+=vector[1]}
     return cells;
   }
-  function canExit(level,items,id){
-    const block=items.find(item=>item.id===id);if(!block||!own(VECTORS,block.dir))return false;
-    return ray(level,block).every(([x,y])=>!(level.walls||[]).some(w=>w[0]===x&&w[1]===y)&&!items.some(item=>item.id!==id&&item.x===x&&item.y===y));
+  // A full ordered ray finds the first contact, including distant obstacles.
+  // Contact carries a typed obstacle so future mechanics can resolve it here.
+  function traceMove(level,items,id){
+    const block=items.find(item=>item.id===id);
+    if(!block||!own(VECTORS,block.dir))return {type:'ignored'};
+    let distance=0;
+    for(const [x,y] of ray(level,block)){
+      distance++;
+      const other=items.find(item=>item.id!==id&&item.x===x&&item.y===y);
+      if(other)return {type:'collision',contact:{kind:'block',id:other.id,x,y},distance};
+      if((level.walls||[]).some(w=>w[0]===x&&w[1]===y))return {type:'collision',contact:{kind:'wall',x,y},distance};
+    }
+    return {type:'exit',distance:distance+1};
+  }
+  function canExit(level,items,id){return traceMove(level,items,id).type==='exit'}
+  function createState(level){
+    return {blocks:level.blocks.map(b=>({...b})),moves:0,lives:3,status:'playing'};
+  }
+  // Immutable state boundary shared by UI and solver. Rejected taps cost no move;
+  // collisions cost exactly one life and preserve every board coordinate.
+  function transition(level,state,id){
+    if(state.status!=='playing'||state.lives<=0)return {type:'ignored',state};
+    const outcome=traceMove(level,state.blocks,id);
+    if(outcome.type==='ignored')return {...outcome,state};
+    if(outcome.type==='collision'){
+      const lives=state.lives-1;
+      return {...outcome,state:{...state,lives,status:lives===0?'failed':'playing'}};
+    }
+    const blocks=state.blocks.filter(block=>block.id!==id);
+    return {...outcome,state:{...state,blocks,moves:state.moves+1,status:isWon(blocks)?'won':'playing'}};
   }
   function legalMoves(level,items=level.blocks){return items.filter(block=>canExit(level,items,block.id)).map(block=>block.id)}
   function applyMove(level,items,id){
@@ -50,5 +77,5 @@
     return {moved:true,blocks:items.filter(block=>block.id!==id)};
   }
   function isWon(items){return items.length===0}
-  return Object.freeze({GRID_SIZE,WORLD_IDS,VECTORS,validateLevel,ray,canExit,legalMoves,applyMove,isWon});
+  return Object.freeze({GRID_SIZE,WORLD_IDS,VECTORS,validateLevel,ray,traceMove,createState,transition,canExit,legalMoves,applyMove,isWon});
 });

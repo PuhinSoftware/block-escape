@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "mode": "collision-lab",
+  "results": [
+    {
+      "id": 1,
+      "title": "Çarpışmayı Öğren",
+      "minimumMoves": 3,
+      "solution": [
+        1,
+        0,
+        2
+      ],
+      "livesRemaining": 3,
+      "metrics": {
+        "blockCount": 3,
+        "density": 0.083,
+        "dependencyDepth": 2,
+        "initialLegalMoves": 2,
+        "blockedRatio": 0.333,
+        "directionCount": 3,
+        "rowCount": 2,
+        "columnCount": 3,
+        "frontiers": [
+          2,
+          1
+        ]
+      },
+      "wrongMoves": [
+        {
+          "tap": 0,
+          "lives": 2,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 2
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 1,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 2
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 0,
+          "status": "failed",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Doğru Sıra",
+      "minimumMoves": 5,
+      "solution": [
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "livesRemaining": 3,
+      "metrics": {
+        "blockCount": 5,
+        "density": 0.139,
+        "dependencyDepth": 5,
+        "initialLegalMoves": 1,
+        "blockedRatio": 0.8,
+        "directionCount": 4,
+        "rowCount": 3,
+        "columnCount": 3,
+        "frontiers": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "wrongMoves": [
+        {
+          "tap": 0,
+          "lives": 2,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 1,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 0,
+          "status": "failed",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Zincirleme Açılma",
+      "minimumMoves": 6,
+      "solution": [
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "livesRemaining": 3,
+      "metrics": {
+        "blockCount": 6,
+        "density": 0.167,
+        "dependencyDepth": 6,
+        "initialLegalMoves": 1,
+        "blockedRatio": 0.833,
+        "directionCount": 4,
+        "rowCount": 3,
+        "columnCount": 4,
+        "frontiers": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "wrongMoves": [
+        {
+          "tap": 0,
+          "lives": 2,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 1,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 0,
+          "status": "failed",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Dikkatli Seçim",
+      "minimumMoves": 6,
+      "solution": [
+        3,
+        2,
+        1,
+        0,
+        5,
+        4
+      ],
+      "livesRemaining": 3,
+      "metrics": {
+        "blockCount": 6,
+        "density": 0.167,
+        "dependencyDepth": 4,
+        "initialLegalMoves": 2,
+        "blockedRatio": 0.667,
+        "directionCount": 3,
+        "rowCount": 4,
+        "columnCount": 3,
+        "frontiers": [
+          2,
+          2,
+          1,
+          1
+        ]
+      },
+      "wrongMoves": [
+        {
+          "tap": 0,
+          "lives": 2,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 1,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 0,
+          "status": "failed",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Kristal Ustalığı",
+      "minimumMoves": 12,
+      "solution": [
+        7,
+        6,
+        5,
+        9,
+        8,
+        11,
+        4,
+        3,
+        2,
+        1,
+        0,
+        10
+      ],
+      "livesRemaining": 3,
+      "metrics": {
+        "blockCount": 12,
+        "density": 0.333,
+        "dependencyDepth": 9,
+        "initialLegalMoves": 2,
+        "blockedRatio": 0.833,
+        "directionCount": 4,
+        "rowCount": 6,
+        "columnCount": 6,
+        "frontiers": [
+          2,
+          2,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "wrongMoves": [
+        {
+          "tap": 0,
+          "lives": 2,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 1,
+          "status": "playing",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "tap": 0,
+          "lives": 0,
+          "status": "failed",
+          "contact": {
+            "kind": "block",
+            "id": 1,
+            "x": 4,
+            "y": 1
+          }
+        }
+      ]
+    }
+  ]
+}
