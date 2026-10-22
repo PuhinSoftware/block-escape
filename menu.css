@@ -6,7 +6,7 @@
 .menu-background:after{content:'';position:absolute;inset:0;background:linear-gradient(#09245140,transparent 28%,transparent 52%,#031c43cc 86%,#021a37f2)}
 .menu-content{position:relative;width:min(100%,490px);height:100vh;height:100svh;min-height:560px;margin:auto;text-align:center;padding: max(12px,env(safe-area-inset-top)) 24px max(24px,env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center}
 .menu-toolbar{display:flex;justify-content:space-between;width:100%;height:46px;position:relative;z-index:4}
-#menuSound,#settingsBtn{appearance:none;-webkit-appearance:none;min-width:44px;min-height:44px;border-radius:13px;border:1px solid #8badf28c;background:linear-gradient(#2c5087,#102e59);color:#eef6ff;font-size:25px;box-shadow:inset 0 2px 2px #ffffff20,0 3px 0 #092448;touch-action:manipulation}
+#settingsBtn{appearance:none;-webkit-appearance:none;min-width:44px;min-height:44px;border-radius:13px;border:1px solid #8badf28c;background:linear-gradient(#2c5087,#102e59);color:#eef6ff;font-size:25px;box-shadow:inset 0 2px 2px #ffffff20,0 3px 0 #092448;touch-action:manipulation}
 .menu-logo{position:relative;z-index:2;flex-shrink:0;width:108%;margin:-2px 0 -8px;line-height:1;filter:drop-shadow(0 5px 4px #00276266)}.menu-logo img{display:block;width:100%;height:auto}
 .menu-scene{position:relative;isolation:isolate;width:100%;flex:1;min-height:150px;display:grid;grid-template-rows:minmax(0,1fr);place-items:center;margin:0 auto;pointer-events:none}
 .island-layer{position:absolute;width:56%;height:auto;left:-24%;bottom:-4%;animation:island-float 5s ease-in-out infinite;filter:drop-shadow(0 8px 10px #002b5d55)}
