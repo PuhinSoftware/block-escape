@@ -2,12 +2,18 @@
 // Presentation/navigation only. The existing game owns levels, moves and storage.
 const menu=document.getElementById('menu'),gameScreen=document.querySelector('.app');
 let gameStarted=false,modalOpener,screenTransition;
-function revealScreen(element){screenTransition?.cancel();if(!reducedMotion()&&element.animate)screenTransition=element.animate([{opacity:0},{opacity:1}],{duration:220,easing:'ease-out'})}
+function revealScreen(element){
+  screenOpening=true;syncClock();screenTransition?.cancel();
+  const animation=!reducedMotion()&&element.animate?element.animate([{opacity:0},{opacity:1}],{duration:220,easing:'ease-out'}):null;
+  screenTransition=animation;
+  if(!animation){screenOpening=false;syncClock();return}
+  Promise.race([animation.finished.catch(()=>{}),new Promise(resolve=>setTimeout(resolve,340))]).then(()=>{if(screenTransition===animation){screenOpening=false;syncClock()}});
+}
 const menuMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 const stopScreenMotion=event=>{if(event.matches)screenTransition?.cancel()};
 if(menuMotion.addEventListener)menuMotion.addEventListener('change',stopScreenMotion);else menuMotion.addListener(stopScreenMotion);
 function syncMenuSound(){const panelButton=document.getElementById('settingsSound');panelButton.setAttribute('aria-pressed',String(sound));panelButton.textContent=sound?'Ses açık':'Ses kapalı'}
-function refreshMenu(){document.getElementById('menuProgress').textContent=LAB_MODE?'Çarpışma testi · 5 bölüm · Kayıt tutulmaz':`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
+function refreshMenu(){document.getElementById('menuProgress').textContent=LAB_MODE?`${LAB_KIND==='timer'?'Süre':'Çarpışma'} testi · 5 bölüm · İlerleme kaydedilmez`:`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
 window.openGame=function(){
   if(!levelsReady)return;
   gameStarted=true;menu.hidden=true;gameScreen.hidden=false;revealScreen(gameScreen);

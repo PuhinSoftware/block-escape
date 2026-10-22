@@ -224,3 +224,66 @@ Started from main commit `dc5776a9b15254077d8ad1efd0d011135621c62f` on the separ
 With the static server on port 8080, run the nine existing browser suites and `NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/art-upgrade.cjs`. Set `ARTIFACT_DIR` for 320/375/390/430px first/second-level screenshots; `BROWSER=webkit` requires WebKit without fallback. The new test checks independent art layers, transparency/opaque faces, the <240KiB art budget, a single shared cell-texture request, no old gameplay PNG requests, four arrow/color skins, unobstructed hit targets and menu return.
 
 Validation: baseline gameplay/10-level/audio and mobile containment checks passed; all ten Chromium suites and JS syntax checks passed. Initial visual review caught panel letterboxing, fixed with SVG scaling. The new alpha check caught slightly translucent generated block faces; normalization restored opaque centers while keeping transparent corners. WebKit launch failed because its executable is absent (earlier installation attempts were blocked by network policy). Chromium mobile emulation is not physical Safari/Android validation.
+
+
+## v0.6.2 — Countdown Timer & Smooth Star Progress
+
+The 25 published puzzles remain **untimed** and byte-identical. `?lab=collision`
+keeps its five existing puzzles. Open `?lab=timer` for five experimental timer
+puzzles (untimed / 45 / 40 / 35 / 30 seconds). These intentionally reuse the
+verified collision layouts to isolate timer behavior, not introduce new puzzle
+balancing. Only available levels appear in each picker.
+
+The continuous gold bar measures successful removals / initial blocks; its three
+milestones are completion markers, **not the final performance rating**. A 550ms
+CSS transform transition retargets from its currently rendered value. Collisions
+do not change it; retry resets it. Reduced motion disables the transition and
+star effects.
+
+`engine/performance.js` is the shared testable active clock/scoring API.
+`timer-stars.js` integrates it with gameplay. One 50ms scheduled update uses
+monotonic `performance.now()`, synchronizing at state transitions. Menus, dialogs,
+opening transitions, block animations, hidden pages and terminal states pause
+the clock. Retry starts a fresh clock and three lives. At zero, TIME'S UP! uses
+the same guarded retry/menu flow as LEVEL FAILED. Display rounds remaining time
+up; internal milliseconds never go negative.
+
+Optional schema-1 level metadata:
+
+```json
+{
+  "timeLimitSeconds": 45,
+  "starThresholds": { "threeSeconds": 25, "twoSeconds": 40 }
+}
+```
+
+`timeLimitSeconds` must be positive. Thresholds must be positive, ordered and
+within the time limit. Omit the limit for an untimed tutorial. Completed timed
+levels award 3 stars for all 3 lives and active time <= threeSeconds; 2 for at
+least 2 lives and active time <= twoSeconds; otherwise 1. Default thresholds are
+60% / 90% of the limit. Untimed completion uses remaining lives (3 / 2 / 1).
+Failed attempts earn no stars. Active time excludes animations on every device.
+
+Best ratings are stored separately in `blockEscapeBestStarsV062` as
+`{schemaVersion:1, ratings:{"v06:1":3,"timer:1":2,"collision:1":3}}`.
+A lower result never overwrites a higher rating. Lab namespaces cannot replace
+normal ratings. No old progress/sound key is migrated, deleted or cleared;
+normal unlocking continues to use `blockEscapeUnlockedV06`. Missing/denied
+storage does not block play. The menu and artwork remain unchanged.
+
+Verification (serve the repository on port 8080):
+
+```sh
+node tests/timer-stars.test.cjs
+node tools/validate-timer.cjs
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/timer-stars-browser.cjs
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/run-browser.cjs
+```
+
+The aggregate runner now includes 13 browser packages. Timer tests use an
+injected monotonic clock in Node and Playwright's fake clock in Chromium, plus
+real animation interpolation/retargeting and mobile geometry at 320/375/390/430px.
+Use `ARTIFACT_DIR=/tmp/block-escape-v062` for screenshots and `BROWSER=webkit`
+for a separately installed WebKit engine. Chromium touch emulation is not an
+actual iPhone Safari or Android hardware test. Rebuild the timer solution report
+with `node tools/validate-timer.cjs --write` after intentional lab changes.

@@ -13,7 +13,8 @@ const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>levelsReady);await page.locator('#playBtn').click();await page.locator('#sound').tap();
 // Deliberate oversized glyph: tests intrinsic-content independence, not Safari emulation.
 if(enlarged)await page.addStyleTag({content:'.app .block{font-size:96px}'});
-const cells=()=>page.locator('.cell').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
+// Touch auto-scroll changes viewport coordinates, not board geometry.
+const cells=()=>page.locator('.cell').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height}}));
 const initial=await cells();
 const check=async stage=>{
 const current=await cells();assert.equal(current.length,36);

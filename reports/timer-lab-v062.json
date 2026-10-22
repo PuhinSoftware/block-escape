@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "note": "Experimental active-play limits, not production balance. Layouts intentionally reuse the verified collision lab.",
+  "levels": [
+    {
+      "id": 1,
+      "title": "Süresiz Keşif",
+      "blocks": 3,
+      "timeLimitSeconds": null,
+      "minimumMoves": 3,
+      "solution": [
+        1,
+        0,
+        2
+      ],
+      "status": "solved"
+    },
+    {
+      "id": 2,
+      "title": "Kristal Yarışı",
+      "blocks": 5,
+      "timeLimitSeconds": 45,
+      "minimumMoves": 5,
+      "solution": [
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "status": "solved"
+    },
+    {
+      "id": 3,
+      "title": "Maden Rotası",
+      "blocks": 6,
+      "timeLimitSeconds": 40,
+      "minimumMoves": 6,
+      "solution": [
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "status": "solved"
+    },
+    {
+      "id": 4,
+      "title": "Zaman Ustası",
+      "blocks": 6,
+      "timeLimitSeconds": 35,
+      "minimumMoves": 6,
+      "solution": [
+        3,
+        2,
+        1,
+        0,
+        5,
+        4
+      ],
+      "status": "solved"
+    },
+    {
+      "id": 5,
+      "title": "Son Vardiya",
+      "blocks": 12,
+      "timeLimitSeconds": 30,
+      "minimumMoves": 12,
+      "solution": [
+        7,
+        6,
+        5,
+        9,
+        8,
+        11,
+        4,
+        3,
+        2,
+        1,
+        0,
+        10
+      ],
+      "status": "solved"
+    }
+  ]
+}
