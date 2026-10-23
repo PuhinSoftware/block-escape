@@ -15,7 +15,7 @@ await page.locator('#settingsBtn').tap();assert.equal(await page.locator('#setti
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth));
 await page.keyboard.press('Shift+Tab');assert.equal(await page.locator('#settingsDone').evaluate(el=>el===document.activeElement),true);
 await page.keyboard.press('Tab');assert.equal(await page.locator('#settingsClose').evaluate(el=>el===document.activeElement),true);
-await page.locator('#settingsSound').tap();assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeSound')),'off');assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');
+await page.locator('#settingsSound').tap();assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('blockEscapeAudioV063')).musicEnabled),false);assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');
 await page.locator('#motionToggle').tap();assert.equal(await page.locator('#playBtn').evaluate(el=>getComputedStyle(el).animationPlayState),'paused');assert.equal(await page.locator('.bloop-layer').evaluate(el=>getComputedStyle(el).animationPlayState),'paused');
 if(process.env.ARTIFACT_DIR)await page.screenshot({path:`${process.env.ARTIFACT_DIR}/settings-${width}.png`,fullPage:true});
 await page.keyboard.press('Escape');assert.equal(await page.locator('#settingsBackdrop').isVisible(),false);assert.equal(await page.locator('#settingsBtn').evaluate(el=>el===document.activeElement),true);assert.equal(await page.locator('#menu').evaluate(el=>el.inert),false);

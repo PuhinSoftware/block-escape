@@ -12,10 +12,11 @@ function revealScreen(element){
 const menuMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 const stopScreenMotion=event=>{if(event.matches)screenTransition?.cancel()};
 if(menuMotion.addEventListener)menuMotion.addEventListener('change',stopScreenMotion);else menuMotion.addListener(stopScreenMotion);
-function syncMenuSound(){const panelButton=document.getElementById('settingsSound');panelButton.setAttribute('aria-pressed',String(sound));panelButton.textContent=sound?'Ses açık':'Ses kapalı'}
+function syncMenuSound(){syncAudioControls()}
 function refreshMenu(){document.getElementById('menuProgress').textContent=LAB_MODE?`${LAB_KIND==='timer'?'Süre':'Çarpışma'} testi · 5 bölüm · İlerleme kaydedilmez`:`${unlocked} / ${levels.length} bölüm açık · İlerlemen güvende`}
 window.openGame=function(){
   if(!levelsReady)return;
+  GameAudio.setScene('playing',levels[index].worldId);GameAudio.unlock();
   gameStarted=true;menu.hidden=true;gameScreen.hidden=false;revealScreen(gameScreen);
   document.getElementById('homeBtn').focus();
 };
@@ -26,6 +27,7 @@ document.getElementById('playBtn').onclick=()=>{
 };
 window.returnToMenu=()=>{
   if(busy)return;
+  GameAudio.setScene('menu');
   gameScreen.hidden=true;menu.hidden=false;refreshMenu();syncMenuSound();revealScreen(menu);
   document.getElementById('playBtn').focus();
 };
@@ -75,12 +77,12 @@ document.getElementById('settingsBtn').onclick=()=>{
 };
 document.getElementById('settingsClose').onclick=closeSettings;
 document.getElementById('settingsDone').onclick=closeSettings;
-document.getElementById('settingsSound').onclick=()=>{toggleSound();syncMenuSound()};
+document.getElementById('settingsSound').onclick=toggleMusic;
 settingsBackdrop.onclick=event=>{if(event.target===settingsBackdrop)closeSettings()};
 settingsBackdrop.addEventListener('keydown',event=>{
   if(event.key==='Escape'){event.preventDefault();closeSettings()}
   if(event.key==='Tab'){
-    const buttons=[...settingsPanel.querySelectorAll('button')];const first=buttons[0],last=buttons.at(-1);
+    const buttons=[...settingsPanel.querySelectorAll('button,input')];const first=buttons[0],last=buttons.at(-1);
     if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}
     else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}
   }

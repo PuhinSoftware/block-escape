@@ -322,3 +322,52 @@ hardware. Existing 25 levels, both labs, storage keys and artwork remain intact.
 See [v0.6.2.1 technical report](reports/v0621-technical-report.md) for results and
 mobile dimensions. Short screens retain vertical scrolling so tiles and touch
 targets need not shrink.
+
+
+## v0.6.3 — Audio Experience
+
+`audio-manager.js` owns one lazy AudioContext, one looping HTML audio element,
+independent music/effect gain buses, settings and bounded effect voices.
+`audio-ui.js` connects settings, the music-only note button and visibility/page
+lifecycle. `star-audio.js` is now only an adapter to this manager. Game rules and
+all 25 normal / 5 collision / 5 timer level data remain unchanged.
+
+Defaults are music on at 30%, effects on at 70%. Both controls and their native
+0–100 sliders are in Settings. The game note toggles **music only**. Settings
+use `blockEscapeAudioV063` (`schemaVersion:1`, `musicEnabled`, `sfxEnabled`,
+`musicVolume`, `sfxVolume`). On first use, old `blockEscapeSound=off` disables
+both channels. The old key and every progression/best-star key remain untouched.
+Valid versioned settings take precedence thereafter. Denied storage stays usable.
+
+Music sources are OGG/Vorbis then MP3, selected only after a permitted user
+interaction. The media element stays the same between levels of one world;
+menu/hidden/pagehide pause it. Background effects are suppressed. Music ducks
+to 35% of its configured gain on failure and during the reward sequence, then
+returns smoothly after stars/victory. The one context is prepared on gestures;
+resume/play rejection never blocks gameplay. Persisted pagehide retains a
+paused graph for BFCache; non-persisted pagehide disposes it. An interrupted
+context can resume after visibility returns if the user already enabled audio.
+
+Eight short WAV effects are fetched/decoded once after a gesture. Missing files
+use short synthesized fallbacks; music failure is silent. Star cues retain the
+260ms v0.6.2.1 visual cadence: first/second samples fade within 220ms, third may
+play 1s. Victory follows the last star, not alongside it. Duplicate effect calls
+within 45ms are suppressed, each new cue replaces the old one, and fallback
+chords have at most three oscillators. Collision doubles as the life-loss warning
+because the pack has no separate life-loss file. No sound ever comes from
+progress-bar milestones.
+
+Add future world music by extending `BlockEscapeAudio.WORLDS` with relative
+source/type pairs; unconfigured worlds remain silent. Do not load the archived
+large music WAV in production. See [audio inventory](assets/audio/README.md).
+
+Additional tests:
+
+```sh
+node tests/audio-system.test.cjs
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules ARTIFACT_DIR=/tmp/block-escape-v063 node tests/audio-system-browser.cjs
+```
+
+The full runner now includes 15 browser packages. See
+[technical report](reports/v063-technical-report.md) for results and limitations.
+Chromium API/media checks do not establish real iPhone Safari or audible quality.

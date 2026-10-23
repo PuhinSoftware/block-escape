@@ -22,3 +22,13 @@ The user also supplied an approved Crystal Mines gameplay reference in chat. Its
 ## v0.5.1 art upgrade
 
 The additional approved art-quality target supplied in chat guides the gameplay adaptation. `gameplay/stone-cell.webp` and `gameplay/block-*.webp` derive from newly generated individual stone/enamel masters, not from cutting the supplied composite into the UI. The arrow, frames, panels, plaque, crystals, lantern and action-icon SVGs are project-authored vector graphics; the board frame embeds a small derived stone texture. `gameplay/miner-bloop.webp` and `gameplay/crystal-mine.webp` are optimized derivatives of the existing project PNGs, whose original files remain unchanged. `gameplay/README.md` records conversion steps and `manifest.json` records sizes/hashes. These derivatives retain the reference/service-terms caveats above; no new stock, web font, icon pack or public-domain/exclusivity claim is introduced.
+
+
+## v0.6.3 user-supplied audio
+
+`assets/audio/` comes from the user's `Block_Escape_Crystal_Mines_BGM_v1.zip`
+and `Block_Escape_Crystal_Mines_SFX_v1.zip`, explicitly supplied for game
+integration. Their preserved READMEs describe original synthesized audio; no
+separate license document was included. The MP3 is derived locally from the
+provided WAV. See `assets/audio/README.md` and `inventory.csv` for provenance,
+formats and unchanged-original checksums. No third-party audio library is used.

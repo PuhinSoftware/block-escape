@@ -1,14 +1,6 @@
 'use strict';
 // Lightweight presentation only; collision coordinates come from Rules.traceMove.
-function prepareCollisionAudio(){
-  if(!sound)return;
-  try{
-    const Audio=window.AudioContext||window.webkitAudioContext;
-    if(!Audio)return;
-    if(!audioContext||audioContext.state==='closed')audioContext=new Audio();
-    if(audioContext.state!=='running')audioContext.resume().catch(()=>{});
-  }catch{}
-}
+function prepareCollisionAudio(){GameAudio.unlock()}
 function updateLives(lost=-1){
   $('lives').setAttribute('aria-label',`Kalan can: ${lives} / 3`);
   $('lives').querySelectorAll('.heart').forEach((heart,i)=>{

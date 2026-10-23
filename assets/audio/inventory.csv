@@ -1,0 +1,12 @@
+path,format,codec,bytes,duration_seconds,sample_rate,channels,sha256
+music/crystal-mines.mp3,mp3,mp3,1025324,64.044000,32000,2,c0a83cf08dd23b49141251d65a82a106ef0c547020cf89e4dd4641a3b0e345d4
+music/crystal-mines.ogg,ogg,vorbis,755584,64.000000,32000,2,c66c5e8a7107bfee4dbe1270c8fa7e8f109e45689de45dd8a1d349c7e3461081
+sfx/blocks/block_exit.wav,wav,pcm_s16le,32684,0.510000,32000,1,7cfd663e6bcb9ebf554b699ba8234d19436ea579a4a5179de444d2e43edfbaae
+sfx/blocks/collision.wav,wav,pcm_s16le,21164,0.330000,32000,1,44c0f68207e21385a9adbdd06bc4fd32eb74bb668daa75644f512ff39a75709c
+sfx/results/level_failed.wav,wav,pcm_s16le,89644,1.400000,32000,1,4be2ccb61df2ab42fd98883e2d4b21b7a202e1c355becaa8e5ca2a0abf9a898d
+sfx/results/level_win.wav,wav,pcm_s16le,89644,1.400000,32000,1,2c6be47f7ec14816569193b59d8d9d5af798dac1cd22bfd94b63746b73180b0b
+sfx/results/time_up.wav,wav,pcm_s16le,70444,1.100000,32000,1,fb1264f5c3f0929c6025624b01642ec803fcc04d118239c8de62ed660e00c949
+sfx/rewards/star_1.wav,wav,pcm_s16le,37164,0.580000,32000,1,11e2b9155c695304ebffb5bfc109a889e3737aea79ad3ba70eed4787d4f28210
+sfx/rewards/star_2.wav,wav,pcm_s16le,41004,0.640000,32000,1,f8b08cddfc3b94acdc16e70118a647d756e090954195df47fd993d3c26844bbf
+sfx/rewards/star_3.wav,wav,pcm_s16le,64044,1.000000,32000,1,d35bf0425cb29d194b0c45de546fce6d96a82d70584c11830fbfcfa6dc86e5ec
+sources/bgm/crystal_mines_ambient_loop.wav,wav,pcm_s16le,8192044,64.000000,32000,2,6f0dd28f55999b73fe821fd62f50c24e779b9c4c4590a6fbc8662c4eae8c3181

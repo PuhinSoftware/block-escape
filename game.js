@@ -5,9 +5,8 @@ const levels=[];
 const PROGRESS_KEY='blockEscapeUnlockedV06';
 const requestedLab=new URLSearchParams(location.search).get('lab');
 const LAB_KIND=['collision','timer'].includes(requestedLab)?requestedLab:null,LAB_MODE=!!LAB_KIND;
-const $=id=>document.getElementById(id),board=$('board');let index=0,blocks=[],moves=0,sound=true,toastTimer,audioContext,busy=false;
+const $=id=>document.getElementById(id),board=$('board');let index=0,blocks=[],moves=0,toastTimer,busy=false;
 let unlocked=1,catalog=null,levelsReady=false,lives=3,playStatus='playing';
-try{sound=localStorage.getItem('blockEscapeSound')!=='off'}catch{}
 function key(x,y){return `${x},${y}`}
 function clearPath(block,items){return Rules.canExit(levels[index],items,block.id)}
 async function initializeLevels(){
@@ -30,49 +29,13 @@ async function initializeLevels(){
   unlocked=1;try{const stored=Number(localStorage.getItem(PROGRESS_KEY));if(Number.isInteger(stored)&&stored>=1)unlocked=Math.min(levels.length,stored)}catch{}
   levelsReady=true;load(0);
 }
-function load(i){if(busy||!levelsReady||!Number.isInteger(i)||!levels[i])return;index=i;adoptState(Rules.createState(levels[i]));activeClock.reset(levels[i].timeLimitSeconds);hideModal();render();message('');resetPerformance();}
+function load(i){if(busy||!levelsReady||!Number.isInteger(i)||!levels[i])return;index=i;adoptState(Rules.createState(levels[i]));GameAudio.setScene(document.querySelector('.app').hidden?'menu':'playing',levels[i].worldId);activeClock.reset(levels[i].timeLimitSeconds);hideModal();render();message('');resetPerformance();}
 function currentState(){return {blocks,moves,lives,status:playStatus}}
 function adoptState(state){blocks=state.blocks;moves=state.moves;lives=state.lives;playStatus=state.status}
 function render(){board.style.setProperty('--size',S);const wallSet=new Set((levels[index].walls||[]).map(p=>key(...p)));const map=new Map(blocks.map(b=>[key(b.x,b.y),b]));const frag=document.createDocumentFragment();for(let y=0;y<S;y++)for(let x=0;x<S;x++){const cell=document.createElement('div');cell.className='cell'+(wallSet.has(key(x,y))?' wall':'');const b=map.get(key(x,y));if(b){const btn=document.createElement('button');btn.className='block';btn.dataset.dir=b.dir;btn.textContent=arrows[b.dir];btn.setAttribute('aria-label',`Satır ${y+1}, sütun ${x+1}, ${b.dir} yönü`);btn.addEventListener('click',()=>tap(b.id,btn));cell.append(btn)}frag.append(cell)}board.replaceChildren(frag);$('levelLabel').textContent=`${String(index+1).padStart(2,'0')} / ${levels.length}`;$('remaining').textContent=blocks.length;$('moves').textContent=moves;updateLives();$('labBanner').hidden=!LAB_MODE;document.querySelector('.game-footer p').textContent=LAB_MODE?'Test modu · İlerleme kaydedilmez.':'İlerlemen bu tarayıcıda güvende.';if(LAB_MODE){$('labBanner').textContent=`TEST ${index+1} · ${levels[index].title}`;$('hint').textContent=levels[index].hint}}
 function message(t){$('toast').textContent=t;clearTimeout(toastTimer);if(t)toastTimer=setTimeout(()=>$('toast').textContent='',1800)}
-// Create/resume only inside a user gesture. One context serves every effect.
-function updateSoundButton(){const button=$('sound');button.textContent=sound?'♪':'♪̸';button.setAttribute('aria-pressed',String(sound));button.setAttribute('aria-label',sound?'Sesi kapat':'Sesi aç');button.title=sound?'Ses açık':'Ses kapalı'}
-function playSound(effect){
-  if(!sound)return;
-  try{
-    const Audio=window.AudioContext||window.webkitAudioContext;
-    if(!Audio)return;
-    if(!audioContext||audioContext.state==='closed')audioContext=new Audio();
-    const context=audioContext;
-    const schedule=()=>{
-      if(!sound||context.state!=='running')return;
-      const notes=effect==='win'?[640,800,960]:effect==='blocked'?[180]:[640];
-      const start=context.currentTime;
-      notes.forEach((frequency,i)=>{
-        const oscillator=context.createOscillator(),gain=context.createGain();
-        const time=start+i*.12;
-        oscillator.type=effect==='blocked'?'triangle':'sine';
-        oscillator.frequency.setValueAtTime(frequency,time);
-        gain.gain.setValueAtTime(.045,time);
-        gain.gain.exponentialRampToValueAtTime(.001,time+.1);
-        oscillator.connect(gain);gain.connect(context.destination);
-        oscillator.start(time);oscillator.stop(time+.11);
-        oscillator.onended=()=>{oscillator.disconnect();gain.disconnect()};
-      });
-    };
-    // Rejected resume (autoplay policy/background tab) must not break gameplay.
-    if(context.state!=='running')context.resume().then(()=>{try{schedule()}catch{}}).catch(()=>{});
-    else schedule();
-  }catch{} // Missing or unavailable audio is an optional enhancement.
-}
-function toggleSound(){
-  sound=!sound;
-  if(!sound)stopStarSounds();
-  try{localStorage.setItem('blockEscapeSound',sound?'on':'off')}catch{}
-  updateSoundButton();
-  if(sound)playSound('move');
-  else if(audioContext){try{audioContext.suspend().catch(()=>{})}catch{}}
-}
+// Thin compatibility boundary: gameplay emits events, never owns audio nodes.
+function playSound(effect){GameAudio.effect(effect==='blocked'?'collision':'block_exit')}
 function setBusy(value){
   syncClock();
   busy=value;
@@ -101,6 +64,7 @@ async function tap(id,el){
   syncClock();
   if(busy||playStatus!=='playing')return;
   const b=blocks.find(x=>x.id===id);if(!b)return;
+  GameAudio.unlock();
   setBusy(true);
   try{
     const outcome=Rules.transition(levels[index],currentState(),id);
@@ -115,7 +79,7 @@ async function tap(id,el){
     }
     if(outcome.type!=='exit')return;
     adoptState(outcome.state);
-    if(blocks.length)playSound('move');else prepareCollisionAudio(); // Unlock the shared context on the final input gesture.
+    playSound('move');
     await animateBlock(el,b,false);
     render();updateProgress();
     if(Rules.isWon(blocks)){
@@ -124,9 +88,8 @@ async function tap(id,el){
     }
   }finally{setBusy(false)}
 }
-function showWin(){showModal('Bölüm tamamlandı! 🎉',`${moves} hamlede bütün blokları temizledin.`,false);showPerformance();$('next').textContent=index===levels.length-1?'Başa dön ↻':'Sonraki bölüm →';$('next').onclick=()=>load(index===levels.length-1?0:index+1)}
-function showFailed(timeout=false){showModal(timeout?"TIME'S UP!":'LEVEL FAILED',timeout?'Süre doldu. Yeni bir denemeye hazır mısın?':'Üç canın bitti. Yolları inceleyip yeniden dene.',false);$('overlay').classList.remove('celebrating');$('overlay').classList.add('failed');$('next').textContent='Tekrar Dene';$('next').onclick=()=>load(index);$('close').textContent='Ana Menü';$('close').onclick=()=>{hideModal(true);window.returnToMenu?.()}}
+function showWin(){showModal('Bölüm tamamlandı! 🎉',`${moves} hamlede bütün blokları temizledin.`,false);GameAudio.setScene('won');showPerformance();$('next').textContent=index===levels.length-1?'Başa dön ↻':'Sonraki bölüm →';$('next').onclick=()=>load(index===levels.length-1?0:index+1)}
+function showFailed(timeout=false){showModal(timeout?"TIME'S UP!":'LEVEL FAILED',timeout?'Süre doldu. Yeni bir denemeye hazır mısın?':'Üç canın bitti. Yolları inceleyip yeniden dene.',false);GameAudio.setScene('failed');GameAudio.effect(timeout?'time_up':'level_failed');$('overlay').classList.remove('celebrating');$('overlay').classList.add('failed');$('next').textContent='Tekrar Dene';$('next').onclick=()=>load(index);$('close').textContent='Ana Menü';$('close').onclick=()=>{hideModal(true);window.returnToMenu?.()}}
 function showModal(title,description,picker){if(busy&&picker)return;cancelRewardPresentation();$('resultStars').hidden=true;$('overlay').classList.remove('failed');$('close').textContent='Kapat';$('close').onclick=()=>hideModal();$('overlay').classList.toggle('celebrating',!picker);$('modalTitle').textContent=title;$('modalText').textContent=description;$('levelPicker').classList.toggle('hidden',!picker);$('next').classList.toggle('hidden',picker);if(picker){$('levelPicker').replaceChildren();levels.forEach((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.disabled=i>=unlocked;b.onclick=()=>{load(i);window.openGame?.()};$('levelPicker').append(b)})}$('overlay').classList.remove('hidden');syncClock()}
 function hideModal(force=false){if(playStatus==='failed'&&$('overlay').classList.contains('failed')&&!force)return;cancelRewardPresentation();$('overlay').classList.add('hidden');syncClock()}
-$('reset').onclick=()=>load(index);$('levelsBtn').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);$('close').onclick=hideModal;$('sound').onclick=toggleSound;
-updateSoundButton();
+$('reset').onclick=()=>load(index);$('levelsBtn').onclick=()=>showModal('Bölüm seç',`Açık bölüm: ${unlocked}/${levels.length}`,true);$('close').onclick=hideModal;$('sound').onclick=toggleMusic;
