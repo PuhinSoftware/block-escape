@@ -1,0 +1,98 @@
+PASS: audio tones, shared context, mute/reload, preserved progress, gesture startup, cleanup, missing audio, rejected resume, denied storage
+PASS: mobile viewport, assets, blocked move, move, reset, all 25 levels, progress persistence; no browser errors
+PASS: touch, direction U/D/L/R, duplicate input lock, blocked feedback, cancellation, reduced motion, success animation, reset and saved unlocking
+PASS mobile: 36 square equal cells; unchanged first/middle/final move geometry; visible midpoint/edge travel; DOM retained; duplicate guard; reset
+PASS desktop: 36 square equal cells; unchanged first/middle/final move geometry; visible midpoint/edge travel; DOM retained; duplicate guard; reset
+PASS chromium 320px normal: cells, button containment, first/middle/last move, reset
+PASS chromium 320px oversized-content: cells, button containment, first/middle/last move, reset
+PASS chromium 375px normal: cells, button containment, first/middle/last move, reset
+PASS chromium 375px oversized-content: cells, button containment, first/middle/last move, reset
+PASS chromium 390px normal: cells, button containment, first/middle/last move, reset
+PASS chromium 390px oversized-content: cells, button containment, first/middle/last move, reset
+PASS chromium 430px normal: cells, button containment, first/middle/last move, reset
+PASS chromium 430px oversized-content: cells, button containment, first/middle/last move, reset
+PASS menu 320px: layers/assets, play/resume, saved levels, keyboard/dialog, reduced motion, storage
+PASS menu 375px: layers/assets, play/resume, saved levels, keyboard/dialog, reduced motion, storage
+PASS menu 390px: layers/assets, play/resume, saved levels, keyboard/dialog, reduced motion, storage
+PASS menu 430px: layers/assets, play/resume, saved levels, keyboard/dialog, reduced motion, storage
+PASS menu 1280px: layers/assets, play/resume, saved levels, keyboard/dialog, reduced motion, storage
+PASS reference menu 320x568: independent animated layers, touch/press, sound sync, reduced motion
+PASS reference menu 375x667: independent animated layers, touch/press, sound sync, reduced motion
+PASS reference menu 390x844: independent animated layers, touch/press, sound sync, reduced motion
+PASS reference menu 430x932: independent animated layers, touch/press, sound sync, reduced motion
+PASS settings 320x568: balanced layout, no overflow, focus trap/return, touch, sound sync/persistence, motion/pulse, reduced motion
+PASS settings 375x667: balanced layout, no overflow, focus trap/return, touch, sound sync/persistence, motion/pulse, reduced motion
+PASS settings 390x844: balanced layout, no overflow, focus trap/return, touch, sound sync/persistence, motion/pulse, reduced motion
+PASS settings 430x932: balanced layout, no overflow, focus trap/return, touch, sound sync/persistence, motion/pulse, reduced motion
+PASS chromium gameplay 320x568: frame/cards, 36 square cells, no tile overflow, helper nonblocking, victory/reduced motion, reset/menu/storage
+PASS chromium gameplay 375x667: frame/cards, 36 square cells, no tile overflow, helper nonblocking, victory/reduced motion, reset/menu/storage
+PASS chromium gameplay 390x844: frame/cards, 36 square cells, no tile overflow, helper nonblocking, victory/reduced motion, reset/menu/storage
+PASS chromium gameplay 430x932: frame/cards, 36 square cells, no tile overflow, helper nonblocking, victory/reduced motion, reset/menu/storage
+PASS chromium crystal mines 320x568: 6x6 geometry, controls/HUD, removed action/state/shortcuts, reset, win/unlock, picker, menu/sound, reduced motion
+PASS chromium crystal mines 375x667: 6x6 geometry, controls/HUD, removed action/state/shortcuts, reset, win/unlock, picker, menu/sound, reduced motion
+PASS chromium crystal mines 390x844: 6x6 geometry, controls/HUD, removed action/state/shortcuts, reset, win/unlock, picker, menu/sound, reduced motion
+PASS chromium crystal mines 430x932: 6x6 geometry, controls/HUD, removed action/state/shortcuts, reset, win/unlock, picker, menu/sound, reduced motion
+PASS chromium art 320x568: independent textures/skins/frames, alpha, one cached cell request, no source PNG requests, hit targets, four directions, menu; art 203549 bytes
+PASS chromium art 375x667: independent textures/skins/frames, alpha, one cached cell request, no source PNG requests, hit targets, four directions, menu; art 203549 bytes
+PASS chromium art 390x844: independent textures/skins/frames, alpha, one cached cell request, no source PNG requests, hit targets, four directions, menu; art 203549 bytes
+PASS chromium art 430x932: independent textures/skins/frames, alpha, one cached cell request, no source PNG requests, hit targets, four directions, menu; art 203549 bytes
+PASS chromium 320px: all 25 levels / 375 real touch moves, 36-cell first/middle/final geometry, reset, blocked move, 25-only picker, old/new progress isolation and reload
+PASS chromium 375px: all 25 levels / 375 real touch moves, 36-cell first/middle/final geometry, reset, blocked move, 25-only picker, old/new progress isolation and reload
+PASS chromium 390px: all 25 levels / 375 real touch moves, 36-cell first/middle/final geometry, reset, blocked move, 25-only picker, old/new progress isolation and reload
+PASS chromium 430px: all 25 levels / 375 real touch moves, 36-cell first/middle/final geometry, reset, blocked move, 25-only picker, old/new progress isolation and reload
+PASS catalog network/version/count/overlap failures: disabled play, accessible retry, successful recovery
+PASS invalid/new progress handling, maximum published level clamp, legacy key preservation
+PASS project-subdirectory relative JSON/assets and play
+PASS chromium collision 320px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS chromium collision 375px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS chromium collision 390px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS chromium collision 430px: visible distant contact/return, spark, one-life duplicate guard, three-hit failure/retry/menu, reduced motion, all 5 labs, 36 square cells and 25-level save isolation
+PASS collision vibration/animation absence, exceptions, cancellation and paused timeline cleanup
+PASS distant fixed-wall collision and return in U/D/L/R
+PASS normal catalog failure preserves progress; retry/win unlocks next level with fresh lives
+PASS fake-clock lifecycle, timeout/retry/menu, collision progress, five labs, scoring and best storage
+PASS chromium 320px real touch, smooth retargeting, first/middle/final grid and HUD containment
+PASS chromium 375px real touch, smooth retargeting, first/middle/final grid and HUD containment
+PASS chromium 390px real touch, smooth retargeting, first/middle/final grid and HUD containment
+PASS chromium 430px real touch, smooth retargeting, first/middle/final grid and HUD containment
+PASS A-H: potential, 3/2/1 results, thresholds, failures/retry, best storage, sequential audio/mute/cancellation/cleanup
+PASS chromium 320px: 28px HUD, geometry, smooth fill, two-star potential/result; document 821px / viewport 568px
+PASS chromium 375px: 28px HUD, geometry, smooth fill, two-star potential/result; document 903px / viewport 844px
+PASS chromium 390px: 28px HUD, geometry, smooth fill, two-star potential/result; document 918px / viewport 844px
+PASS chromium 430px: 28px HUD, geometry, smooth fill, two-star potential/result; document 958px / viewport 844px
+PASS missing/rejected/throwing Web Audio: victory and next remain usable
+PASS defaults/gains, real OGG and 8 WAVs, independent mute, persistence, same-world continuity, menu/hidden, 1/2/3 stars, duck/restore, distinct failure/timeout, one context
+PASS OGG loop boundary and real MP3 source fallback after OGG failure
+PASS legacy mute/old progress preservation, failed files/API/play/storage: gameplay continues
+PASS 320px settings: independent controls, keyboard range, 44px targets, no overflow and playable board
+PASS 375px settings: independent controls, keyboard range, 44px targets, no overflow and playable board
+PASS 390px settings: independent controls, keyboard range, 44px targets, no overflow and playable board
+PASS 430px settings: independent controls, keyboard range, 44px targets, no overflow and playable board
+PASS 1 star(s): natural star tail -> one full 1.4s victory; no explicit stop, no music restart; live volume changes safe; gap 0.000s
+PASS 2 star(s): natural star tail -> one full 1.4s victory; no explicit stop, no music restart; live volume changes safe; gap 0.000s
+PASS 3 star(s): natural star tail -> one full 1.4s victory; no explicit stop, no music restart; live volume changes safe; gap 0.000s
+PASS offline real-WAV rendering: middle-section RMS gain 0.224047 (expected .32 × .70)
+PASS mute during victory: explicit cancellation, no late/repeated reward
+PASS zero during victory: explicit cancellation, no late/repeated reward
+PASS menu during victory: explicit cancellation, no late/repeated reward
+PASS next during victory: explicit cancellation, no late/repeated reward
+PASS hidden during victory: explicit cancellation, no late/repeated reward
+PASS mute/unmute during stars: pending victory remains cancelled
+
+Browser suite summary
+PASS browser
+PASS animations
+PASS board-geometry
+PASS mobile-grid
+PASS menu
+PASS reference-menu
+PASS settings
+PASS gameplay-ui
+PASS crystal-mines
+PASS art-upgrade
+PASS level-system-browser
+PASS collision-browser
+PASS timer-stars-browser
+PASS hud-polish-browser
+PASS audio-system-browser
+PASS victory-audio-browser

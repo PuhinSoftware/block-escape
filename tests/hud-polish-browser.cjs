@@ -6,7 +6,7 @@ const click=(p,s)=>p.locator(s).evaluate(el=>el.click());
 async function move(p,legal=true){await p.getByRole('button',{name:await moveLabel(p,legal),exact:true}).evaluate(el=>el.click());await settled(p)}
 async function complete(p){while(await p.locator('.block').count())await move(p)}
 const potential=p=>p.locator('#potentialStars').getAttribute('data-stars');
-const notes=p=>p.evaluate(()=>audioLog.filter(n=>n.frequency>=784));
+const notes=p=>p.evaluate(()=>audioLog.filter(n=>[784,988,1175,1480,1760].includes(n.frequency)));
 async function shot(p,name){if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:true});await p.screenshot({path:`${process.env.ARTIFACT_DIR}/${engine}-${name}.png`,fullPage:true})}}
 (async()=>{
 const browser=await(engine==='webkit'?webkit:chromium).launch(engine==='chromium'?{executablePath:'/usr/bin/chromium',args:['--no-sandbox']}:{});
@@ -33,7 +33,7 @@ try{
   await p.clock.runFor(260);assert.equal(await p.locator('#resultStars .awarded').count(),Math.min(2,stars));
   await p.clock.runFor(260);assert.equal(await p.locator('#resultStars .awarded').count(),stars);
   const cues=await notes(p);assert.deepEqual(cues.map(n=>n.frequency),stars===3?[784,988,1175,1480,1760]:stars===2?[784,988]:[784]);assert.equal(new Set(cues.map(n=>n.time)).size,stars);
-  await p.clock.runFor(300);assert.equal(await p.evaluate(()=>connected),1);assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem(STARS_KEY)).ratings['timer:1']),3);
+  for(let step=0;step<50&&await p.evaluate(()=>GameAudio.voices.size>0);step++)await p.clock.runFor(50);assert.equal(await p.evaluate(()=>GameAudio.voices.size),0);assert.equal(await p.evaluate(()=>connected),1);assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem(STARS_KEY)).ratings['timer:1']),3);
  }
  assert.equal(await p.evaluate(()=>contexts),1);
  await p.evaluate(()=>{load(1);audioLog=[]});await p.clock.runFor(25000);assert.equal(await potential(p),'3');await p.clock.runFor(50);assert.equal(await potential(p),'2');await p.clock.runFor(15000);assert.equal(await potential(p),'1');await p.clock.runFor(5000);assert.equal(await potential(p),'0');assert.equal(await p.locator('#modalTitle').textContent(),"TIME'S UP!");assert.equal(await p.locator('#resultStars').isHidden(),true);assert.equal((await notes(p)).length,0);

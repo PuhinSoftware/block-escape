@@ -15,9 +15,10 @@ Playback is owned by `audio-manager.js`. The original SFX README's progress
 milestone wording is historical metadata: stars now play only for **earned
 performance rewards**, never completion-progress milestones.
 
-The original 260 ms reveal cadence is preserved. `star_1` and `star_2` use
-220 ms windows with a fading envelope; `star_3` may use its full 1 s duration.
-Victory waits for the final star tail. Collision also supplies the life-loss
+The original 260 ms reveal cadence is preserved. Intermediate star cues use 220 ms windows with a short tail fade. The final
+earned star always uses its full decoded duration (0.58 / 0.64 / 1.00 s).
+Victory waits for that native ended event, then plays its complete 1.4 s sample
+without an extra full-file envelope. Music restores on victory ended. Collision also supplies the life-loss
 warning; no separate life-loss file exists. Missing effects fall back to short
 synthesized cues on the same context. There is no invented asset reference.
 

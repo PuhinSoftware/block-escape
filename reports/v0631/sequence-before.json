@@ -1,0 +1,20 @@
+[
+  {
+    "stars": 1,
+    "lastStarEnded": 0.43247165532879817,
+    "victoryStarted": 1.2712925170068028,
+    "silentGapSeconds": 0.8388208616780046
+  },
+  {
+    "stars": 2,
+    "lastStarEnded": 3.1898412698412697,
+    "victoryStarted": 4.051882086167801,
+    "silentGapSeconds": 0.8620408163265312
+  },
+  {
+    "stars": 3,
+    "lastStarEnded": 7.012426303854875,
+    "victoryStarted": 7.102403628117914,
+    "silentGapSeconds": 0.08997732426303884
+  }
+]

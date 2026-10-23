@@ -1,0 +1,36 @@
+{
+  "before": [
+    {
+      "lateEffect": "star_1",
+      "accepted": true,
+      "totalSources": 2,
+      "victoryStopCalls": [
+        1.41,
+        0.3
+      ]
+    },
+    {
+      "lateEffect": "level_win",
+      "accepted": true,
+      "totalSources": 2,
+      "victoryStopCalls": [
+        1.41,
+        0.3
+      ]
+    }
+  ],
+  "after": [
+    {
+      "lateEffect": "star_1",
+      "accepted": false,
+      "totalSources": 1,
+      "victoryStopCalls": []
+    },
+    {
+      "lateEffect": "level_win",
+      "accepted": false,
+      "totalSources": 1,
+      "victoryStopCalls": []
+    }
+  ]
+}
