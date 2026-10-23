@@ -88,3 +88,10 @@
 - Keep completion progress free of stars. Potential rewards delegate to the shared performance scorer; failure is zero, a possible successful completion is at least one. Do not copy threshold rules into UI files.
 - Only result stars celebrate. `star-audio.js` reuses the gesture-unlocked shared context, with no delayed context creation/resume. Cancel queued reveals and active voices on dialog dismissal/next; respect mute and reduced motion.
 - Run `tests/hud-polish.test.cjs` plus all previous Node tests and the 14-package browser runner. Keep the 28px panel readable and geometry checked at 320/375/390/430px.
+
+
+## v0.6.3 central audio
+- `audio-manager.js` owns the single lazy context, persistent music element, separate gains/settings and bounded effects. Gameplay emits events; never add a second sound engine. `audio-ui.js` owns controls/lifecycle. The game note is music-only.
+- Migrate legacy mute to both channels without rewriting the old key. Keep versioned `blockEscapeAudioV063` settings independent from progression and ratings. No automatic playback before a gesture; handle missing/rejected audio and background suppression.
+- Preserve normal/lab data and reward scoring. Stars are performance awards, not progression cues. Victory follows star tails. Same-world level changes must not reset music time.
+- Run all five Node suites and the 15-package browser runner, including `audio-system-browser.cjs`. Check 320/375/390/430px ranges, independent toggles, media fallback, mute migration and lifecycle. Do not claim Safari hardware/audio listening coverage from Chromium.

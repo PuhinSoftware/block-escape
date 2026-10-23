@@ -10,8 +10,8 @@ const page=await browser.newPage({viewport:{width,height},isMobile:true,hasTouch
 await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>levelsReady);
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth));
 assert.equal(await page.locator('#menu button:visible').count(),3,'only play, levels and settings controls');
-const audioBefore=await page.evaluate(()=>audioContext===undefined);assert.equal(audioBefore,true);
-await page.locator('#settingsBtn').tap();await page.locator('#settingsSound').tap();assert.equal(await page.evaluate(()=>localStorage.getItem('blockEscapeSound')),'off');
+const audioBefore=await page.evaluate(()=>GameAudio.context===undefined);assert.equal(audioBefore,true);
+await page.locator('#settingsBtn').tap();await page.locator('#settingsSound').tap();assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('blockEscapeAudioV063')).musicEnabled),false);
 assert.equal(await page.locator('#settingsSound').getAttribute('aria-pressed'),'false');await page.locator('#settingsDone').tap();
 // Sample actual rendered animation transforms, not just animation names.
 for(const selector of ['.bloop-layer','.cloud-one','.island-layer']){

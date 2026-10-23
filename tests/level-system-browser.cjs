@@ -58,6 +58,6 @@ try{
  // GitHub Pages-style subdirectory: all JSON and script URLs resolve relative to it.
  const page=await browser.newPage({reducedMotion:'reduce',hasTouch:true});
  await page.route('**/block-escape/**',async route=>{const requestUrl=new URL(route.request().url());const response=await page.request.get(url+requestUrl.pathname.replace(/^\/block-escape/,'/') .replace('//','/'));await route.fulfill({response})});
- await page.goto(url+'/block-escape/');await page.locator('#playBtn').click();assert.equal(await page.locator('.cell').count(),36);await tapLegal(page);await page.close();console.log('PASS project-subdirectory relative JSON/assets and play');
+ await page.goto(url+'/block-escape/');await page.locator('#playBtn').click();assert.equal(await page.locator('.cell').count(),36);await tapLegal(page);await page.waitForFunction(()=>GameAudio.buffers.size===8);await page.unrouteAll({behavior:'wait'});await page.close();console.log('PASS project-subdirectory relative JSON/assets and play');
 }finally{await browser.close()}
 })().catch(error=>{console.error(error);process.exitCode=1});
