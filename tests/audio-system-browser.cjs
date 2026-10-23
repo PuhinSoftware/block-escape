@@ -4,7 +4,7 @@ const {moveLabel,settled,finish}=require('./helpers.cjs');
 const engine=process.env.BROWSER||'chromium',base='http://127.0.0.1:8080';
 async function shot(p,name){if(process.env.ARTIFACT_DIR){fs.mkdirSync(process.env.ARTIFACT_DIR,{recursive:true});await p.screenshot({path:`${process.env.ARTIFACT_DIR}/${engine}-${name}.png`,fullPage:true})}}
 async function instrument(p){await p.addInitScript(()=>{const Native=window.AudioContext||window.webkitAudioContext;window.createdContexts=0;if(Native)window.AudioContext=class extends Native{constructor(...args){super(...args);createdContexts++}}});}
-async function observe(p){await p.evaluate(()=>{window.effectEvents=[];const effect=GameAudio.effect.bind(GameAudio);GameAudio.effect=name=>{const played=effect(name);effectEvents.push({name,played,at:performance.now()});return played}})}
+async function observe(p){await p.evaluate(()=>{window.effectEvents=[];const effect=GameAudio.effect.bind(GameAudio);GameAudio.effect=(name,options)=>{const played=effect(name,options);effectEvents.push({name,played,at:performance.now()});return played}})}
 async function move(p,legal=true){await p.getByRole('button',{name:await moveLabel(p,legal),exact:true}).tap();await settled(p)}
 const played=p=>p.evaluate(()=>effectEvents.filter(e=>e.played).map(e=>e.name));
 (async()=>{
@@ -27,7 +27,7 @@ const played=p=>p.evaluate(()=>effectEvents.filter(e=>e.played).map(e=>e.name));
   for(const stars of [1,2,3]){
    await p.evaluate(()=>{load(0);effectEvents=[]});for(let i=3;i>stars;i--)await move(p,false);await finish(p);await p.waitForTimeout(2100);
    const events=await p.evaluate(()=>effectEvents.filter(e=>e.played));assert.deepEqual(events.filter(e=>e.name.startsWith('star_')).map(e=>e.name),Array.from({length:stars},(_,i)=>`star_${i+1}`));
-   const win=events.find(e=>e.name==='level_win'),last=events.filter(e=>e.name.startsWith('star_')).at(-1);assert.ok(win&&win.at-last.at>=1000,'victory follows star tail');assert.equal(await p.locator('#resultStars .awarded').count(),stars);
+   const win=events.find(e=>e.name==='level_win'),last=events.filter(e=>e.name.startsWith('star_')).at(-1);const duration=await p.evaluate(n=>GameAudio.buffers.get(`star_${n}`).duration,stars);assert.ok(win&&win.at-last.at>=duration*1000-30,'victory follows actual final star tail');assert.equal(await p.locator('#resultStars .awarded').count(),stars);
    await p.waitForFunction(()=>!GameAudio.ducked&&Math.abs(GameAudio.musicGain.gain.value-.41)<.02);
   }
   await p.evaluate(()=>{load(0);effectEvents=[]});for(let i=0;i<3;i++)await move(p,false);assert.ok((await played(p)).includes('level_failed'));assert.ok(!(await played(p)).includes('time_up'));

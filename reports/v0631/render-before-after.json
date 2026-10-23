@@ -1,0 +1,12 @@
+{
+  "before": {
+    "duration": 1.4,
+    "middleGain": 0.010594712336029362,
+    "lateGain": 0.0018060923699546383
+  },
+  "after": {
+    "duration": 1.4,
+    "middleGain": 0.2240469761184079,
+    "lateGain": 0.2239999915771029
+  }
+}

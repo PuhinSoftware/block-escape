@@ -52,8 +52,8 @@ createGain(){return {gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}},
 await audio.goto('http://127.0.0.1:8080');assert.equal(await audio.evaluate(()=>audioCalls.contexts),0);await audio.locator('#playBtn').click();assert.equal(await audio.evaluate(()=>audioCalls.contexts),1);
 await audio.evaluate(()=>load(1));await audio.getByRole('button',{name:await moveLabel(audio,false),exact:true}).click();await settled(audio);
 await audio.evaluate(()=>{load(0);Object.defineProperty(GameAudio.context,'currentTime',{get:()=>performance.now()/1000})});await finish(audio);
-await audio.waitForFunction(()=>audioCalls.disconnects>=18);
-assert.deepEqual(await audio.evaluate(()=>audioCalls.tones),[180,640,640,640,784,988,1175,1480,1760]);
+await audio.waitForFunction(()=>audioCalls.disconnects>=22);
+assert.deepEqual(await audio.evaluate(()=>audioCalls.tones),[180,640,640,640,784,988,1175,1480,1760,660,880]);
 assert.equal(await audio.evaluate(()=>audioCalls.contexts),1);
 await audio.locator('#close').click();
 await audio.evaluate(()=>GameAudio.setSetting('sfxEnabled',false));await settled(audio);

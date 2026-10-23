@@ -95,3 +95,9 @@
 - Migrate legacy mute to both channels without rewriting the old key. Keep versioned `blockEscapeAudioV063` settings independent from progression and ratings. No automatic playback before a gesture; handle missing/rejected audio and background suppression.
 - Preserve normal/lab data and reward scoring. Stars are performance awards, not progression cues. Victory follows star tails. Same-world level changes must not reset music time.
 - Run all five Node suites and the 15-package browser runner, including `audio-system-browser.cjs`. Check 320/375/390/430px ranges, independent toggles, media fallback, mute migration and lifecycle. Do not claim Safari hardware/audio listening coverage from Chromium.
+
+
+## v0.6.3.1 victory lifetime
+- Use per-cue native completion, not fixed victory/restoration timeouts. Mastered samples retain their own envelope; only intermediate star windows may be trimmed. A victory is protected and once per attempt on the shared context.
+- Explicit cancellation invalidates queued reward audio. Menu/next/mute/hidden page cancels; nonzero gain changes do not. Hold gain automation before retargeting and never pause/restart music for ducking.
+- Run all six Node suites and the 16-package browser runner. The victory suite checks actual WAV duration/native ended, offline-rendered sample gain, and cancellation including mute/unmute. Preserve audio settings, data and scoring.

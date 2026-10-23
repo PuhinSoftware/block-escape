@@ -371,3 +371,31 @@ NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modul
 The full runner now includes 15 browser packages. See
 [technical report](reports/v063-technical-report.md) for results and limitations.
 Chromium API/media checks do not establish real iPhone Safari or audible quality.
+
+
+## v0.6.3.1 — uninterrupted victory audio
+
+Mastered WAV samples retain their own gain envelope and end naturally; synthetic
+fallbacks alone receive an oscillator envelope. Intermediate star reveals still
+use a short 220ms window to preserve the 260ms visual rhythm, while the final
+earned star plays its full decoded duration. Victory begins from that cue's
+native `ended` callback, and music restores after victory's own `ended`, without
+fixed 1100/2600ms completion timers. The gameplay/reward channels are logically
+separate on the same existing AudioContext. A started victory cannot be replaced
+by another reward/gameplay cue, and it can only start once per attempt.
+
+Menu, next level, effects mute/zero volume and hidden-page cancellation still
+stop active voices. A cancellation epoch prevents queued rewards from replaying
+after unmute/visibility return. Nonzero volume changes preserve the active cue.
+Music automation holds the current gain before changing target and skips
+unchanged targets; celebration does not pause/restart the media element.
+Settings, audio files, score rules and all normal/lab data are unchanged.
+
+```sh
+node tests/victory-audio.test.cjs
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules node tests/victory-audio-browser.cjs
+```
+
+Run the existing Node suites and full browser runner as well (now 16 packages).
+See [victory audio report](reports/v0631-victory-audio-fix.md) for reproduced
+failures, real-WAV offline rendering and Safari coverage limits.

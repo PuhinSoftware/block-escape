@@ -15,7 +15,7 @@
   class Manager{
     constructor({storage,media,createContext,fetcher,isHidden=()=>false,onChange=()=>{}}){
       this.storage=storage;this.media=media;this.createContext=createContext;this.fetcher=fetcher;this.isHidden=isHidden;this.onChange=onChange;
-      this.settings=readSettings(storage);this.context=undefined;this.buffers=new Map();this.loading=new Set();this.voices=new Set();this.scene='menu';this.world=null;this.ducked=false;this.suspended=false;this.disposed=false;this.unlocked=false;this.pendingPlay=null;this.musicFailed=false;this.lastEffects=new Map();this.musicRevision=0;
+      this.settings=readSettings(storage);this.context=undefined;this.buffers=new Map();this.loading=new Set();this.voices=new Set();this.cues=new Map();this.effectEpoch=0;this.victoryPlayed=false;this.gainTargets=new WeakMap();this.scene='menu';this.world=null;this.ducked=false;this.suspended=false;this.disposed=false;this.unlocked=false;this.pendingPlay=null;this.musicFailed=false;this.lastEffects=new Map();this.musicRevision=0;
       media.loop=true;media.preload='none';media.addEventListener('error',()=>{this.musicFailed=true;this.pauseMusic()});
       this.save();
     }
@@ -49,7 +49,7 @@
     }
     setScene(scene,world=this.world||'crystal-mines'){
       if(this.disposed)return;
-      if(scene!==this.scene){this.stopEffects()}
+      if(scene!==this.scene){this.stopEffects();this.victoryPlayed=false}
       this.scene=scene;this.ducked=scene==='won'||scene==='failed';
       if(world!==this.world){
         this.pauseMusic();this.world=world;this.musicFailed=false;
@@ -58,7 +58,16 @@
       this.applyVolumes();this.syncMusic();
     }
     applyVolumes(){
-      const set=(node,value)=>{if(!node||!this.context)return;try{const p=node.gain,t=this.context.currentTime;p.cancelScheduledValues?.(t);if(p.setTargetAtTime)p.setTargetAtTime(value,t,.07);else p.setValueAtTime(value,t)}catch{}};
+      const set=(node,value)=>{
+        if(!node||!this.context||this.gainTargets.get(node)===value)return;
+        try{
+          const p=node.gain,t=this.context.currentTime,current=p.value;
+          if(p.cancelAndHoldAtTime)p.cancelAndHoldAtTime(t);
+          else{p.cancelScheduledValues?.(t);p.setValueAtTime(current,t)}
+          if(p.setTargetAtTime)p.setTargetAtTime(value,t,.07);else p.setValueAtTime(value,t);
+          this.gainTargets.set(node,value);
+        }catch{}
+      };
       set(this.sfxGain,this.settings.sfxEnabled?this.settings.sfxVolume:0);
       set(this.musicGain,this.settings.musicEnabled?this.settings.musicVolume*(this.ducked?.35:1):0);
     }
@@ -77,30 +86,54 @@
       }catch{}
     }
     visibility(suspended=this.suspended){this.suspended=suspended;if(this.isHidden()||suspended)this.stopEffects();else if(this.unlocked&&this.context&&this.context.state!=='running'&&this.context.state!=='closed'&&(this.settings.musicEnabled||this.settings.sfxEnabled)){try{Promise.resolve(this.context.resume()).then(()=>this.syncMusic()).catch(()=>{})}catch{}}this.syncMusic()}
-    stopEffects(){for(const v of [...this.voices]){try{v.source.stop()}catch{}v.cleanup()}this.voices.clear()}
-    effect(name){
-      if(this.disposed||!EFFECTS[name]||!this.settings.sfxEnabled||!this.settings.sfxVolume||this.isHidden()||this.suspended||this.scene==='menu'||this.context?.state!=='running')return false;
+    stopEffects(channel){
+      if(!channel)this.effectEpoch++;
+      for(const cue of [...this.cues.values()])if(!channel||cue.channel===channel)cue.cancel();
+    }
+    effect(name,{onEnded,maxDuration}={}){
+      if(this.disposed||!Object.prototype.hasOwnProperty.call(EFFECTS,name)||!this.settings.sfxEnabled||!this.settings.sfxVolume||this.isHidden()||this.suspended||this.scene==='menu'||this.context?.state!=='running')return false;
+      const reward=name.startsWith('star_')||name==='level_win',channel=reward?'reward':'gameplay';
+      if(reward&&this.scene!=='won')return false;
+      if(!reward&&this.scene==='won')return false;
+      if(reward&&this.victoryPlayed)return false;
       const now=this.context.currentTime,last=this.lastEffects.get(name);if(last!==undefined&&now-last<.045)return false;
-      this.lastEffects.set(name,now);this.stopEffects();
-      const buffer=this.buffers.get(name);
+      this.lastEffects.set(name,now);this.stopEffects(channel);
+      const cue={name,channel,voices:new Set(),building:true,done:false,cancelled:false};
+      cue.finish=()=>{
+        if(cue.done||cue.building||cue.voices.size)return;
+        cue.done=true;if(this.cues.get(channel)===cue)this.cues.delete(channel);
+        try{onEnded?.({cancelled:cue.cancelled})}catch{}
+      };
+      cue.cancel=()=>{cue.cancelled=true;for(const voice of [...cue.voices]){try{voice.source.stop()}catch{}voice.cleanup()}cue.finish()};
+      this.cues.set(channel,cue);
       try{
+        const buffer=this.buffers.get(name);
         if(buffer){
           const source=this.context.createBufferSource();source.buffer=buffer;
-          // Preserve the 260ms star reveal rhythm, with short fading first cues.
-          const duration=Math.min(buffer.duration,['star_1','star_2'].includes(name)?.22:2);
-          this.voice(source,.32,duration);return true;
+          const duration=Number.isFinite(maxDuration)&&maxDuration>0?Math.min(buffer.duration,maxDuration):buffer.duration;
+          // Mastered samples already contain their envelope. Let the buffer end naturally.
+          this.voice(source,.32,duration,cue,true,duration<buffer.duration);
+        }else{
+          const notes={block_exit:[640],collision:[180],level_win:[660,880],level_failed:[150],time_up:[240],star_1:[784],star_2:[988],star_3:[1175,1480,1760]}[name];
+          for(const frequency of notes){const source=this.context.createOscillator();source.type=name==='collision'?'triangle':'sine';source.frequency.setValueAtTime(frequency,now);this.voice(source,.045/notes.length,.18,cue,false,false)}
         }
-        const notes={block_exit:[640],collision:[180],level_win:[660,880],level_failed:[150],time_up:[240],star_1:[784],star_2:[988],star_3:[1175,1480,1760]}[name];
-        for(const frequency of notes){const source=this.context.createOscillator();source.type=name==='collision'?'triangle':'sine';source.frequency.setValueAtTime(frequency,now);this.voice(source,.045/notes.length,.18)}
-        return true;
-      }catch{this.stopEffects();return false}
+        if(name==='level_win')this.victoryPlayed=true;
+        cue.building=false;cue.finish();return true;
+      }catch{cue.building=false;cue.cancel();return false}
     }
-    voice(source,volume,duration){
+    voice(source,volume,duration,cue,sample,trimmed){
       const gain=this.context.createGain(),voice={source,gain};let cleaned=false;
-      voice.cleanup=()=>{if(cleaned)return;cleaned=true;try{source.disconnect();gain.disconnect()}catch{}this.voices.delete(voice)};
-      this.voices.add(voice);const t=this.context.currentTime;
-      gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(volume,t+.012);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);
-      source.connect(gain);gain.connect(this.sfxGain);source.onended=voice.cleanup;source.start(t);source.stop(t+duration+.01);
+      voice.cleanup=()=>{if(cleaned)return;cleaned=true;try{source.disconnect();gain.disconnect()}catch{}this.voices.delete(voice);cue.voices.delete(voice);cue.finish()};
+      this.voices.add(voice);cue.voices.add(voice);const t=this.context.currentTime;
+      if(sample){
+        gain.gain.setValueAtTime(volume,t);
+        if(trimmed){gain.gain.setValueAtTime(volume,t+Math.max(0,duration-.025));gain.gain.exponentialRampToValueAtTime(.0001,t+duration)}
+      }else{
+        gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(volume,t+.012);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);
+      }
+      source.connect(gain);gain.connect(this.sfxGain);source.onended=voice.cleanup;
+      if(sample&&trimmed)source.start(t,0,duration);else source.start(t);
+      if(!sample)source.stop(t+duration+.01);
     }
     restoreMusic(){if(this.scene==='won'){this.ducked=false;this.applyVolumes()}}
     dispose(){this.disposed=true;this.pauseMusic();this.stopEffects();this.buffers.clear();try{this.musicSource?.disconnect();this.musicGain?.disconnect();this.sfxGain?.disconnect();this.context?.close()?.catch(()=>{})}catch{}}

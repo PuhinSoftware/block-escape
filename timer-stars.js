@@ -39,30 +39,40 @@ function updatePotential(){
   element.querySelectorAll('span').forEach((star,i)=>star.classList.toggle('lost',i>=stars));
 }
 let rewardTimers=[],rewardRun=0;
-function cancelRewardPresentation(){
+function cancelRewardPresentation({restoreMusic=true,completeVisual=false}={}){
   rewardRun++;rewardTimers.forEach(clearTimeout);rewardTimers=[];
-  stopStarSounds();GameAudio.restoreMusic();
+  stopStarSounds();if(restoreMusic)GameAudio.restoreMusic();
+  if(completeVisual){const result=$('resultStars');result.querySelectorAll('span').forEach((span,i)=>{if(i<Number(result.dataset.stars)){span.textContent='★';span.classList.add('awarded')}})}
 }
 function showPerformance(){
-  cancelRewardPresentation();GameAudio.ducked=true;GameAudio.applyVolumes();
+  cancelRewardPresentation({restoreMusic:false});GameAudio.ducked=true;GameAudio.applyVolumes();
   const stars=PerformanceRules.score(levels[index],{completed:true,lives,elapsedMs:activeClock.elapsed});
   const key=`${LAB_KIND||'v06'}:${levels[index].id}`;
   try{localStorage.setItem(STARS_KEY,JSON.stringify(PerformanceRules.bestRecord(localStorage.getItem(STARS_KEY),key,stars)))}catch{}
-  const result=$('resultStars');result.hidden=false;result.setAttribute('aria-label',`Performans: ${stars} / 3 yıldız`);
+  const result=$('resultStars');result.dataset.stars=String(stars);result.hidden=false;result.setAttribute('aria-label',`Performans: ${stars} / 3 yıldız`);
   const slots=[1,2,3].map(()=>{const span=document.createElement('span');span.textContent='☆';span.setAttribute('aria-hidden','true');return span});
   result.replaceChildren(...slots);
-  const run=rewardRun;
+  const run=rewardRun,audioEpoch=GameAudio.effectEpoch;
+  let victoryStarted=false;
+  const current=()=>run===rewardRun&&playStatus==='won'&&!$('overlay').classList.contains('hidden')&&!document.hidden;
+  const victory=()=>{
+    if(!current()||audioEpoch!==GameAudio.effectEpoch||victoryStarted)return;victoryStarted=true;
+    const played=GameAudio.effect('level_win',{onEnded:()=>{if(current())GameAudio.restoreMusic()}});
+    if(!played&&current())GameAudio.restoreMusic();
+  };
   const reveal=n=>{
     if(run!==rewardRun||playStatus!=='won'||$('overlay').classList.contains('hidden'))return;
     slots[n-1].textContent='★';slots[n-1].classList.add('awarded');
-    if(!document.hidden)playStarSound(n);
+    if(!document.hidden&&audioEpoch===GameAudio.effectEpoch){
+      const last=n===stars;
+      const played=playStarSound(n,{maxDuration:last?undefined:.22,onEnded:result=>{if(result.cancelled&&audioEpoch!==GameAudio.effectEpoch&&current())GameAudio.restoreMusic();else if(last&&!result.cancelled)victory()}});
+      if(last&&!played)victory();
+    }
   };
   // Each cue is tied to the actual reveal, never to progression milestones.
   for(let n=1;n<=stars;n++)rewardTimers.push(setTimeout(()=>reveal(n),(n-1)*260));
-  // The last supplied star cue lasts 1s; victory follows instead of layering over it.
-  rewardTimers.push(setTimeout(()=>{if(run===rewardRun&&playStatus==='won')GameAudio.effect('level_win')},(stars-1)*260+1100));
-  rewardTimers.push(setTimeout(()=>{if(run===rewardRun)GameAudio.restoreMusic()},(stars-1)*260+2600));
+
 }
-document.addEventListener('visibilitychange',()=>{syncClock();if(document.hidden)stopStarSounds()});
-window.addEventListener('pagehide',()=>{pageSuspended=true;syncClock()});
+document.addEventListener('visibilitychange',()=>{syncClock();if(document.hidden)cancelRewardPresentation({completeVisual:true})});
+window.addEventListener('pagehide',()=>{pageSuspended=true;syncClock();cancelRewardPresentation({completeVisual:true})});
 window.addEventListener('pageshow',()=>{pageSuspended=false;syncClock()});
