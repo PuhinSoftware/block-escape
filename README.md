@@ -399,3 +399,31 @@ NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modul
 Run the existing Node suites and full browser runner as well (now 16 packages).
 See [victory audio report](reports/v0631-victory-audio-fix.md) for reproduced
 failures, real-WAV offline rendering and Safari coverage limits.
+
+
+## v0.6.4 — Compact HUD
+
+Gameplay uses a new hierarchy in `index.html` and gameplay-only
+`compact-hud.css`: home/music touch targets flank a world/level header; the level
+and cleared/total count share one row. A 4px crystal line replaces the framed
+progress panel. Hearts, time and potential rewards share one readable status
+row, followed by secondary move/remaining counters. Existing state IDs and
+calculations remain unchanged. The header is 116px high, versus 180–187px for
+the equivalent previous HUD/caption stack.
+
+The miner helper and bottom action spacing adapt to viewport height; the board
+keeps its original width, square cells and hit targets. On short screens the
+redundant save-status footer is hidden, while save behavior is unchanged. Long
+lab hints remain fully available and may require intentional vertical scrolling.
+Safe-area padding, keyboard focus, 44px controls, reduced motion and the existing
+550ms progress transition are preserved. The menu and v0.6.3.1 audio are unchanged.
+
+```sh
+NODE_PATH=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules ARTIFACT_DIR=/tmp/block-escape-v064 node tests/compact-hud-browser.cjs
+```
+
+The full runner includes 17 browser packages; the six Node suites still run.
+See [v0.6.4 report](reports/v064-compact-hud.md) for before/after viewport
+measurements, screenshots and Safari coverage. Normal gameplay fits the tested
+320×568, 375×667, 390×844 and 430×932 CSS viewports without page overflow;
+this is Chromium emulation, not a real iPhone Safari validation.

@@ -19,11 +19,12 @@ await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>levelsRe
 await page.locator('.bloop-helper img').evaluate(img=>img.decode());
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth));
 assert.equal(await page.locator('.cell').count(),36);assert.equal(await page.locator('#undo').count(),0);
-assert.ok((await page.locator('.bloop-helper img').boundingBox()).width>=140,'miner should be more prominent');
+assert.ok((await page.locator('.bloop-helper img').boundingBox()).width>=90,'compact miner remains visible');
+assert.ok(await page.locator('.bloop-helper img').evaluate(el=>el.getBoundingClientRect().bottom<=document.querySelector('#board').getBoundingClientRect().top),'helper stays above playable board');
 assert.ok((await page.locator('.cell').first().evaluate(el=>getComputedStyle(el,'::before').backgroundImage)).includes('stone-cell.webp'));
 assert.ok((await page.locator('.block').first().evaluate(el=>getComputedStyle(el,'::before').backgroundImage)).includes('block-'));
 assert.ok((await page.locator('.block').first().evaluate(el=>getComputedStyle(el,'::after').backgroundImage)).includes('arrow-raised.svg'));
-assert.ok((await page.locator('.hud-level').evaluate(el=>getComputedStyle(el).backgroundImage)).includes('panel-blue.svg'));
+assert.ok((await page.locator('#homeBtn').evaluate(el=>getComputedStyle(el).backgroundImage)).includes('panel-blue.svg'));
 assert.ok((await page.locator('#reset').evaluate(el=>getComputedStyle(el).backgroundImage)).includes('panel-gold.svg'));
 assert.ok((await page.locator('.board-platform').evaluate(el=>getComputedStyle(el,'::before').backgroundImage)).includes('board-frame.svg'));
 assert.equal(await page.locator('.board-decoration').evaluateAll(els=>els.every(el=>getComputedStyle(el).pointerEvents==='none')),true);

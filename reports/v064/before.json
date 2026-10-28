@@ -1,0 +1,38 @@
+[
+  {
+    "width": 320,
+    "height": 568,
+    "boardY": 338,
+    "boardHeight": 284,
+    "documentHeight": 797,
+    "hudStackHeight": 180,
+    "progressPanelHeight": 28
+  },
+  {
+    "width": 375,
+    "height": 667,
+    "boardY": 365,
+    "boardHeight": 339,
+    "documentHeight": 879,
+    "hudStackHeight": 187,
+    "progressPanelHeight": 28
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "boardY": 365,
+    "boardHeight": 354,
+    "documentHeight": 894,
+    "hudStackHeight": 187,
+    "progressPanelHeight": 28
+  },
+  {
+    "width": 430,
+    "height": 932,
+    "boardY": 365,
+    "boardHeight": 394,
+    "documentHeight": 934,
+    "hudStackHeight": 187,
+    "progressPanelHeight": 28
+  }
+]
