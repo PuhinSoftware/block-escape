@@ -1,0 +1,31 @@
+/* Gameplay-only hierarchy: toolbar identity, crystal line, status, secondary counters.
+   Board tracks, tile sizing, game state and audio remain in their existing files. */
+.app .game-header{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:stretch;gap:6px;height:auto;margin:0 0 5px}
+.app .game-header:before{content:'';position:absolute;inset:-8px -8px -3px;z-index:-1;pointer-events:none;background:linear-gradient(#071827f0,#081d30ed 85%,#081d30b0);border-radius:10px}
+.hud-toolbar{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:10px;min-height:44px}
+.app .game-header #homeBtn{height:44px}.hud-toolbar #sound{position:static;top:auto;right:auto}
+.hud-heading{min-width:0}.hud-heading .mine-caption{position:static;justify-content:flex-start;min-height:0;margin:0}.hud-heading .mine-caption h1{font-size:9px;line-height:1.4;letter-spacing:.7px;color:#b9cdda;text-align:left;margin:0}
+.level-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-height:23px;margin-top:2px}
+.app .hud-level{display:flex;align-items:baseline;gap:5px;padding:0;min-width:0;border:0;background:none;box-shadow:none}
+.app .hud-level small{color:#d4c7af;font-size:9px;font-weight:700;letter-spacing:.4px}.app .hud-level strong{color:#fff0c1;font-size:16px;font-weight:800;line-height:1.25;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px #061527}
+.app .progress-caption{display:flex;align-items:baseline;gap:5px;height:auto;line-height:1.3;white-space:nowrap}.app .progress-caption>span:first-child{display:inline;font-size:8px;letter-spacing:.1px;color:#c3dbe7}.app #progressText{font-size:13px;line-height:1.3;color:#b6f7ff;letter-spacing:.4px}
+.app .progress-hud{display:block;width:100%;height:auto;min-width:0;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+.app .progress-track{height:4px;width:100%;margin:0;border:0;border-radius:3px;box-shadow:inset 0 1px 1px #0005;background:#234255}.app .progress-fill{box-shadow:0 0 5px #68eaff44,inset 0 1px #e8ffff99}
+.app .status-rail{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:6px;padding:1px 0 3px;border-bottom:1px solid #9bbcd528}
+.app .status-rail .life-hud{height:30px;min-width:0;width:auto;justify-content:flex-start;gap:6px;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+.app .life-hud small{font-size:9px;letter-spacing:.5px;color:#c8d5e4}.app .hearts{gap:3px}.app .heart{font-size:22px}
+.app .timer-hud{min-width:0;justify-content:center;gap:5px;height:30px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;color:#d6f6ff}.app .timer-hud small{font-size:9px;letter-spacing:.5px;color:#c8d5e4}.app .timer-hud strong{font-size:14px}.app .timer-hud.urgent{color:#ffe18c;text-shadow:0 0 6px #d4892340}
+.app .potential-reward{height:30px;justify-self:end;min-width:0;text-align:right;border:0;border-radius:0;background:none;box-shadow:none}.app .potential-reward small{font-size:9px;letter-spacing:.2px;line-height:11px;color:#e0d3bf}.app .potential-stars{justify-content:flex-end;height:19px;line-height:19px;gap:4px}.app .potential-stars span{font-size:18px}
+.app .hud{display:flex;justify-content:space-between;gap:10px}.app .hud>div{display:flex;flex-direction:row;align-items:baseline;justify-content:flex-start;gap:6px;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+.app .hud small{font-size:10px;font-weight:600;letter-spacing:.5px;color:#bdccdc}.app .hud strong{font-size:12px;line-height:1.25;font-variant-numeric:tabular-nums;color:#f1f5fb}
+.app .bloop-helper{height:58px;margin:0 0 15px;gap:3px;align-items:center}.app .bloop-helper img{flex:0 0 94px;width:94px;max-width:94px;height:77px;align-self:center;margin:0 0 0 -3px}.app .bloop-helper .hint{flex:1;max-width:none;margin:0 12px 0 0;padding:8px 12px;font-size:10px;line-height:1.35}
+.app .lab-banner{margin:2px 0 4px;font-size:10px;line-height:1.3;padding:3px 6px}
+.app .controls{margin-top:5px;gap:10px}.app .controls button,.app .controls #reset{min-height:60px;padding:7px 6px 9px;gap:3px;font-size:10px}.app .controls button img{width:24px;height:24px}.app .toast{height:18px;margin-top:18px;font-size:10px}.app .game-footer{margin-top:8px}
+@media(max-width:350px){.hud-toolbar{gap:6px}.hud-heading .mine-caption h1{letter-spacing:.4px}.hud-heading .progress-caption>span:first-child{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.hud-heading .progress-caption:before{content:'◆';font-size:9px;color:#73efff}.app .life-hud small{display:none}.app .heart{font-size:21px}.app .potential-reward small{letter-spacing:0}.app .bloop-helper{height:52px}.app .bloop-helper img{height:73px;flex-basis:90px;width:90px;max-width:90px}.app .bloop-helper .hint{margin-right:11px}}
+@media(max-height:740px){.app{padding-bottom:max(10px,env(safe-area-inset-bottom))}.app .bloop-helper{height:50px}.app .game-footer{display:none}.app .controls button,.app .controls #reset{min-height:56px}}
+@media(max-height:640px){.app .bloop-helper{height:34px}.app .bloop-helper img{height:60px;flex-basis:90px;width:90px;max-width:90px}.app .bloop-helper .hint{padding:7px 10px}.app .toast{margin-top:13px;height:16px}}
+@media(forced-colors:active){.app .progress-track{border:1px solid CanvasText}.app .progress-fill{background:Highlight;box-shadow:none}.app .game-header{border-bottom:1px solid CanvasText}}
+.app .frame-lantern{top:-45px;right:-14px;width:31px;height:48px}
+.app{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+/* Lab instructions may be longer than the normal helper line; retain them in full. */
+.app .lab-banner:not([hidden]) + .bloop-helper{height:auto;min-height:64px}

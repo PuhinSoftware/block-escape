@@ -1,0 +1,14 @@
+browserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/webkit-2336/pw_run.sh
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     npx playwright install                                 ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+    at /workspace/block-escape/tests/compact-hud-browser.cjs:9:57
+    at Object.<anonymous> (/workspace/block-escape/tests/compact-hud-browser.cjs:31:3) {
+  log: [],
+  name: 'Error'
+}

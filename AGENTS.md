@@ -101,3 +101,9 @@
 - Use per-cue native completion, not fixed victory/restoration timeouts. Mastered samples retain their own envelope; only intermediate star windows may be trimmed. A victory is protected and once per attempt on the shared context.
 - Explicit cancellation invalidates queued reward audio. Menu/next/mute/hidden page cancels; nonzero gain changes do not. Hold gain automation before retargeting and never pause/restart music for ducking.
 - Run all six Node suites and the 16-package browser runner. The victory suite checks actual WAV duration/native ended, offline-rendered sample gain, and cancellation including mute/unmute. Preserve audio settings, data and scoring.
+
+
+## v0.6.4 compact gameplay HUD
+- `compact-hud.css` owns the responsive gameplay hierarchy. Preserve existing state IDs: level and removed/total share the toolbar row; a 4px star-free crystal line follows; hearts/time/potential remain separate from earned rewards.
+- Do not shrink the board to make the header fit. Keep the helper/decorations above playable cells, actions at least 44px, safe-area padding, reduced motion and progress transition. Long lab instructions may intentionally scroll; normal portrait viewports should not overflow.
+- Run the six Node suites and 17-package browser runner. `compact-hud-browser.cjs` checks viewport readability, real progress, full board visibility/size, no page scrolling, urgency/life/potential, overlays and navigation. Compare with `reports/v064/before.json` captured from main's original HTML, without resetting working files.

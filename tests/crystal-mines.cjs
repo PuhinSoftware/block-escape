@@ -13,7 +13,7 @@ const page=await browser.newPage({viewport:{width,height},isMobile:true,hasTouch
 await page.goto('http://127.0.0.1:8080');await page.waitForFunction(()=>levelsReady);await page.locator('#playBtn').tap();await page.waitForFunction(()=>document.querySelector('.app').getAnimations().length===0);
 assert.equal(await page.locator('#undo').count(),0);assert.equal(await page.evaluate(()=>typeof undo),'undefined');
 assert.deepEqual(await page.locator('.controls button').evaluateAll(buttons=>buttons.map(button=>button.id)),['reset','levelsBtn']);
-assert.deepEqual(await page.locator('.hud>div').evaluateAll(cards=>cards.map(card=>card.querySelector('strong').id)),['levelLabel','moves','remaining']);
+assert.deepEqual(await page.locator('.hud-level strong,.hud strong').evaluateAll(counters=>counters.map(counter=>counter.id)),['levelLabel','moves','remaining']);
 assert.equal(await page.locator('.app h1').textContent(),'KRİSTAL MADENLERİ');
 assert.equal(await page.locator('.bloop-helper img').evaluate(img=>img.complete&&img.naturalWidth>0&&img.src.endsWith('gameplay/miner-bloop.webp')),true);
 assert.ok((await page.request.get('http://127.0.0.1:8080/assets/gameplay/crystal-mine.webp')).ok());
